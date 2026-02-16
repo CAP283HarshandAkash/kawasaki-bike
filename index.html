@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki Bikes Website | Home</title>
+    <style>
+      :root {
+        --kawa-green: #00b140;
+        --kawa-green-2: #00d957;
+        --ink: #0c1014;
+        --muted: #b8c2cc;
+        --card: rgba(12, 16, 20, 0.72);
+        --line: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.55;
+      }
+
+      body.home {
+        background-color: #05070a;
+        background-image:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.85)),
+          url("assets/bg-kawasaki.svg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      a {
+        color: var(--kawa-green-2);
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.55);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 220px;
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .brand strong {
+        letter-spacing: 0.6px;
+        font-size: 15px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      nav a {
+        display: inline-block;
+        padding: 8px 10px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: #f5f7fa;
+      }
+
+      nav a[aria-current="page"] {
+        border-color: var(--line);
+        background: rgba(0, 177, 64, 0.14);
+      }
+
+      main {
+        padding: 28px 0 56px;
+      }
+
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 22px;
+        overflow: hidden;
+      }
+
+      .hero h1 {
+        margin: 0 0 8px;
+        font-size: clamp(26px, 4vw, 40px);
+        letter-spacing: 0.3px;
+      }
+
+      .hero p {
+        margin: 0 0 14px;
+        color: #e8edf3;
+        max-width: 70ch;
+      }
+
+      .cta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        color: #f5f7fa;
+        font-weight: 600;
+      }
+
+      .btn.primary {
+        border-color: rgba(0, 217, 87, 0.6);
+        background: linear-gradient(135deg, rgba(0, 177, 64, 0.75), rgba(0, 217, 87, 0.35));
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .card {
+        grid-column: span 12;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 16px;
+      }
+
+      @media (min-width: 880px) {
+        .card.span-7 {
+          grid-column: span 7;
+        }
+        .card.span-5 {
+          grid-column: span 5;
+        }
+      }
+
+      .bike-row {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .bike-row figure {
+        grid-column: span 12;
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+      }
+
+      @media (min-width: 860px) {
+        .bike-row figure {
+          grid-column: span 4;
+        }
+      }
+
+      figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.35);
+      }
+
+      .media {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.35);
+      }
+
+      .media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .price-tag {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.62);
+        color: #f5f7fa;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        font-size: 13px;
+        backdrop-filter: blur(6px);
+      }
+
+      .price-tag small {
+        font-weight: 700;
+        color: rgba(245, 247, 250, 0.82);
+        margin-left: 6px;
+      }
+
+      figcaption {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .banner {
+        margin-top: 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        overflow: hidden;
+      }
+
+      .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .banner .cap {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .credit {
+        font-size: 12px;
+        color: rgba(184, 194, 204, 0.9);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.55);
+        padding: 18px 0;
+      }
+
+      footer small {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body class="home">
+    <header>
+      <div class="container topbar">
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
+          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+          <strong>Kawasaki Bikes Website</strong>
+        </a>
+
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="bikes.html">Bike Models</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" aria-labelledby="welcome">
+        <h1 id="welcome">Ride the Green Legacy</h1>
+        <p>
+          Welcome to a simple, multi-page <strong>HTML-only</strong> website project themed around Kawasaki bikes.
+          Explore model highlights, check a comparison table, click around the image map gallery, and send a message using the contact form.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="bikes.html">Explore Bike Models</a>
+          <a class="btn" href="gallery.html">View the Gallery</a>
+          <a class="btn" href="contact.html">Contact Us</a>
+        </div>
+        <p class="muted" style="margin-top: 12px">
+          Navigation requirement: this site uses both <strong>text links</strong> and an <strong>image link</strong> (the logo) to move between pages.
+        </p>
+      </section>
+
+      <section class="banner" aria-label="Real Kawasaki bike photo banner">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kawasaki_Ninja_H2.jpg/1280px-Kawasaki_Ninja_H2.jpg"
+          alt="Kawasaki Ninja H2 (2015) photographed at Kobe Kawasaki World, Kobe, Japan"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        />
+        <div class="cap">
+          <strong>Ninja H2 (2015)</strong> — Photo location: <strong>Kobe Kawasaki World, Kobe, Japan</strong>.
+          <span class="credit">Source: Wikimedia Commons (online).</span>
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Home content">
+        <article class="card span-7" aria-labelledby="highlights">
+          <h2 id="highlights">Featured Kawasaki Bike Images</h2>
+          <p class="muted" style="margin-top: -4px">Real photos loaded from online sources (Wikimedia Commons).</p>
+
+          <div class="bike-row">
+            <figure>
+              <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
+                    alt="Kawasaki Ninja ZX-10R (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$17,399 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                <strong>Ninja ZX-10R</strong> — track-inspired sport performance.
+                <span class="credit">Source: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="z900.html" aria-label="Open Z900 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                    alt="Kawasaki Z900 green (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$9,999 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                <strong>Z900</strong> — aggressive streetfighter style.
+                <span class="credit">Source: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="versys-650.html" aria-label="Open Versys 650 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
+                    alt="Kawasaki Versys 650 (KLE 650) used by Austrian military police (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$8,899 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                <strong>Versys 650</strong> — adventure-ready comfort. Location: <strong>Austria</strong> (Bundesheer / Militärstreife).
+                <span class="credit">Source: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                    alt="Kawasaki Vulcan S 650 (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$7,399 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                <strong>Vulcan S</strong> — relaxed cruiser proportions.
+                <span class="credit">Source: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="klr650.html" aria-label="Open KLR650 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
+                    alt="Kawasaki KLR 650 at the Las Vegas Ride for Kids 2019 (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$6,999 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                <strong>KLR650</strong> — rugged dual-sport. Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
+                <span class="credit">Source: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <p style="margin-top: 14px">
+            Quick links:
+            <a href="bikes.html">Bike Models</a> ·
+            <a href="gallery.html">Image Gallery</a> ·
+            <a href="contact.html">Contact Form</a>
+          </p>
+        </article>
+
+        <article class="card span-5" aria-labelledby="lists">
+          <h2 id="lists">Lists (Ordered + Unordered)</h2>
+
+          <section aria-labelledby="ordered">
+            <h3 id="ordered" style="margin: 12px 0 8px; font-size: 16px">Top Reasons Riders Love Kawasaki</h3>
+            <ol>
+              <li>Strong performance across sport, street, adventure, and cruiser segments.</li>
+              <li>Iconic Kawasaki Green and unmistakable design language.</li>
+              <li>Great value with approachable models and premium flagships.</li>
+              <li>Rider-focused ergonomics and practical features.</li>
+            </ol>
+          </section>
+
+          <section aria-labelledby="unordered">
+            <h3 id="unordered" style="margin: 12px 0 8px; font-size: 16px">Popular Segments</h3>
+            <ul>
+              <li>Sport (Ninja series)</li>
+              <li>Street / Naked (Z series)</li>
+              <li>Adventure / Touring (Versys series)</li>
+              <li>Cruiser (Vulcan series)</li>
+            </ul>
+          </section>
+
+          <p class="muted" style="margin-top: 10px">
+            Font styling requirement: this page uses CSS for font family, sizes, weights, and spacing.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>
+          © <span>2026</span> Kawasaki Bikes Website (HTML project). This is a demo site for learning HTML5 semantic elements, tables, image maps, and forms.
+        </small>
+      </div>
+    </footer>
+  </body>
+</html>

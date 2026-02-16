@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="Stylized Kawasaki Ninja sportbike illustration">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#00d957"/>
+      <stop offset="1" stop-color="#00b140"/>
+    </linearGradient>
+    <linearGradient id="m" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#1a1f25"/>
+      <stop offset="1" stop-color="#0c1014"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="700" fill="#0a0f14"/>
+  <path d="M0 520C220 430 420 410 640 470c180 50 360 45 560-50v280H0z" fill="rgba(0,217,87,0.08)"/>
+  <g filter="url(#shadow)">
+    <!-- wheels -->
+    <circle cx="330" cy="500" r="88" fill="#0b0f13" stroke="rgba(255,255,255,0.18)" stroke-width="10"/>
+    <circle cx="880" cy="500" r="88" fill="#0b0f13" stroke="rgba(255,255,255,0.18)" stroke-width="10"/>
+    <circle cx="330" cy="500" r="38" fill="#10151b" stroke="rgba(0,217,87,0.35)" stroke-width="6"/>
+    <circle cx="880" cy="500" r="38" fill="#10151b" stroke="rgba(0,217,87,0.35)" stroke-width="6"/>
+
+    <!-- frame / fairing -->
+    <path d="M370 430h200l120-70h110l90 55 40 35-55 10-35 55H560l-80-30-70 30h-70l30-85z"
+      fill="url(#m)" stroke="rgba(255,255,255,0.14)" stroke-width="4" stroke-linejoin="round"/>
+
+    <!-- green accent -->
+    <path d="M410 445h150l95-55h80l65 40-20 5-25 40H560l-75-28-60 28h-50l35-55z"
+      fill="url(#g)" opacity="0.9"/>
+
+    <!-- seat / tail -->
+    <path d="M720 340h150l80 60-70 20H740l-45-40z" fill="#121820" stroke="rgba(255,255,255,0.12)" stroke-width="4" />
+
+    <!-- handle / head -->
+    <path d="M650 360l-60 40h-70l40-55h70z" fill="#10151b" />
+    <path d="M545 332l-22 55h-70l30-70h62z" fill="#0c1014" />
+
+    <!-- small details -->
+    <circle cx="606" cy="404" r="9" fill="#00d957"/>
+    <rect x="565" y="420" width="100" height="10" rx="5" fill="rgba(255,255,255,0.18)"/>
+    <path d="M350 492h530" stroke="rgba(255,255,255,0.14)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <text x="50" y="80" fill="rgba(245,247,250,0.9)" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="800">
+    NINJA
+  </text>
+  <text x="50" y="120" fill="rgba(0,217,87,0.8)" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">
+    Kawasaki Sport Series (SVG)
+  </text>
+</svg>

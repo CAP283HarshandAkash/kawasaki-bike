@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki Bikes Website | Contact</title>
+    <style>
+      :root {
+        --kawa-green: #00b140;
+        --kawa-green-2: #00d957;
+        --muted: #b8c2cc;
+        --card: rgba(12, 16, 20, 0.72);
+        --line: rgba(255, 255, 255, 0.12);
+        --bg: #070a0e;
+        --danger: #ff5a66;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.55;
+        background:
+          radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
+          radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
+          var(--bg);
+      }
+
+      a {
+        color: var(--kawa-green-2);
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.55);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 220px;
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .brand strong {
+        letter-spacing: 0.6px;
+        font-size: 15px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      nav a {
+        display: inline-block;
+        padding: 8px 10px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: #f5f7fa;
+      }
+
+      nav a[aria-current="page"] {
+        border-color: var(--line);
+        background: rgba(0, 177, 64, 0.14);
+      }
+
+      main {
+        padding: 28px 0 56px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 16px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(24px, 3vw, 34px);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      form {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 12px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .field {
+        grid-column: span 12;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      @media (min-width: 920px) {
+        .col-6 {
+          grid-column: span 6;
+        }
+        .col-4 {
+          grid-column: span 4;
+        }
+        .col-8 {
+          grid-column: span 8;
+        }
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.25);
+        color: #f5f7fa;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      fieldset {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      legend {
+        padding: 0 8px;
+        font-weight: 700;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        margin-top: 8px;
+      }
+
+      .row label {
+        font-weight: 500;
+        margin: 0;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        color: #f5f7fa;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .btn.primary {
+        border-color: rgba(0, 217, 87, 0.6);
+        background: linear-gradient(135deg, rgba(0, 177, 64, 0.75), rgba(0, 217, 87, 0.35));
+      }
+
+      .hint {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.55);
+        padding: 18px 0;
+      }
+
+      footer small {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
+          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+          <strong>Kawasaki Bikes Website</strong>
+        </a>
+
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bikes.html">Bike Models</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" aria-labelledby="contact-title">
+        <h1 id="contact-title">Contact Form</h1>
+        <p class="muted">
+          Requirement: this page contains a contact form. (This is a static HTML project, so the form uses
+          <code>action="#"</code> — no server processing.)
+        </p>
+
+        <form action="#" method="post" aria-label="Contact Kawasaki Bikes Website form">
+          <section class="field col-6">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" placeholder="Enter your name" required />
+          </section>
+
+          <section class="field col-6">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" required />
+          </section>
+
+          <section class="field col-4">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+91-XXXXXXXXXX" />
+          </section>
+
+          <section class="field col-8">
+            <label for="model">Interested Model</label>
+            <select id="model" name="model">
+              <option value="">Select a model (optional)</option>
+              <option value="ninja-zx10r">Ninja ZX-10R</option>
+              <option value="z900">Z900</option>
+              <option value="versys-650">Versys 650</option>
+              <option value="vulcan-s">Vulcan S</option>
+              <option value="klr650">KLR650</option>
+            </select>
+            <p class="hint">You can compare these models in the table on the <a href="bikes.html">Bike Models</a> page.</p>
+          </section>
+
+          <section class="col-12">
+            <fieldset>
+              <legend>Inquiry Type</legend>
+              <div class="row">
+                <label><input type="radio" name="inquiry" value="pricing" required /> Pricing</label>
+                <label><input type="radio" name="inquiry" value="test-ride" /> Test Ride</label>
+                <label><input type="radio" name="inquiry" value="service" /> Service</label>
+                <label><input type="radio" name="inquiry" value="general" /> General</label>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="field col-12">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+            <p class="hint">No backend is included; this form demonstrates HTML form elements only.</p>
+          </section>
+
+          <section class="col-12">
+            <fieldset>
+              <legend>Consent</legend>
+              <div class="row">
+                <label><input type="checkbox" name="updates" value="yes" /> Send me updates about new models</label>
+                <label><input type="checkbox" name="terms" value="accepted" required /> I agree to the terms</label>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="col-12">
+            <div class="actions">
+              <button class="btn primary" type="submit">Submit</button>
+              <button class="btn" type="reset">Reset</button>
+              <a class="btn" href="index.html" role="button">Back to Home</a>
+            </div>
+          </section>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>
+          © <span>2026</span> Kawasaki Bikes Website (HTML project). Contact form is for demo/assignment purposes.
+        </small>
+      </div>
+    </footer>
+  </body>
+</html>

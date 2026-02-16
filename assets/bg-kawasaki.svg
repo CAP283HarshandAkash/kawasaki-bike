@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Abstract Kawasaki green background">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#06080b"/>
+      <stop offset="1" stop-color="#0a0f14"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#00b140" stop-opacity="0.0"/>
+      <stop offset="0.5" stop-color="#00d957" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#00b140" stop-opacity="0.0"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.3" cy="0.2" r="0.8">
+      <stop offset="0" stop-color="#00d957" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#00d957" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#spot)"/>
+
+  <g opacity="0.9">
+    <path d="M-120 280C320 120 620 120 980 260c260 100 510 110 920-40v150C1550 520 1300 540 1000 440 700 340 360 340 -120 470z" fill="url(#green)"/>
+    <path d="M-120 520C300 420 600 420 950 540c280 100 580 90 1090-90v150c-520 200-840 220-1140 110C600 610 300 610 -120 690z" fill="url(#green)"/>
+    <path d="M-120 760c420-120 720-120 1060 10 320 120 620 110 980-40v170c-380 110-690 130-980 20C600 790 300 790 -120 920z" fill="url(#green)"/>
+  </g>
+
+  <g opacity="0.35">
+    <circle cx="1560" cy="240" r="140" fill="#00b140"/>
+    <circle cx="1560" cy="240" r="200" fill="#00b140" opacity="0.35"/>
+    <circle cx="1560" cy="240" r="260" fill="#00b140" opacity="0.18"/>
+  </g>
+
+  <g opacity="0.22" fill="none" stroke="#ffffff">
+    <path d="M80 980h1760" stroke-opacity="0.12" stroke-width="2"/>
+    <path d="M80 940h1760" stroke-opacity="0.06" stroke-width="2"/>
+  </g>
+</svg>

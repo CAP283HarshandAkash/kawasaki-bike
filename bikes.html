@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki Bikes Website | Bike Models</title>
+    <style>
+      :root {
+        --kawa-green: #00b140;
+        --kawa-green-2: #00d957;
+        --ink: #0c1014;
+        --muted: #b8c2cc;
+        --card: rgba(12, 16, 20, 0.72);
+        --line: rgba(255, 255, 255, 0.12);
+        --bg: #070a0e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.55;
+        background:
+          radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
+          radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
+          var(--bg);
+      }
+
+      a {
+        color: var(--kawa-green-2);
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.55);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 220px;
+      }
+
+      .brand img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .brand strong {
+        letter-spacing: 0.6px;
+        font-size: 15px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      nav a {
+        display: inline-block;
+        padding: 8px 10px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: #f5f7fa;
+      }
+
+      nav a[aria-current="page"] {
+        border-color: var(--line);
+        background: rgba(0, 177, 64, 0.14);
+      }
+
+      main {
+        padding: 28px 0 56px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 16px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(24px, 3vw, 34px);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      @media (min-width: 920px) {
+        .two-col {
+          grid-template-columns: 1.1fr 0.9fr;
+          align-items: start;
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      caption {
+        caption-side: top;
+        text-align: left;
+        padding: 10px 12px;
+        font-weight: 700;
+      }
+
+      thead th {
+        text-align: left;
+        font-weight: 700;
+        background: rgba(0, 177, 64, 0.14);
+      }
+
+      th,
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      tfoot td {
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.25);
+        font-size: 13px;
+        color: #e8edf3;
+      }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .model-grid article {
+        grid-column: span 12;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+      }
+
+      @media (min-width: 860px) {
+        .model-grid article {
+          grid-column: span 6;
+        }
+      }
+
+      figure {
+        margin: 0;
+      }
+
+      figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.35);
+      }
+
+      .media {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.35);
+      }
+
+      .media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .price-tag {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.62);
+        color: #f5f7fa;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        font-size: 13px;
+        backdrop-filter: blur(6px);
+      }
+
+      .price-tag small {
+        font-weight: 700;
+        color: rgba(245, 247, 250, 0.82);
+        margin-left: 6px;
+      }
+
+      figcaption {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .specs {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      .specs li {
+        margin: 4px 0;
+      }
+
+      .credit {
+        font-size: 12px;
+        color: rgba(184, 194, 204, 0.9);
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.55);
+        padding: 18px 0;
+      }
+
+      footer small {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
+          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+          <strong>Kawasaki Bikes Website</strong>
+        </a>
+
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bikes.html" aria-current="page">Bike Models</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" aria-labelledby="models-title">
+        <h1 id="models-title">Bike Models (Table)</h1>
+        <p class="muted">
+          Requirement: this page includes a table built with <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>,
+          <code>&lt;tbody&gt;</code>, and <code>&lt;tfoot&gt;</code>.
+        </p>
+
+        <div class="two-col">
+          <section aria-labelledby="table-title">
+            <h2 id="table-title" style="margin: 0 0 10px; font-size: 18px">Model Comparison</h2>
+
+            <table aria-describedby="price-note">
+              <caption>Kawasaki Model Snapshot</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Bike Model</th>
+                  <th scope="col">Engine</th>
+                  <th scope="col">Price (Approx.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="ninja-zx10r">
+                  <th scope="row"><a href="ninja-zx10r.html">Ninja ZX-10R</a></th>
+                  <td>998cc inline-4</td>
+                  <td>$17,399</td>
+                </tr>
+                <tr id="z900">
+                  <th scope="row"><a href="z900.html">Z900</a></th>
+                  <td>948cc inline-4</td>
+                  <td>$9,999</td>
+                </tr>
+                <tr id="versys-650">
+                  <th scope="row"><a href="versys-650.html">Versys 650</a></th>
+                  <td>649cc parallel-twin</td>
+                  <td>$8,899</td>
+                </tr>
+                <tr id="vulcan-s">
+                  <th scope="row"><a href="vulcan-s.html">Vulcan S</a></th>
+                  <td>649cc parallel-twin</td>
+                  <td>$7,399</td>
+                </tr>
+                <tr id="klr650">
+                  <th scope="row"><a href="klr650.html">KLR650</a></th>
+                  <td>652cc single-cylinder</td>
+                  <td>$6,999</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Total models listed</td>
+                  <td>5</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <p id="price-note" class="muted" style="margin: 10px 0 0">
+              Note: prices are sample values for demonstration (HTML project).
+            </p>
+          </section>
+
+          <aside class="card" style="background: rgba(255,255,255,0.03)" aria-label="Quick links">
+            <h2 style="margin: 0 0 10px; font-size: 18px">Quick Jump</h2>
+            <p class="muted" style="margin-top: -4px">These links are also used by the Gallery image map.</p>
+            <ul style="margin: 0; padding-left: 18px">
+              <li><a href="#ninja-zx10r">Ninja ZX-10R</a> <span class="pill">Sport</span></li>
+              <li><a href="#z900">Z900</a> <span class="pill">Naked</span></li>
+              <li><a href="#versys-650">Versys 650</a> <span class="pill">Adventure</span></li>
+              <li><a href="#vulcan-s">Vulcan S</a> <span class="pill">Cruiser</span></li>
+              <li><a href="#klr650">KLR650</a> <span class="pill">Dual-sport</span></li>
+            </ul>
+            <p class="muted" style="margin-bottom: 0; margin-top: 12px">
+              Next: try the <a href="gallery.html">Gallery</a> and click the image map areas.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 16px" aria-labelledby="details-title">
+        <h2 id="details-title" style="margin: 0 0 10px">Model Highlights</h2>
+        <p class="muted" style="margin-top: -4px">
+          Each article uses semantic HTML (<code>&lt;section&gt;</code> + <code>&lt;article&gt;</code> + <code>&lt;figure&gt;</code>).
+        </p>
+        <p class="muted" style="margin-top: 0">
+          Specifications below are <strong>example/approx values</strong> for an HTML assignment.
+        </p>
+
+        <div class="model-grid">
+          <article aria-labelledby="ninja-h">
+            <h3 id="ninja-h" style="margin: 0 0 8px">Ninja ZX-10R</h3>
+            <figure>
+              <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
+                    alt="Kawasaki Ninja ZX-10R (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$17,399 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                Race-bred styling and track-focused performance.
+                <span class="credit">Photo source: Wikimedia Commons (online).</span>
+              </figcaption>
+            </figure>
+            <ul class="specs">
+              <li><strong>Engine</strong>: 998cc inline-4</li>
+              <li><strong>Transmission</strong>: 6-speed</li>
+              <li><strong>Power</strong>: ~200 PS (typical)</li>
+              <li><strong>Weight</strong>: ~205–210 kg (curb)</li>
+              <li><strong>Features</strong>: ride modes, traction control, ABS (varies by market)</li>
+            </ul>
+          </article>
+
+          <article aria-labelledby="z-h">
+            <h3 id="z-h" style="margin: 0 0 8px">Z900</h3>
+            <figure>
+              <a href="z900.html" aria-label="Open Z900 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                    alt="Kawasaki Z900 green (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$9,999 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                Streetfighter design with a punchy inline-4 character.
+                <span class="credit">Photo source: Wikimedia Commons (online).</span>
+              </figcaption>
+            </figure>
+            <ul class="specs">
+              <li><strong>Engine</strong>: 948cc inline-4</li>
+              <li><strong>Transmission</strong>: 6-speed</li>
+              <li><strong>Power</strong>: ~125 PS (typical)</li>
+              <li><strong>Weight</strong>: ~210–215 kg (curb)</li>
+              <li><strong>Style</strong>: naked / streetfighter</li>
+            </ul>
+          </article>
+
+          <article aria-labelledby="versys-h">
+            <h3 id="versys-h" style="margin: 0 0 8px">Versys 650</h3>
+            <figure>
+              <a href="versys-650.html" aria-label="Open Versys 650 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
+                    alt="Kawasaki Versys 650 (KLE 650) used by Austrian military police (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$8,899 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                Comfortable ergonomics for commuting and touring. Location: <strong>Austria</strong> (Bundesheer / Militärstreife).
+                <span class="credit">Photo source: Wikimedia Commons (online).</span>
+              </figcaption>
+            </figure>
+            <ul class="specs">
+              <li><strong>Engine</strong>: 649cc parallel-twin</li>
+              <li><strong>Transmission</strong>: 6-speed</li>
+              <li><strong>Power</strong>: ~67 PS (typical)</li>
+              <li><strong>Fuel</strong>: ~21 L (typical)</li>
+              <li><strong>Use</strong>: commuting, touring, light adventure</li>
+            </ul>
+          </article>
+
+          <article aria-labelledby="vulcan-h">
+            <h3 id="vulcan-h" style="margin: 0 0 8px">Vulcan S</h3>
+            <figure>
+              <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                    alt="Kawasaki Vulcan S 650 (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$7,399 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                Low-slung cruiser stance with modern reliability.
+                <span class="credit">Photo source: Wikimedia Commons (online).</span>
+              </figcaption>
+            </figure>
+            <ul class="specs">
+              <li><strong>Engine</strong>: 649cc parallel-twin</li>
+              <li><strong>Transmission</strong>: 6-speed</li>
+              <li><strong>Power</strong>: ~60 PS (typical)</li>
+              <li><strong>Seat height</strong>: ~705 mm (typical)</li>
+              <li><strong>Style</strong>: cruiser</li>
+            </ul>
+          </article>
+
+          <article aria-labelledby="klr-h">
+            <h3 id="klr-h" style="margin: 0 0 8px">KLR650</h3>
+            <figure>
+              <a href="klr650.html" aria-label="Open KLR650 details page">
+                <div class="media">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
+                    alt="Kawasaki KLR 650 at the Las Vegas Ride for Kids 2019 (real photo)"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                  />
+                  <span class="price-tag">$6,999 <small>approx</small></span>
+                </div>
+              </a>
+              <figcaption>
+                Built for long-distance, mixed-surface exploring. Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
+                <span class="credit">Photo source: Wikimedia Commons (online).</span>
+              </figcaption>
+            </figure>
+            <ul class="specs">
+              <li><strong>Engine</strong>: 652cc single-cylinder</li>
+              <li><strong>Transmission</strong>: 5-speed (typical)</li>
+              <li><strong>Power</strong>: ~40 hp (typical)</li>
+              <li><strong>Fuel</strong>: ~23 L (typical)</li>
+              <li><strong>Use</strong>: adventure / dual-sport</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>
+          © <span>2026</span> Kawasaki Bikes Website (HTML project). Use the navigation links above to move between pages.
+        </small>
+      </div>
+    </footer>
+  </body>
+</html>

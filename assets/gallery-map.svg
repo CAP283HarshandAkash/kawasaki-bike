@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="320" viewBox="0 0 1000 320" role="img" aria-label="Gallery map banner with five clickable zones">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0a0f14"/>
+      <stop offset="1" stop-color="#070a0e"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#00b140"/>
+      <stop offset="1" stop-color="#00d957"/>
+    </linearGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1000" height="320" rx="0" fill="url(#bg)"/>
+  <rect width="1000" height="320" fill="url(#grid)" opacity="0.9"/>
+
+  <!-- five zones (these are visual only; actual click areas are defined in HTML map coords) -->
+  <g>
+    <rect x="0" y="0" width="200" height="320" fill="rgba(0,217,87,0.08)"/>
+    <rect x="200" y="0" width="200" height="320" fill="rgba(0,177,64,0.06)"/>
+    <rect x="400" y="0" width="200" height="320" fill="rgba(0,217,87,0.08)"/>
+    <rect x="600" y="0" width="200" height="320" fill="rgba(0,177,64,0.06)"/>
+    <rect x="800" y="0" width="200" height="320" fill="rgba(0,217,87,0.08)"/>
+  </g>
+
+  <path d="M0 220c120-80 250-95 400-40 120 44 260 44 600-70v210H0z" fill="rgba(0,217,87,0.10)"/>
+
+  <g fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2">
+    <path d="M200 0v320"/>
+    <path d="M400 0v320"/>
+    <path d="M600 0v320"/>
+    <path d="M800 0v320"/>
+  </g>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="800" text-anchor="middle">
+    <text x="100" y="70" font-size="26" fill="url(#green)">NINJA</text>
+    <text x="300" y="70" font-size="26" fill="url(#green)">Z900</text>
+    <text x="500" y="70" font-size="26" fill="url(#green)">VERSYS</text>
+    <text x="700" y="70" font-size="26" fill="url(#green)">VULCAN</text>
+    <text x="900" y="70" font-size="26" fill="url(#green)">KLR</text>
+  </g>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="600" text-anchor="middle" opacity="0.9">
+    <text x="100" y="108" font-size="13" fill="rgba(245,247,250,0.85)">Sport</text>
+    <text x="300" y="108" font-size="13" fill="rgba(245,247,250,0.85)">Naked</text>
+    <text x="500" y="108" font-size="13" fill="rgba(245,247,250,0.85)">Adventure</text>
+    <text x="700" y="108" font-size="13" fill="rgba(245,247,250,0.85)">Cruiser</text>
+    <text x="900" y="108" font-size="13" fill="rgba(245,247,250,0.85)">Dual-sport</text>
+  </g>
+
+  <g opacity="0.9">
+    <path d="M70 220h60" stroke="url(#green)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M270 220h60" stroke="url(#green)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M470 220h60" stroke="url(#green)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M670 220h60" stroke="url(#green)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M870 220h60" stroke="url(#green)" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <text x="20" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="rgba(245,247,250,0.55)">
+    Click zones using HTML image map
+  </text>
+</svg>

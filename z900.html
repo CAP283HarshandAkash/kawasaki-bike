@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki Bikes Website | Z900</title>
+    <style>
+      :root {
+        --kawa-green: #00b140;
+        --kawa-green-2: #00d957;
+        --muted: #b8c2cc;
+        --card: rgba(12, 16, 20, 0.72);
+        --line: rgba(255, 255, 255, 0.12);
+        --bg: #070a0e;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.55;
+        background:
+          radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
+          radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
+          var(--bg);
+      }
+      a { color: var(--kawa-green-2); text-decoration: none; }
+      a:hover, a:focus-visible { text-decoration: underline; }
+      .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+      header {
+        position: sticky; top: 0; z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.55);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 220px; }
+      .brand img { width: 44px; height: 44px; }
+      .brand strong { letter-spacing: 0.6px; font-size: 15px; }
+      nav ul { list-style: none; display: flex; gap: 12px; padding: 0; margin: 0; flex-wrap: wrap; justify-content: flex-end; }
+      nav a { display: inline-block; padding: 8px 10px; border: 1px solid transparent; border-radius: 10px; color: #f5f7fa; }
+      main { padding: 28px 0 56px; }
+      .card { border: 1px solid var(--line); border-radius: 18px; background: var(--card); padding: 16px; }
+      h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 34px); }
+      .muted { color: var(--muted); }
+      .layout { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
+      @media (min-width: 920px) { .layout { grid-template-columns: 1.15fr 0.85fr; align-items: start; } }
+      .media { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: rgba(0, 0, 0, 0.35); }
+      .media img { width: 100%; height: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; }
+      .price-tag {
+        position: absolute; left: 12px; bottom: 12px;
+        padding: 7px 11px; border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.62);
+        color: #f5f7fa; font-weight: 900; letter-spacing: 0.2px; font-size: 13px;
+        backdrop-filter: blur(6px);
+      }
+      .price-tag small { font-weight: 700; color: rgba(245, 247, 250, 0.82); margin-left: 6px; }
+      table { width: 100%; border-collapse: collapse; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); }
+      th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { text-align: left; width: 45%; background: rgba(0, 177, 64, 0.10); }
+      .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+      .btn { display: inline-block; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.06); color: #f5f7fa; font-weight: 700; }
+      .btn.primary { border-color: rgba(0, 217, 87, 0.6); background: linear-gradient(135deg, rgba(0, 177, 64, 0.75), rgba(0, 217, 87, 0.35)); }
+      .credit { font-size: 12px; color: rgba(184, 194, 204, 0.9); margin-top: 8px; }
+      footer { border-top: 1px solid var(--line); background: rgba(0, 0, 0, 0.55); padding: 18px 0; }
+      footer small { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
+          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+          <strong>Kawasaki Bikes Website</strong>
+        </a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bikes.html">Bike Models</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" aria-labelledby="title">
+        <h1 id="title">Z900</h1>
+        <p class="muted">Dedicated model page with full details (HTML project).</p>
+
+        <section class="layout" aria-label="Z900 details layout">
+          <article class="card" style="background: rgba(255,255,255,0.03)" aria-label="Photo and overview">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                alt="Kawasaki Z900 green (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              />
+              <span class="price-tag">$9,999 <small>approx</small></span>
+            </div>
+            <p class="credit">Photo: Wikimedia Commons (online). Price/specs are sample values for an assignment.</p>
+
+            <section aria-label="Key points">
+              <h2 style="margin: 10px 0 8px; font-size: 18px">Overview</h2>
+              <ul style="margin: 0; padding-left: 18px">
+                <li><strong>Category</strong>: Naked / Street</li>
+                <li><strong>Engine</strong>: 948cc inline-4</li>
+                <li><strong>Style</strong>: aggressive streetfighter design</li>
+              </ul>
+            </section>
+          </article>
+
+          <article class="card" style="background: rgba(255,255,255,0.03)" aria-label="Specifications">
+            <h2 style="margin: 0 0 10px; font-size: 18px">Specifications (Sample)</h2>
+            <table aria-label="Z900 specification table">
+              <tbody>
+                <tr><th scope="row">Engine</th><td>948cc, inline-4, liquid-cooled</td></tr>
+                <tr><th scope="row">Transmission</th><td>6-speed</td></tr>
+                <tr><th scope="row">Power</th><td>~125 PS (typical)</td></tr>
+                <tr><th scope="row">Torque</th><td>~98 Nm (typical)</td></tr>
+                <tr><th scope="row">Weight</th><td>~210–215 kg (curb, typical)</td></tr>
+                <tr><th scope="row">Brakes</th><td>Dual front disc, rear disc</td></tr>
+                <tr><th scope="row">Use</th><td>City + highway street riding</td></tr>
+              </tbody>
+            </table>
+
+            <section aria-label="Features">
+              <h2 style="margin: 14px 0 8px; font-size: 18px">Features</h2>
+              <ul style="margin: 0; padding-left: 18px">
+                <li>Strong midrange power delivery</li>
+                <li>Upright ergonomics for street comfort</li>
+                <li>Sharp styling with Kawasaki Green options</li>
+              </ul>
+            </section>
+
+            <div class="actions" aria-label="Navigation buttons">
+              <a class="btn primary" href="bikes.html">Back to Bike Models</a>
+              <a class="btn" href="gallery.html">Back to Gallery</a>
+              <a class="btn" href="contact.html">Contact</a>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>© 2026 Kawasaki Bikes Website (HTML project). Dedicated model page: Z900.</small>
+      </div>
+    </footer>
+  </body>
+</html>
