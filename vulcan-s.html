@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki Bikes Website | Vulcan S</title>
+    <style>
+      :root {
+        --kawa-green: #00b140;
+        --kawa-green-2: #00d957;
+        --muted: #b8c2cc;
+        --card: rgba(12, 16, 20, 0.72);
+        --line: rgba(255, 255, 255, 0.12);
+        --bg: #070a0e;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        line-height: 1.55;
+        background:
+          radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
+          radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
+          var(--bg);
+      }
+      a { color: var(--kawa-green-2); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+      header {
+        position: sticky; top: 0; z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.55);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+      .brand { display: flex; align-items: center; gap: 10px; }
+      .brand img { width: 44px; height: 44px; }
+      nav ul { list-style: none; display: flex; gap: 12px; padding: 0; margin: 0; }
+      nav a { padding: 8px 10px; border-radius: 10px; color: #f5f7fa; }
+      main { padding: 28px 0 56px; }
+      .card { border: 1px solid var(--line); border-radius: 18px; background: var(--card); padding: 16px; }
+      h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 34px); }
+      .muted { color: var(--muted); }
+      .layout { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
+      @media (min-width: 920px) { .layout { grid-template-columns: 1.15fr 0.85fr; } }
+      .media { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
+      .media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+      .price-tag {
+        position: absolute; left: 12px; bottom: 12px;
+        padding: 7px 11px; border-radius: 999px;
+        background: rgba(0, 0, 0, 0.62);
+        font-weight: 900; font-size: 13px;
+      }
+      table { width: 100%; border-collapse: collapse; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); }
+      th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+      th { text-align: left; width: 45%; background: rgba(0, 177, 64, 0.10); }
+      .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+      .btn { padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.06); color: #f5f7fa; font-weight: 700; }
+      .btn.primary { background: linear-gradient(135deg, rgba(0,177,64,0.75), rgba(0,217,87,0.35)); }
+      footer { border-top: 1px solid var(--line); background: rgba(0, 0, 0, 0.55); padding: 18px 0; }
+      footer small { color: var(--muted); }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container topbar">
+        <a class="brand" href="index.html">
+          <img src="assets/kawasaki-logo.svg" alt="Kawasaki logo" />
+          <strong>Kawasaki Bikes Website</strong>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bikes.html">Bike Models</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1>Vulcan S</h1>
+        <p class="muted">Dedicated cruiser model page (HTML project).</p>
+
+        <section class="layout">
+
+          <article class="card" style="background: rgba(255,255,255,0.03)">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                alt="Kawasaki Vulcan S"
+                loading="lazy"
+              />
+              <span class="price-tag">Rs.8,13,000 <small>approx</small></span>
+            </div>
+
+            <h2 style="margin: 10px 0 8px; font-size: 18px">Overview</h2>
+            <ul style="margin: 0; padding-left: 18px">
+              <li><strong>Category</strong>: Urban Cruiser</li>
+              <li><strong>Engine</strong>: 649cc parallel-twin</li>
+              <li><strong>Style</strong>: Low-slung, muscular, modern cruiser stance</li>
+              <li><strong>Use</strong>: City riding and relaxed highway cruising</li>
+            </ul>
+          </article>
+
+          <article class="card" style="background: rgba(255,255,255,0.03)">
+            <h2 style="margin: 0 0 10px; font-size: 18px">Specifications</h2>
+            <table>
+              <tbody>
+                <tr><th>Engine</th><td>649cc, liquid-cooled parallel twin</td></tr>
+                <tr><th>Transmission</th><td>6-speed manual</td></tr>
+                <tr><th>Power</th><td>61 PS @ 7500 rpm</td></tr>
+                <tr><th>Torque</th><td>62 Nm @ 6600 rpm</td></tr>
+                <tr><th>Weight</th><td>235 kg (kerb)</td></tr>
+                <tr><th>Brakes</th><td>Dual channel ABS with disc brakes</td></tr>
+              </tbody>
+            </table>
+
+            <h2 style="margin: 14px 0 8px; font-size: 18px">Features</h2>
+            <ul style="margin: 0; padding-left: 18px">
+              <li>Ergo-Fit adjustable riding position</li>
+              <li>Low 705 mm seat height</li>
+              <li>Digital instrument cluster with gear indicator</li>
+            </ul>
+
+            <div class="actions">
+              <a class="btn primary" href="bikes.html">Back to Bike Models</a>
+              <a class="btn" href="gallery.html">Back to Gallery</a>
+              <a class="btn" href="contact.html">Contact</a>
+            </div>
+          </article>
+
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>© 2026 Kawasaki Bikes Website (HTML project). Dedicated model page: Vulcan S.</small>
+      </div>
+    </footer>
+  </body>
+</html>
+
+
+
+
+
