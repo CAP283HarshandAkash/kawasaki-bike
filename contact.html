@@ -185,11 +185,12 @@
       }
 
       .row {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px 18px;
         margin-top: 8px;
       }
+
 
       .row label {
         font-weight: 500;
@@ -313,7 +314,7 @@
             <p class="hint">No backend is included; this form demonstrates HTML form elements only.</p>
           </section>
 
-          <section class="col-12">
+          <section class="field col-8">
             <fieldset>
               <legend>Consent</legend>
               <div class="row">
@@ -322,7 +323,7 @@
               </div>
             </fieldset>
           </section>
-
+          
           <section class="col-12">
             <div class="actions">
               <button class="btn primary" type="submit">Submit</button>
