@@ -382,165 +382,315 @@
       </section>
 
       <section class="card" style="margin-top: 16px" aria-labelledby="details-title">
-        <h2 id="details-title" style="margin: 0 0 10px">Model Highlights</h2>
-        <p class="muted" style="margin-top: -4px">
-          Each article uses semantic HTML (<code>&lt;section&gt;</code> + <code>&lt;article&gt;</code> + <code>&lt;figure&gt;</code>).
-        </p>
-        <p class="muted" style="margin-top: 0">
-          Specifications below are <strong>example/approx values</strong> for an HTML assignment.
-        </p>
+    <h2 id="details-title" style="margin: 0 0 10px">Model Highlights</h2>
+    <p class="muted" style="margin-top: -4px">
+      Each article uses semantic HTML (<code>&lt;section&gt;</code> + <code>&lt;article&gt;</code> + <code>&lt;figure&gt;</code>).
+    </p>
+    <p class="muted" style="margin-top: 0">
+      Specifications below are <strong>example/approx values</strong> for an HTML assignment.
+    </p>
 
-        <div class="model-grid">
-          <article aria-labelledby="ninja-h">
-            <h3 id="ninja-h" style="margin: 0 0 8px">Ninja ZX-10R</h3>
-            <figure>
-              <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
-                <div class="media">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
-                    alt="Kawasaki Ninja ZX-10R (real photo)"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="price-tag">Rs.20,79,000 <small>approx</small></span>
-                </div>
-              </a>
-              <figcaption>
-                Race-bred styling and track-focused performance.
-                <span class="credit">Photo source: Wikimedia Commons (online).</span>
-              </figcaption>
-            </figure>
-            <ul class="specs">
-              <li><strong>Engine</strong>: 998cc inline-4</li>
-              <li><strong>Transmission</strong>: 6-speed</li>
-              <li><strong>Power</strong>: ~200 PS (typical)</li>
-              <li><strong>Weight</strong>: ~205–210 kg (curb)</li>
-              <li><strong>Features</strong>: ride modes, traction control, ABS (varies by market)</li>
-            </ul>
-          </article>
+  <!-- ===== LOCATION BAR (ADD THIS BLOCK) ===== -->
+    <div style="
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(0, 177, 64, 0.07);
+   ">
+     <span style="font-size: 20px;">📍</span>
+      <label for="citySelect" style="
+        font-weight: 600;
+       font-size: 15px;
+       color: var(--kawa-green-2);
+        white-space: nowrap;
+     ">
+        Select City:
+     </label>
+     <select id="citySelect" onchange="updatePrices()" style="
+        background: rgba(12, 16, 20, 0.85);
+        color: #f5f7fa;
+       border: 1px solid var(--kawa-green);
+       border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        outline: none;
+       min-width: 200px;
+      ">
+        <option value="">-- Select Your City --</option>
+       <option value="mumbai">Mumbai</option>
+       <option value="delhi">Delhi</option>
+       <option value="bangalore">Bangalore</option>
+        <option value="chennai">Chennai</option>
+       <option value="hyderabad">Hyderabad</option>
+       <option value="kolkata">Kolkata</option>
+        <option value="pune">Pune</option>
+        <option value="jaipur">Jaipur</option>
+     </select>
+      <span id="city-note" style="
+        color: var(--muted);
+        font-size: 13px;
+      ">
+        Prices shown are on-road estimates for the selected city.
+      </span>
+    </div>  
 
-          <article aria-labelledby="z-h">
-            <h3 id="z-h" style="margin: 0 0 8px">Z900</h3>
-            <figure>
-              <a href="z900.html" aria-label="Open Z900 details page">
-                <div class="media">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
-                    alt="Kawasaki Z900 green (real photo)"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="price-tag">Rs.9,99,000 <small>approx</small></span>
-                </div>
-              </a>
-              <figcaption>
-                Streetfighter design with a punchy inline-4 character.
-                <span class="credit">Photo source: Wikimedia Commons (online).</span>
-              </figcaption>
-            </figure>
-            <ul class="specs">
-              <li><strong>Engine</strong>: 948cc inline-4</li>
-              <li><strong>Transmission</strong>: 6-speed</li>
-              <li><strong>Power</strong>: ~125 PS (typical)</li>
-              <li><strong>Weight</strong>: ~210–215 kg (curb)</li>
-              <li><strong>Style</strong>: naked / streetfighter</li>
-            </ul>
-          </article>
+    <div class="model-grid">
 
-          <article aria-labelledby="versys-h">
-            <h3 id="versys-h" style="margin: 0 0 8px">Versys 650</h3>
-            <figure>
-              <a href="versys-650.html" aria-label="Open Versys 650 details page">
-                <div class="media">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
-                    alt="Kawasaki Versys 650 (KLE 650) used by Austrian military police (real photo)"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="price-tag">Rs.8,63,000 <small>approx</small></span>
-                </div>
-              </a>
-              <figcaption>
-                Comfortable ergonomics for commuting and touring. Location: <strong>Austria</strong> (Bundesheer / Militärstreife).
-                <span class="credit">Photo source: Wikimedia Commons (online).</span>
-              </figcaption>
-            </figure>
-            <ul class="specs">
-              <li><strong>Engine</strong>: 649cc parallel-twin</li>
-              <li><strong>Transmission</strong>: 6-speed</li>
-              <li><strong>Power</strong>: ~67 PS (typical)</li>
-              <li><strong>Fuel</strong>: ~21 L (typical)</li>
-              <li><strong>Use</strong>: commuting, touring, light adventure</li>
-            </ul>
-          </article>
+      <article aria-labelledby="ninja-h">
+        <h3 id="ninja-h" style="margin: 0 0 8px">Ninja ZX-10R</h3>
+        <figure>
+         <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
+           <div class="media">
+             <img
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
+               alt="Kawasaki Ninja ZX-10R (real photo)"
+               loading="lazy"
+                referrerpolicy="no-referrer"
+             />
+              <span class="price-tag" id="price-ninja">Rs.20,79,000 <small>approx</small></span>
+            </div>
+         </a>
+         <figcaption>
+            Race-bred styling and track-focused performance.
+           <span class="credit">Photo source: Wikimedia Commons (online).</span>
+         </figcaption>
+       </figure>
+        <ul class="specs">
+          <li><strong>Engine</strong>: 998cc inline-4</li>
+          <li><strong>Transmission</strong>: 6-speed</li>
+          <li><strong>Power</strong>: ~200 PS (typical)</li>
+          <li><strong>Weight</strong>: ~205–210 kg (curb)</li>
+          <li><strong>Features</strong>: ride modes, traction control, ABS</li>
+         <li><strong>Availability</strong>: <span id="avail-ninja" style="color: var(--kawa-green-2)">Select a city</span></li>
+         <li><strong>Dealer City</strong>: <span id="dealer-ninja" style="color: var(--muted)">—</span></li>
+        </ul>
+      </article>
 
-          <article aria-labelledby="vulcan-h">
-            <h3 id="vulcan-h" style="margin: 0 0 8px">Vulcan S</h3>
-            <figure>
-              <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
-                <div class="media">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
-                    alt="Kawasaki Vulcan S 650 (real photo)"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="price-tag">Rs.8,13,000 <small>approx</small></span>
-                </div>
-              </a>
-              <figcaption>
-                Low-slung cruiser stance with modern reliability.
-                <span class="credit">Photo source: Wikimedia Commons (online).</span>
-              </figcaption>
-            </figure>
-            <ul class="specs">
-              <li><strong>Engine</strong>: 649cc parallel-twin</li>
-              <li><strong>Transmission</strong>: 6-speed</li>
-              <li><strong>Power</strong>: ~60 PS (typical)</li>
-              <li><strong>Seat height</strong>: ~705 mm (typical)</li>
-              <li><strong>Style</strong>: cruiser</li>
-            </ul>
-          </article>
+      <article aria-labelledby="z-h">
+        <h3 id="z-h" style="margin: 0 0 8px">Z900</h3>
+        <figure>
+         <a href="z900.html" aria-label="Open Z900 details page">
+            <div class="media">
+              <img
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                alt="Kawasaki Z900 green (real photo)"
+               loading="lazy"
+               referrerpolicy="no-referrer"
+              />
+             <span class="price-tag" id="price-z900">Rs.9,99,000 <small>approx</small></span>
+           </div>
+         </a>
+         <figcaption>
+           Streetfighter design with a punchy inline-4 character.
+            <span class="credit">Photo source: Wikimedia Commons (online).</span>
+         </figcaption>
+        </figure>
+        <ul class="specs">
+         <li><strong>Engine</strong>: 948cc inline-4</li>
+         <li><strong>Transmission</strong>: 6-speed</li>
+         <li><strong>Power</strong>: ~125 PS (typical)</li>
+         <li><strong>Weight</strong>: ~210–215 kg (curb)</li>
+          <li><strong>Style</strong>: naked / streetfighter</li>
+          <li><strong>Availability</strong>: <span id="avail-z900" style="color: var(--kawa-green-2)">Select a city</span></li>
+          <li><strong>Dealer City</strong>: <span id="dealer-z900" style="color: var(--muted)">—</span></li>
+       </ul>
+      </article>
 
-          <article aria-labelledby="klr-h">
-            <h3 id="klr-h" style="margin: 0 0 8px">KLR650</h3>
-            <figure>
-              <a href="klr650.html" aria-label="Open KLR650 details page">
-                <div class="media">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
-                    alt="Kawasaki KLR 650 at the Las Vegas Ride for Kids 2019 (real photo)"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                  />
-                  <span class="price-tag">Rs.2,00,000 <small>approx</small></span>
-                </div>
-              </a>
-              <figcaption>
-                Built for long-distance, mixed-surface exploring. Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
-                <span class="credit">Photo source: Wikimedia Commons (online).</span>
-              </figcaption>
-            </figure>
-            <ul class="specs">
-              <li><strong>Engine</strong>: 652cc single-cylinder</li>
-              <li><strong>Transmission</strong>: 5-speed (typical)</li>
-              <li><strong>Power</strong>: ~40 hp (typical)</li>
-              <li><strong>Fuel</strong>: ~23 L (typical)</li>
-              <li><strong>Use</strong>: adventure / dual-sport</li>
-            </ul>
-          </article>
-        </div>
-      </section>
+     <article aria-labelledby="versys-h">
+       <h3 id="versys-h" style="margin: 0 0 8px">Versys 650</h3>
+       <figure>
+          <a href="versys-650.html" aria-label="Open Versys 650 details page">
+           <div class="media">
+             <img
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
+               alt="Kawasaki Versys 650 (real photo)"
+               loading="lazy"
+               referrerpolicy="no-referrer"
+             />
+             <span class="price-tag" id="price-versys">Rs.8,63,000 <small>approx</small></span>
+           </div>
+         </a>
+          <figcaption>
+            Comfortable ergonomics for commuting and touring.
+            <span class="credit">Photo source: Wikimedia Commons (online).</span>
+          </figcaption>
+       </figure>
+        <ul class="specs">
+         <li><strong>Engine</strong>: 649cc parallel-twin</li>
+          <li><strong>Transmission</strong>: 6-speed</li>
+          <li><strong>Power</strong>: ~67 PS (typical)</li>
+          <li><strong>Fuel</strong>: ~21 L (typical)</li>
+          <li><strong>Use</strong>: commuting, touring, light adventure</li>
+         <li><strong>Availability</strong>: <span id="avail-versys" style="color: var(--kawa-green-2)">Select a city</span></li>
+         <li><strong>Dealer City</strong>: <span id="dealer-versys" style="color: var(--muted)">—</span></li>
+        </ul>
+      </article>
+
+      <article aria-labelledby="vulcan-h">
+        <h3 id="vulcan-h" style="margin: 0 0 8px">Vulcan S</h3>
+        <figure>
+         <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
+            <div class="media">
+             <img
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                alt="Kawasaki Vulcan S 650 (real photo)"
+               loading="lazy"
+               referrerpolicy="no-referrer"
+             />
+              <span class="price-tag" id="price-vulcan">Rs.8,13,000 <small>approx</small></span>
+            </div>
+          </a>
+         <figcaption>
+           Low-slung cruiser stance with modern reliability.
+            <span class="credit">Photo source: Wikimedia Commons (online).</span>
+          </figcaption>
+        </figure>
+        <ul class="specs">
+          <li><strong>Engine</strong>: 649cc parallel-twin</li>
+          <li><strong>Transmission</strong>: 6-speed</li>
+          <li><strong>Power</strong>: ~60 PS (typical)</li>
+          <li><strong>Seat height</strong>: ~705 mm (typical)</li>
+          <li><strong>Style</strong>: cruiser</li>
+          <li><strong>Availability</strong>: <span id="avail-vulcan" style="color: var(--kawa-green-2)">Select a city</span></li>
+          <li><strong>Dealer City</strong>: <span id="dealer-vulcan" style="color: var(--muted)">—</span></li>
+        </ul>
+      </article>
+
+      <article aria-labelledby="klr-h">
+        <h3 id="klr-h" style="margin: 0 0 8px">KLR650</h3>
+        <figure>
+          <a href="klr650.html" aria-label="Open KLR650 details page">
+            <div class="media">
+              <img
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
+                alt="Kawasaki KLR 650 (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+             />
+              <span class="price-tag" id="price-klr">Rs.2,00,000 <small>approx</small></span>
+            </div>
+          </a>
+          <figcaption>
+            Built for long-distance, mixed-surface exploring.
+            <span class="credit">Photo source: Wikimedia Commons (online).</span>
+          </figcaption>
+        </figure>
+        <ul class="specs">
+          <li><strong>Engine</strong>: 652cc single-cylinder</li>
+          <li><strong>Transmission</strong>: 5-speed (typical)</li>
+          <li><strong>Power</strong>: ~40 hp (typical)</li>
+          <li><strong>Fuel</strong>: ~23 L (typical)</li>
+          <li><strong>Use</strong>: adventure / dual-sport</li>
+          <li><strong>Availability</strong>: <span id="avail-klr" style="color: var(--kawa-green-2)">Select a city</span></li>
+          <li><strong>Dealer City</strong>: <span id="dealer-klr" style="color: var(--muted)">—</span></li>
+        </ul>
+        </article>
+
+      </div>
+    </section>
     </main>
 
     <footer>
+          <footer>
       <div class="container">
         <small>
           © <span>2026</span> Kawasaki Bikes Website (HTML project). Use the navigation links above to move between pages.
         </small>
       </div>
     </footer>
-  </body>
-</html>
+    <script>
+  const bikeData = {
+    mumbai:    { ninja: "Rs.22,45,000", z900: "Rs.10,82,000", versys: "Rs.9,35,000", vulcan: "Rs.8,82,000", klr: "Rs.2,18,000", dealer: "Kawasaki Mumbai, Andheri (E)" },
+    delhi:     { ninja: "Rs.22,10,000", z900: "Rs.10,65,000", versys: "Rs.9,20,000", vulcan: "Rs.8,68,000", klr: "Rs.2,15,000", dealer: "Kawasaki Delhi, Rohini" },
+    bangalore: { ninja: "Rs.21,90,000", z900: "Rs.10,55,000", versys: "Rs.9,10,000", vulcan: "Rs.8,58,000", klr: "Rs.2,12,000", dealer: "Kawasaki Bangalore, Koramangala" },
+    chennai:   { ninja: "Rs.22,00,000", z900: "Rs.10,60,000", versys: "Rs.9,15,000", vulcan: "Rs.8,62,000", klr: "Rs.2,14,000", dealer: "Kawasaki Chennai, Anna Nagar" },
+    hyderabad: { ninja: "Rs.21,80,000", z900: "Rs.10,48,000", versys: "Rs.9,05,000", vulcan: "Rs.8,52,000", klr: "Rs.2,10,000", dealer: "Kawasaki Hyderabad, Banjara Hills" },
+    kolkata:   { ninja: "Rs.22,30,000", z900: "Rs.10,75,000", versys: "Rs.9,28,000", vulcan: "Rs.8,75,000", klr: "Rs.2,16,000", dealer: "Kawasaki Kolkata, Salt Lake" },
+    pune:      { ninja: "Rs.21,95,000", z900: "Rs.10,52,000", versys: "Rs.9,08,000", vulcan: "Rs.8,55,000", klr: "Rs.2,11,000", dealer: "Kawasaki Pune, Viman Nagar" },
+    jaipur:    { ninja: "Rs.22,20,000", z900: "Rs.10,70,000", versys: "Rs.9,25,000", vulcan: "Rs.8,70,000", klr: "Rs.2,17,000", dealer: "Kawasaki Jaipur, Vaishali Nagar" }
+  };
+
+  const dealerLinks = {
+    mumbai:    "https://www.google.com/maps/search/Kawasaki+dealer+Mumbai+Andheri",
+    delhi:     "https://www.google.com/maps/search/Kawasaki+dealer+Delhi+Rohini",
+    bangalore: "https://www.google.com/maps/search/Kawasaki+dealer+Bangalore+Koramangala",
+    chennai:   "https://www.google.com/maps/search/Kawasaki+dealer+Chennai+Anna+Nagar",
+    hyderabad: "https://www.google.com/maps/search/Kawasaki+dealer+Hyderabad+Banjara+Hills",
+    kolkata:   "https://www.google.com/maps/search/Kawasaki+dealer+Kolkata+Salt+Lake",
+    pune:      "https://www.google.com/maps/search/Kawasaki+dealer+Pune+Viman+Nagar",
+    jaipur:    "https://www.google.com/maps/search/Kawasaki+dealer+Jaipur+Vaishali+Nagar"
+  };
+
+  const availability = {
+    mumbai:    { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "On Order" },
+    delhi:     { ninja: "In Stock", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
+    bangalore: { ninja: "Limited Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
+    chennai:   { ninja: "On Order", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "In Stock" },
+    hyderabad: { ninja: "In Stock", z900: "Limited Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
+    kolkata:   { ninja: "On Order", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
+    pune:      { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "Limited Stock" },
+    jaipur:    { ninja: "Limited Stock", z900: "On Order", versys: "In Stock", vulcan: "In Stock", klr: "In Stock" }
+  };
+
+  function availColor(status) {
+    if (status === "In Stock") return "#00d957";
+    if (status === "Limited Stock") return "#f5a623";
+    return "#e05c5c";
+  }
+
+  function updatePrices() {
+    const city = document.getElementById("citySelect").value;
+
+    if (!city) {
+      ["ninja","z900","versys","vulcan","klr"].forEach(bike => {
+        document.getElementById("avail-" + bike).textContent = "Select a city";
+        document.getElementById("avail-" + bike).style.color = "var(--kawa-green-2)";
+        document.getElementById("dealer-" + bike).innerHTML = "—";
+      });
+      document.getElementById("price-ninja").innerHTML  = "Rs.20,79,000 <small>approx</small>";
+      document.getElementById("price-z900").innerHTML   = "Rs.9,99,000 <small>approx</small>";
+      document.getElementById("price-versys").innerHTML = "Rs.8,63,000 <small>approx</small>";
+      document.getElementById("price-vulcan").innerHTML = "Rs.8,13,000 <small>approx</small>";
+      document.getElementById("price-klr").innerHTML    = "Rs.2,00,000 <small>approx</small>";
+      document.getElementById("city-note").textContent  = "Prices shown are on-road estimates for the selected city.";
+      return;
+    }
+
+    const d = bikeData[city];
+    const a = availability[city];
+    const citySelect = document.getElementById("citySelect");
+    const cityName = citySelect.options[citySelect.selectedIndex].text;
+
+    document.getElementById("price-ninja").innerHTML  = d.ninja  + " <small>on-road</small>";
+    document.getElementById("price-z900").innerHTML   = d.z900   + " <small>on-road</small>";
+    document.getElementById("price-versys").innerHTML = d.versys + " <small>on-road</small>";
+    document.getElementById("price-vulcan").innerHTML = d.vulcan + " <small>on-road</small>";
+    document.getElementById("price-klr").innerHTML    = d.klr    + " <small>on-road</small>";
+
+    ["ninja","z900","versys","vulcan","klr"].forEach(bike => {
+      const availEl  = document.getElementById("avail-"  + bike);
+      const dealerEl = document.getElementById("dealer-" + bike);
+
+      availEl.textContent = a[bike];
+      availEl.style.color = availColor(a[bike]);
+
+      dealerEl.innerHTML = `<a href="${dealerLinks[city]}"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color: var(--kawa-green-2); text-decoration: underline; text-underline-offset: 3px;"
+        aria-label="Find ${d.dealer} on Google Maps"
+      >${d.dealer} 🗺️</a>`;
+    });
+
+    document.getElementById("city-note").textContent = "Showing on-road prices & availability for: " + cityName;
+  }
+</script>
+
 
