@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kawasaki | Login</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap');
+
+      :root {
+        --g1: #00d957;
+        --g2: #00b140;
+        --bg: #060809;
+        --surface: #0c1014;
+        --surface2: #111820;
+        --line: rgba(255,255,255,0.08);
+        --muted: #7a8a96;
+        --text: #e8edf3;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Barlow', sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,185,64,0.06) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      /* ════════════════════════════════
+         WELCOME SCREEN
+      ════════════════════════════════ */
+      #welcome-screen {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        background: var(--bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+      }
+      #welcome-screen.show { display: flex; }
+
+      .ring-burst {
+        position: absolute;
+        width: 120px; height: 120px;
+        border-radius: 50%;
+        border: 2px solid var(--g1);
+        opacity: 0;
+        animation: ringExpand 2s ease-out forwards;
+      }
+      .ring-burst:nth-child(2) { animation-delay: 0.3s; border-color: var(--g2); }
+      .ring-burst:nth-child(3) { animation-delay: 0.6s; border-color: rgba(0,217,87,0.3); }
+
+      @keyframes ringExpand {
+        0%   { transform: scale(0.2); opacity: 0.9; }
+        100% { transform: scale(4);   opacity: 0; }
+      }
+
+      .welcome-check-wrap {
+        position: relative;
+        width: 90px; height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 32px;
+        animation: fadeSlideUp 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      }
+
+      .welcome-check-circle {
+        width: 90px; height: 90px;
+        border-radius: 50%;
+        border: 2.5px solid var(--g1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,217,87,0.08);
+        box-shadow: 0 0 30px rgba(0,217,87,0.25), 0 0 60px rgba(0,217,87,0.1), inset 0 0 20px rgba(0,217,87,0.08);
+      }
+
+      .check-svg {
+        width: 38px; height: 38px;
+        stroke: var(--g1);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+        stroke-dasharray: 60;
+        stroke-dashoffset: 60;
+        animation: drawCheck 0.5s ease forwards 0.3s;
+      }
+
+      @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+      .welcome-text-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        animation: fadeSlideUp 0.7s ease forwards 0.2s;
+        opacity: 0;
+      }
+
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .welcome-tag {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 11px; font-weight: 700;
+        letter-spacing: 4px; text-transform: uppercase;
+        color: var(--g2);
+      }
+
+      .welcome-name {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 48px; font-weight: 900;
+        letter-spacing: 2px; text-transform: uppercase;
+        line-height: 1; color: var(--text);
+      }
+      .welcome-name span { color: var(--g1); }
+
+      .welcome-sub {
+        font-size: 14px; font-weight: 300;
+        color: var(--muted); letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
+
+      .welcome-divider {
+        width: 60px; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--g1), transparent);
+        margin: 8px 0;
+        animation: fadeSlideUp 0.7s ease forwards 0.4s;
+        opacity: 0;
+      }
+
+      .redirect-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 36px;
+        animation: fadeSlideUp 0.7s ease forwards 0.6s;
+        opacity: 0;
+      }
+
+      .redirect-label {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 11px; font-weight: 600;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .redirect-track {
+        width: 180px; height: 2px;
+        background: rgba(255,255,255,0.07);
+        border-radius: 2px; overflow: hidden;
+      }
+
+      .redirect-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--g2), var(--g1));
+        border-radius: 2px;
+        box-shadow: 0 0 8px var(--g1);
+        animation: fillTrack 2.8s linear forwards 0.8s;
+        width: 0;
+      }
+
+      @keyframes fillTrack { from { width: 0; } to { width: 100%; } }
+
+      /* ── ROAD ── */
+      .welcome-road {
+        position: absolute;
+        bottom: 72px; left: 0; right: 0;
+        height: 1px;
+        background: rgba(255,255,255,0.05);
+      }
+      .welcome-road::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          90deg,
+          rgba(0,217,87,0.3) 0, rgba(0,217,87,0.3) 20px,
+          transparent 20px, transparent 38px
+        );
+        animation: roadZoom 0.15s linear infinite;
+      }
+      @keyframes roadZoom {
+        from { background-position: 0 0; }
+        to   { background-position: -58px 0; }
+      }
+
+      /* ── BIKE RIDE-OFF (faces RIGHT — correct direction) ── */
+      .welcome-bike-wrap {
+        position: absolute;
+        bottom: 36px;
+        left: -100px;
+        animation: bikeRideRight 3.2s ease-in forwards 0.5s;
+        opacity: 0;
+        /* scaleX(1) = faces right naturally since SVG is drawn facing right */
+      }
+
+      @keyframes bikeRideRight {
+        0%   { left: -120px;              opacity: 1; }
+        60%  { left: 44%;                 opacity: 1; }
+        85%  { left: 50%;                 opacity: 1; }
+        100% { left: calc(100% + 120px);  opacity: 0.7; }
+      }
+
+      /* ── inline SVG bike facing RIGHT ── */
+      .bike-svg {
+        width: 110px;
+        height: 64px;
+      }
+
+      /* ════════════════════════════════
+         LOGIN CARD
+      ════════════════════════════════ */
+      .card {
+        width: min(440px, calc(100% - 32px));
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+        background: var(--surface);
+        box-shadow: 0 0 0 1px rgba(0,217,87,0.04), 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(0,185,64,0.05);
+        position: relative; z-index: 1;
+        animation: cardIn 0.5s cubic-bezier(0.34,1.2,0.64,1) forwards;
+      }
+
+      @keyframes cardIn {
+        from { opacity: 0; transform: translateY(24px) scale(0.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .card-top {
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--g2), var(--g1), var(--g2), transparent);
+      }
+
+      .card-body { padding: 40px 38px 36px; }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        margin-bottom: 28px;
+      }
+
+      .brand-eyebrow {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 10px; font-weight: 600;
+        letter-spacing: 4px; text-transform: uppercase;
+        color: var(--g2); opacity: 0.75;
+      }
+
+      .brand-name {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 36px; font-weight: 900;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: var(--text); line-height: 1;
+      }
+      .brand-name span { color: var(--g1); text-shadow: 0 0 20px rgba(0,217,87,0.4); }
+
+      .brand-tagline {
+        font-size: 12px; font-weight: 300;
+        color: var(--muted); letter-spacing: 0.5px;
+        margin-top: 2px;
+      }
+
+      .brand-line {
+        width: 40px; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--g1), transparent);
+        margin: 10px auto 0;
+      }
+
+      .tabs {
+        display: flex;
+        background: var(--surface2);
+        border-radius: 10px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        margin-bottom: 26px;
+      }
+
+      .tab {
+        flex: 1; padding: 9px;
+        background: transparent; color: var(--muted);
+        border: none; cursor: pointer;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 14px; font-weight: 700;
+        letter-spacing: 1.5px; text-transform: uppercase;
+        border-radius: 8px;
+        transition: background 0.25s, color 0.25s;
+      }
+
+      .tab.on {
+        background: rgba(0,177,64,0.16);
+        color: var(--g1);
+        box-shadow: inset 0 0 0 1px rgba(0,217,87,0.18);
+      }
+
+      .f-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 26px; font-weight: 900;
+        letter-spacing: 1px; text-transform: uppercase;
+        margin-bottom: 4px; line-height: 1;
+      }
+      .f-title span { color: var(--g1); }
+
+      .f-sub {
+        font-size: 13px; color: var(--muted);
+        font-weight: 300; margin-bottom: 22px;
+        letter-spacing: 0.2px;
+      }
+
+      .fields { display: flex; flex-direction: column; gap: 16px; }
+      .fld    { display: flex; flex-direction: column; gap: 5px; }
+
+      .fld label {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 11px; font-weight: 700;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .input-wrap { position: relative; display: flex; align-items: center; }
+
+      .input-icon {
+        position: absolute; left: 13px;
+        font-size: 14px; opacity: 0.4;
+        pointer-events: none; user-select: none;
+      }
+
+      .fld input {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 8px;
+        padding: 11px 14px 11px 38px;
+        color: var(--text); font-size: 14px;
+        font-family: 'Barlow', sans-serif;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+
+      .fld input::placeholder { color: rgba(255,255,255,0.17); }
+
+      .fld input:focus {
+        border-color: var(--g2);
+        background: rgba(0,177,64,0.04);
+        box-shadow: 0 0 0 3px rgba(0,177,64,0.1);
+      }
+
+      .fld input.err { border-color: #e05c5c; box-shadow: 0 0 0 3px rgba(224,92,92,0.1); }
+
+      .e-msg { font-size: 11px; color: #e05c5c; min-height: 14px; letter-spacing: 0.2px; }
+
+      .pw-toggle {
+        position: absolute; right: 12px;
+        background: none; border: none;
+        cursor: pointer; color: var(--muted);
+        font-size: 14px; padding: 0;
+        transition: color 0.2s;
+      }
+      .pw-toggle:hover { color: var(--g1); }
+
+      .strength-wrap { display: none; flex-direction: column; gap: 4px; }
+      .strength-wrap.show { display: flex; }
+
+      .strength-track { height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+      .strength-fill  { height: 100%; width: 0%; border-radius: 2px; transition: width 0.3s, background 0.3s; }
+      .strength-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+      .forgot {
+        font-size: 11px; color: var(--muted);
+        text-align: right; cursor: pointer;
+        text-decoration: underline; margin-top: -8px;
+        transition: color 0.2s;
+      }
+      .forgot:hover { color: var(--g1); }
+
+      .go-btn {
+        width: 100%; padding: 13px;
+        background: linear-gradient(135deg, #00a035, #00d957);
+        color: #000;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 15px; font-weight: 900;
+        letter-spacing: 2.5px; text-transform: uppercase;
+        border: none; border-radius: 10px; cursor: pointer;
+        margin-top: 6px;
+        transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(0,200,60,0.22);
+        position: relative; overflow: hidden;
+      }
+
+      .go-btn::before {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%; width: 60%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        transform: skewX(-20deg);
+        transition: left 0.4s;
+      }
+
+      .go-btn:hover::before { left: 150%; }
+      .go-btn:hover  { box-shadow: 0 6px 28px rgba(0,200,60,0.35); }
+      .go-btn:active { transform: scale(0.985); }
+
+      .f-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 18px; }
+      .f-note a { color: var(--g1); text-decoration: underline; cursor: pointer; font-weight: 500; }
+
+      #name-fld { display: none; }
+    </style>
+  </head>
+  <body>
+
+    <!-- ════════ WELCOME SCREEN ════════ -->
+    <div id="welcome-screen" role="alert" aria-live="assertive">
+
+      <div class="ring-burst"></div>
+      <div class="ring-burst"></div>
+      <div class="ring-burst"></div>
+
+      <div class="welcome-check-wrap">
+        <div class="welcome-check-circle">
+          <svg class="check-svg" viewBox="0 0 38 38">
+            <polyline points="7,20 16,29 31,10"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="welcome-text-block">
+        <div class="welcome-tag" id="w-mode-label">Login Successful</div>
+        <div class="welcome-name">Welcome, <span id="w-name">Rider</span></div>
+        <div class="welcome-divider"></div>
+        <div class="welcome-sub">Start your engine. The road awaits.</div>
+      </div>
+
+      <div class="redirect-wrap">
+        <div class="redirect-label">Redirecting to home</div>
+        <div class="redirect-track">
+          <div class="redirect-fill" id="redirect-fill"></div>
+        </div>
+      </div>
+
+      <!-- road -->
+      <div class="welcome-road"></div>
+
+      <!-- ── BIKE SVG facing RIGHT ── -->
+      <div class="welcome-bike-wrap">
+        <svg class="bike-svg" viewBox="0 0 110 64" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- REAR WHEEL (left side) -->
+          <g transform="translate(28,44)">
+            <circle r="18" fill="#111" stroke="#333" stroke-width="2.5"/>
+            <circle r="14" fill="#0d0d0d"/>
+            <circle r="12" fill="none" stroke="#1a3a1a" stroke-width="1.5"/>
+            <!-- spokes -->
+            <line x1="0" y1="-12" x2="0"  y2="12"  stroke="#2a4a2a" stroke-width="1.2"/>
+            <line x1="-12" y1="0" x2="12" y2="0"   stroke="#2a4a2a" stroke-width="1.2"/>
+            <line x1="-8" y1="-8" x2="8"  y2="8"   stroke="#1e3a1e" stroke-width="1"/>
+            <line x1="8"  y1="-8" x2="-8" y2="8"   stroke="#1e3a1e" stroke-width="1"/>
+            <!-- hub -->
+            <circle r="3.5" fill="#0a1a0a" stroke="#00b140" stroke-width="1.5"/>
+            <circle r="1.8" fill="#00d957"/>
+          </g>
+
+          <!-- FRONT WHEEL (right side) -->
+          <g transform="translate(84,46)">
+            <circle r="16" fill="#111" stroke="#333" stroke-width="2.5"/>
+            <circle r="12" fill="#0d0d0d"/>
+            <circle r="10" fill="none" stroke="#1a3a1a" stroke-width="1.5"/>
+            <line x1="0"  y1="-10" x2="0"  y2="10" stroke="#2a4a2a" stroke-width="1.2"/>
+            <line x1="-10" y1="0"  x2="10" y2="0"  stroke="#2a4a2a" stroke-width="1.2"/>
+            <line x1="-7" y1="-7"  x2="7"  y2="7"  stroke="#1e3a1e" stroke-width="1"/>
+            <line x1="7"  y1="-7"  x2="-7" y2="7"  stroke="#1e3a1e" stroke-width="1"/>
+            <circle r="3" fill="#0a1a0a" stroke="#00b140" stroke-width="1.5"/>
+            <circle r="1.5" fill="#00d957"/>
+          </g>
+
+          <!-- SWINGARM -->
+          <path d="M28,44 Q44,42 54,38" stroke="#1e4a1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+          <!-- FRONT FORK (angled forward to the right) -->
+          <path d="M76,30 L84,46" stroke="#aaa" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M78,30 L86,46" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+          <!-- MAIN FRAME -->
+          <path d="M32,42 Q50,30 68,26 Q76,24 80,28" stroke="#2a6a2a" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+          <!-- EXHAUST — exits LEFT (rear of bike) -->
+          <path d="M34,44 Q22,44 14,46 Q8,47 4,46" stroke="#666" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="4" cy="46" rx="4" ry="2.5" fill="#333" stroke="#666" stroke-width="1"/>
+
+          <!-- BELLY PAN -->
+          <path d="M32,44 Q56,50 74,48 Q80,46 84,44 L84,50 Q78,52 72,52 Q54,54 32,50 Z"
+            fill="#0d1e0d" stroke="#1a3a1a" stroke-width="0.8"/>
+
+          <!-- MAIN FAIRING BODY — nose points RIGHT -->
+          <path d="M32,40 Q36,24 52,18 Q64,14 74,16 Q82,18 86,24 Q90,30 88,36 Q84,42 76,44 Q60,48 44,46 Q34,44 32,40 Z"
+            fill="#1e6020" stroke="#3aaa3a" stroke-width="1.2"/>
+
+          <!-- fairing highlight -->
+          <path d="M42,24 Q58,18 74,20 Q82,22 86,28"
+            stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+          <!-- KAWASAKI text on fairing -->
+          <text x="44" y="38" font-family="Arial" font-size="5" font-weight="900"
+            fill="rgba(0,217,87,0.65)" letter-spacing="1.5">KAWASAKI</text>
+
+          <!-- green accent stripe -->
+          <path d="M36,38 Q52,34 70,34 Q80,34 86,38"
+            stroke="rgba(0,217,87,0.4)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+          <!-- NOSE FAIRING — pointing RIGHT -->
+          <path d="M84,20 Q94,22 96,28 Q96,34 90,38 Q86,40 84,40 Q86,34 86,28 Q86,24 84,20 Z"
+            fill="#237a25" stroke="#3aaa3a" stroke-width="1.2"/>
+
+          <!-- HEADLIGHT — on the RIGHT (front) -->
+          <ellipse cx="94" cy="30" rx="5" ry="6"
+            fill="rgba(0,217,87,0.5)" stroke="#00d957" stroke-width="1.5"/>
+          <!-- headlight beam pointing RIGHT -->
+          <path d="M99,27 L110,22 L110,38 L99,33 Z"
+            fill="url(#beamG)" opacity="0.7"/>
+
+          <!-- WINDSCREEN — leans right -->
+          <path d="M74,14 Q80,8 86,10 Q88,16 84,20 Q78,16 74,14 Z"
+            fill="rgba(0,217,87,0.18)" stroke="rgba(0,217,87,0.5)" stroke-width="1"/>
+
+          <!-- TAIL — on the LEFT -->
+          <path d="M18,32 Q22,24 30,22 Q34,22 34,26 Q30,38 24,42 Q20,44 16,40 Z"
+            fill="#0d2a0e" stroke="#2a6a2a" stroke-width="1.2"/>
+
+          <!-- TAIL LIGHT — rear left -->
+          <rect x="14" y="36" width="6" height="4" rx="1.5"
+            fill="rgba(255,50,50,0.7)" stroke="#ff4444" stroke-width="0.8"/>
+
+          <!-- SEAT -->
+          <path d="M34,22 Q52,16 70,18 Q76,18 76,22 Q76,26 70,26 Q52,24 34,26 Z"
+            fill="#111" stroke="#222" stroke-width="0.8"/>
+
+          <!-- HANDLEBAR — above front area pointing right -->
+          <path d="M72,18 Q74,12 78,10 Q80,10 80,12" stroke="#aaa" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M70,18 L66,20" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- ── RIDER ── -->
+
+          <!-- legs -->
+          <path d="M48,26 Q44,32 40,40 Q38,46 42,48 Q48,48 52,42 Q54,36 54,26 Z"
+            fill="#0d0d18" stroke="#1a1a2e" stroke-width="1"/>
+          <!-- boot left -->
+          <path d="M38,46 Q42,52 50,50 Q52,46 48,44 Q42,43 38,46 Z"
+            fill="#080810" stroke="#111" stroke-width="0.8"/>
+
+          <!-- torso — leaning forward over tank toward right -->
+          <path d="M42,18 Q44,26 48,32 Q54,36 62,34 Q70,30 72,22 Q70,12 62,10 Q52,8 44,14 Z"
+            fill="#0a1e0a" stroke="#2a6a2a" stroke-width="1.2"/>
+
+          <!-- jacket stripe -->
+          <path d="M46,18 Q56,14 66,18" stroke="rgba(0,217,87,0.35)" stroke-width="1.5" fill="none"/>
+
+          <!-- right arm reaching to handlebar -->
+          <path d="M62,16 Q68,14 74,14" stroke="#1a3a1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M62,16 Q68,14 74,14" stroke="#2a5a2a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- glove -->
+          <ellipse cx="74" cy="14" rx="4" ry="3" fill="#0a1a0a" stroke="#1e4a1e" stroke-width="1"/>
+
+          <!-- left arm -->
+          <path d="M46,20 Q52,18 60,18" stroke="#1a3a1a" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+          <!-- HELMET — full face, on top facing right -->
+          <path d="M44,8 Q46,-2 56,-4 Q66,-4 70,4 Q74,12 70,20 Q66,26 58,26 Q48,26 44,18 Z"
+            fill="#0c2a0c" stroke="#3aaa3a" stroke-width="1.5"/>
+          <!-- helmet highlight -->
+          <path d="M50,0 Q58,-4 66,0 Q70,6 68,14"
+            stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- visor -->
+          <path d="M48,8 Q52,2 60,2 Q68,4 70,10 Q68,16 62,18 Q54,18 48,14 Z"
+            fill="rgba(0,217,87,0.38)" stroke="rgba(0,217,87,0.75)" stroke-width="1.2"/>
+          <!-- visor glare -->
+          <path d="M52,4 Q56,2 62,4" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- chin -->
+          <path d="M48,14 Q48,20 54,24 Q60,26 66,22 Q68,16 64,16 Q58,18 52,16 Z"
+            fill="#0d2a0d" stroke="#2a6a2a" stroke-width="1"/>
+
+          <!-- SMOKE PUFFS from exhaust (LEFT side) -->
+          <g opacity="0.6">
+            <circle cx="2"  cy="43" r="3" fill="rgba(200,200,200,0.5)">
+              <animate attributeName="cx" values="2;-6;-14" dur="1s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="43;38;30" dur="1s" repeatCount="indefinite"/>
+              <animate attributeName="r"  values="2;4;7"   dur="1s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0.3;0" dur="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="2"  cy="43" r="2" fill="rgba(200,200,200,0.5)">
+              <animate attributeName="cx" values="2;-8;-16" dur="1s" repeatCount="indefinite" begin="0.33s"/>
+              <animate attributeName="cy" values="43;36;28" dur="1s" repeatCount="indefinite" begin="0.33s"/>
+              <animate attributeName="r"  values="2;5;8"    dur="1s" repeatCount="indefinite" begin="0.33s"/>
+              <animate attributeName="opacity" values="0.5;0.25;0" dur="1s" repeatCount="indefinite" begin="0.33s"/>
+            </circle>
+          </g>
+
+          <!-- gradient defs -->
+          <defs>
+            <linearGradient id="beamG" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="rgba(0,217,87,0.35)"/>
+              <stop offset="100%" stop-color="rgba(0,217,87,0)"/>
+            </linearGradient>
+          </defs>
+
+        </svg>
+      </div><!-- welcome-bike-wrap -->
+
+    </div><!-- welcome-screen -->
+
+    <!-- ════════ LOGIN CARD ════════ -->
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-body">
+
+        <div class="brand">
+          <div class="brand-eyebrow">Motorcycles</div>
+          <div class="brand-name">Kawa<span>saki</span></div>
+          <div class="brand-tagline">Built for the road. Made for you.</div>
+          <div class="brand-line"></div>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab on" id="t-login"  role="tab" onclick="switchTab('login')">Login</button>
+          <button class="tab"    id="t-signup" role="tab" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <div class="f-title" id="f-title">Welcome <span>Back</span></div>
+        <div class="f-sub"   id="f-sub">Sign in to your account to continue.</div>
+
+        <form id="main-form" onsubmit="handleSubmit(event)" novalidate>
+          <div class="fields">
+
+            <div class="fld" id="name-fld">
+              <label for="i-name">Full Name</label>
+              <div class="input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text" id="i-name" placeholder="John Doe" autocomplete="name"/>
+              </div>
+              <span class="e-msg" id="e-name"></span>
+            </div>
+
+            <div class="fld">
+              <label for="i-email">Email Address</label>
+              <div class="input-wrap">
+                <span class="input-icon">✉️</span>
+                <input type="email" id="i-email" placeholder="you@example.com" autocomplete="email"/>
+              </div>
+              <span class="e-msg" id="e-email"></span>
+            </div>
+
+            <div class="fld">
+              <label for="i-pass">Password</label>
+              <div class="input-wrap">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="i-pass" placeholder="••••••••" autocomplete="current-password"/>
+                <button type="button" class="pw-toggle" id="pw-toggle" onclick="togglePw()">👁️</button>
+              </div>
+              <span class="e-msg" id="e-pass"></span>
+              <div class="strength-wrap" id="strength-wrap">
+                <div class="strength-track">
+                  <div class="strength-fill" id="strength-fill"></div>
+                </div>
+                <div class="strength-label" id="strength-label">Password strength</div>
+              </div>
+            </div>
+
+            <div id="forgot-row">
+              <div class="forgot" onclick="alert('Reset link sent! (demo)')">Forgot password?</div>
+            </div>
+
+            <button type="submit" class="go-btn" id="go-btn">Login &amp; Ride 🏍️</button>
+          </div>
+        </form>
+
+        <p class="f-note" id="f-note">
+          No account? <a onclick="switchTab('signup')">Sign up here</a>
+        </p>
+
+      </div>
+    </div>
+
+    <script>
+      let mode = "login";
+      let pwVisible = false;
+
+      function switchTab(t) {
+        mode = t;
+        const isL = t === "login";
+        document.getElementById("t-login").classList.toggle("on",  isL);
+        document.getElementById("t-signup").classList.toggle("on", !isL);
+        document.getElementById("name-fld").style.display   = isL ? "none" : "flex";
+        document.getElementById("forgot-row").style.display = isL ? "block" : "none";
+        document.getElementById("strength-wrap").classList.toggle("show", !isL);
+        document.getElementById("f-title").innerHTML = isL
+          ? "Welcome <span>Back</span>" : "Create <span>Account</span>";
+        document.getElementById("f-sub").textContent = isL
+          ? "Sign in to your account to continue."
+          : "Fill in the details to join the ride.";
+        document.getElementById("go-btn").textContent = isL
+          ? "Login & Ride 🏍️" : "Sign Up & Ride 🏍️";
+        document.getElementById("f-note").innerHTML = isL
+          ? "No account? <a onclick=\"switchTab('signup')\">Sign up here</a>"
+          : "Already registered? <a onclick=\"switchTab('login')\">Login here</a>";
+        clearErr();
+      }
+
+      function togglePw() {
+        pwVisible = !pwVisible;
+        document.getElementById("i-pass").type = pwVisible ? "text" : "password";
+        document.getElementById("pw-toggle").textContent = pwVisible ? "🙈" : "👁️";
+      }
+
+      document.getElementById("i-pass").addEventListener("input", function() {
+        if (mode !== "signup") return;
+        const v = this.value;
+        let score = 0;
+        if (v.length >= 6)           score++;
+        if (v.length >= 10)          score++;
+        if (/[A-Z]/.test(v))         score++;
+        if (/[0-9]/.test(v))         score++;
+        if (/[^A-Za-z0-9]/.test(v))  score++;
+        const fill   = document.getElementById("strength-fill");
+        const label  = document.getElementById("strength-label");
+        const pcts   = [0,20,40,60,80,100];
+        const colors = ["#e05c5c","#e05c5c","#f5a623","#f5d623","#00b140","#00d957"];
+        const labels = ["","Weak","Fair","Good","Strong","Excellent"];
+        fill.style.width      = pcts[score] + "%";
+        fill.style.background = colors[score];
+        label.textContent     = labels[score] || "Password strength";
+        label.style.color     = score >= 3 ? "#00d957" : score >= 2 ? "#f5a623" : "#e05c5c";
+      });
+
+      function clearErr() {
+        ["i-name","i-email","i-pass"].forEach(id =>
+          document.getElementById(id).classList.remove("err"));
+        ["e-name","e-email","e-pass"].forEach(id =>
+          document.getElementById(id).textContent = "");
+      }
+
+      function validate() {
+        let ok = true; clearErr();
+        const email = document.getElementById("i-email").value.trim();
+        const pass  = document.getElementById("i-pass").value;
+        const name  = document.getElementById("i-name").value.trim();
+        if (mode === "signup" && !name) {
+          document.getElementById("i-name").classList.add("err");
+          document.getElementById("e-name").textContent = "Please enter your full name.";
+          ok = false;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById("i-email").classList.add("err");
+          document.getElementById("e-email").textContent = "Please enter a valid email address.";
+          ok = false;
+        }
+        if (pass.length < 6) {
+          document.getElementById("i-pass").classList.add("err");
+          document.getElementById("e-pass").textContent = "Password must be at least 6 characters.";
+          ok = false;
+        }
+        return ok;
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        if (!validate()) return;
+        const email = document.getElementById("i-email").value.trim();
+        const name  = document.getElementById("i-name").value.trim();
+        const label = (mode === "signup" && name) ? name : email.split("@")[0];
+        const displayName = label.charAt(0).toUpperCase() + label.slice(1);
+        showWelcome(displayName);
+      }
+
+      function showWelcome(name) {
+        const ws = document.getElementById("welcome-screen");
+        document.getElementById("w-name").textContent = name;
+        document.getElementById("w-mode-label").textContent =
+          mode === "login" ? "Login Successful" : "Account Created";
+        const fill = document.getElementById("redirect-fill");
+        fill.style.animation = "none";
+        fill.offsetHeight;
+        fill.style.animation = "";
+        ws.classList.add("show");
+        setTimeout(() => { window.location.href = "index.html"; }, 4000);
+      }
+
+      switchTab("login");
+    </script>
+  </body>
+</html>
