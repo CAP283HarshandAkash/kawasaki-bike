@@ -3,45 +3,126 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Explore Kawasaki motorcycles — Ninja ZX-10R, Z900, Versys 650, Vulcan S, KLR650. Compare prices, specs, and find dealers near you." />
+    <meta name="keywords" content="Kawasaki, Ninja, Z900, Versys, Vulcan, KLR650, motorcycles, bikes, India" />
+    <meta name="author" content="Harsh and Akash" />
+
+    <meta property="og:title" content="Kawasaki Bikes Website | Home" />
+    <meta property="og:description" content="Explore Kawasaki motorcycles — compare models, prices, and find dealers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/og-preview.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/kawasaki-logo.svg" />
+
     <title>Kawasaki Bikes Website | Home</title>
+
     <style>
       :root {
         --kawa-green: #00b140;
         --kawa-green-2: #00d957;
+        --kawa-green-glow: rgba(0, 177, 64, 0.14);
         --ink: #0c1014;
+        --bg: #05070a;
+        --text-primary: #f5f7fa;
+        --text-secondary: #e8edf3;
         --muted: #b8c2cc;
         --card: rgba(12, 16, 20, 0.72);
+        --card-hover: rgba(12, 16, 20, 0.85);
         --line: rgba(255, 255, 255, 0.12);
+        --line-strong: rgba(255, 255, 255, 0.18);
+        --overlay: rgba(0, 0, 0, 0.62);
+        --overlay-light: rgba(0, 0, 0, 0.55);
+        --white-subtle: rgba(255, 255, 255, 0.06);
+        --white-faint: rgba(255, 255, 255, 0.03);
+        --radius-sm: 10px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 18px;
+        --radius-pill: 999px;
+        --blur: blur(10px);
+        --blur-sm: blur(6px);
+        --transition-fast: 0.2s ease;
+        --transition-med: 0.3s ease;
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.15);
       }
 
-      * {
+      body[data-theme="light"] {
+        --bg: #f0f2f5;
+        --text-primary: #1a1a2e;
+        --text-secondary: #2d2d44;
+        --muted: #6b7280;
+        --card: rgba(255, 255, 255, 0.92);
+        --card-hover: rgba(255, 255, 255, 0.98);
+        --line: rgba(0, 0, 0, 0.1);
+        --line-strong: rgba(0, 0, 0, 0.18);
+        --overlay: rgba(255, 255, 255, 0.85);
+        --overlay-light: rgba(255, 255, 255, 0.75);
+        --white-subtle: rgba(0, 0, 0, 0.04);
+        --white-faint: rgba(0, 0, 0, 0.02);
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.12);
+      }
+
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
-        margin: 0;
-        color: #f5f7fa;
-        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-        line-height: 1.55;
+        color: var(--text-primary);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, Arial, sans-serif;
+        line-height: 1.6;
+        background:
+          radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
+          radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
+          var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        transition: all 0.3s ease;
       }
 
-      body.home {
-        background-color: #05070a;
-        background-image:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.85)),
-          url("assets/bg-kawasaki.svg");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 16px;
+        z-index: 100;
+        padding: 12px 20px;
+        background: var(--kawa-green);
+        color: #fff;
+        font-weight: 700;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        transition: top var(--transition-fast);
+      }
+
+      .skip-link:focus {
+        top: 12px;
       }
 
       a {
         color: var(--kawa-green-2);
         text-decoration: none;
+        transition: color var(--transition-fast);
       }
+
       a:hover,
       a:focus-visible {
         text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--kawa-green-2);
+        outline-offset: 3px;
       }
 
       .container {
@@ -49,12 +130,24 @@
         margin: 0 auto;
       }
 
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--kawa-green), var(--kawa-green-2));
+        z-index: 1000;
+        transition: width 0.1s ease-out;
+      }
+
       header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        backdrop-filter: blur(10px);
-        background: rgba(0, 0, 0, 0.55);
+        z-index: 50;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        background: var(--overlay-light);
         border-bottom: 1px solid var(--line);
       }
 
@@ -64,46 +157,166 @@
         justify-content: space-between;
         gap: 16px;
         padding: 12px 0;
+        flex-wrap: wrap;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
-        min-width: 220px;
+        min-width: 200px;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: opacity var(--transition-fast);
+      }
+
+      .brand:hover {
+        opacity: 0.85;
+        text-decoration: none;
       }
 
       .brand img {
         width: 44px;
         height: 44px;
+        flex-shrink: 0;
       }
 
       .brand strong {
         letter-spacing: 0.6px;
         font-size: 15px;
+        white-space: nowrap;
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .theme-toggle {
+        background: var(--white-subtle);
+        border: 1px solid var(--line);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
+      }
+
+      .theme-toggle:hover {
+        background: var(--white-subtle);
+      }
+
+      .fav-header-icon {
+        position: relative;
+      }
+
+      .fav-header-btn {
+        background: var(--white-subtle);
+        border: 1px solid var(--line);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
+      }
+
+      .fav-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: var(--kawa-green);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
       }
 
       nav ul {
         list-style: none;
         display: flex;
-        gap: 12px;
-        padding: 0;
-        margin: 0;
+        gap: 8px;
         flex-wrap: wrap;
         justify-content: flex-end;
       }
 
       nav a {
         display: inline-block;
-        padding: 8px 10px;
+        padding: 8px 14px;
         border: 1px solid transparent;
-        border-radius: 10px;
-        color: #f5f7fa;
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        transition: all var(--transition-fast);
+      }
+
+      nav a:hover {
+        background: var(--white-subtle);
+        border-color: var(--line);
+        text-decoration: none;
       }
 
       nav a[aria-current="page"] {
         border-color: var(--line);
-        background: rgba(0, 177, 64, 0.14);
+        background: var(--kawa-green-glow);
+        color: var(--kawa-green-2);
+        font-weight: 600;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        transition: background var(--transition-fast);
+      }
+
+      .menu-toggle:hover {
+        background: var(--white-subtle);
+      }
+
+      @media (max-width: 700px) {
+        .menu-toggle {
+          display: block;
+        }
+
+        nav {
+          display: none;
+          width: 100%;
+          order: 3;
+        }
+
+        nav.open {
+          display: block;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 4px;
+          padding: 12px 0 4px;
+          border-top: 1px solid var(--line);
+          margin-top: 8px;
+        }
+
+        nav a {
+          display: block;
+          padding: 12px 14px;
+          border-radius: var(--radius-sm);
+        }
       }
 
       main {
@@ -112,44 +325,227 @@
 
       .hero {
         border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: var(--radius-xl);
         background: var(--card);
-        padding: 22px;
+        padding: 28px 24px;
+        box-shadow: var(--shadow-card);
+        position: relative;
         overflow: hidden;
       }
 
-      .hero h1 {
-        margin: 0 0 8px;
-        font-size: clamp(26px, 4vw, 40px);
-        letter-spacing: 0.3px;
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(0, 177, 64, 0.08), transparent 70%);
+        pointer-events: none;
       }
 
-      .hero p {
-        margin: 0 0 14px;
-        color: #e8edf3;
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(26px, 4vw, 42px);
+        letter-spacing: 0.3px;
+        line-height: 1.2;
+        position: relative;
+      }
+
+      .hero h1::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--kawa-green), var(--kawa-green-2));
+        border-radius: 2px;
+        margin-top: 12px;
+      }
+
+      .hero > p {
+        margin: 16px 0 0;
+        color: var(--text-secondary);
         max-width: 70ch;
+        position: relative;
       }
 
       .cta {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-        margin-top: 14px;
+        margin-top: 20px;
+        position: relative;
       }
 
       .btn {
-        display: inline-block;
-        padding: 10px 12px;
-        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 18px;
+        border-radius: var(--radius-md);
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.06);
-        color: #f5f7fa;
+        background: var(--white-subtle);
+        color: var(--text-primary);
         font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+        cursor: pointer;
+        transition: all var(--transition-med);
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: var(--line-strong);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
       }
 
       .btn.primary {
         border-color: rgba(0, 217, 87, 0.6);
         background: linear-gradient(135deg, rgba(0, 177, 64, 0.75), rgba(0, 217, 87, 0.35));
+        color: #fff;
+      }
+
+      .btn.primary:hover {
+        background: linear-gradient(135deg, rgba(0, 177, 64, 0.9), rgba(0, 217, 87, 0.5));
+        border-color: var(--kawa-green-2);
+        box-shadow: 0 4px 20px rgba(0, 177, 64, 0.25);
+      }
+
+      .search-container {
+        margin-top: 20px;
+        position: relative;
+      }
+
+      .search-bar {
+        width: 100%;
+        max-width: 400px;
+        padding: 12px 16px 12px 40px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--white-faint);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+        transition: all 0.2s ease;
+      }
+
+      .search-bar:focus {
+        border-color: var(--kawa-green);
+        background: var(--white-subtle);
+        box-shadow: 0 0 0 3px rgba(0, 177, 64, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 16px;
+        pointer-events: none;
+      }
+
+      .location-select {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 14px 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(0, 177, 64, 0.05);
+        position: relative;
+      }
+
+      .location-select .location-icon {
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .location-select label {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--kawa-green-2);
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .location-select select {
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--kawa-green);
+        background: rgba(12, 16, 20, 0.85);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        outline: none;
+        min-width: 180px;
+        transition: border-color var(--transition-fast);
+      }
+
+      .location-select select:focus-visible {
+        border-color: var(--kawa-green-2);
+        box-shadow: 0 0 0 3px rgba(0, 217, 87, 0.2);
+        outline: none;
+      }
+
+      .location-select select option {
+        background: #0c1014;
+        color: var(--text-primary);
+      }
+
+      .city-status {
+        font-size: 13px;
+        color: var(--muted);
+        transition: color var(--transition-fast);
+      }
+
+      .city-status.active {
+        color: var(--kawa-green-2);
+      }
+
+      .banner {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        overflow: hidden;
+        box-shadow: var(--shadow-card);
+        transition: box-shadow var(--transition-med);
+        cursor: pointer;
+      }
+
+      .banner:hover {
+        box-shadow: var(--shadow-hover);
+      }
+
+      .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform var(--transition-med);
+      }
+
+      .banner:hover img {
+        transform: scale(1.01);
+      }
+
+      .banner .cap {
+        padding: 14px 18px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .credit {
+        font-size: 12px;
+        color: rgba(184, 194, 204, 0.9);
       }
 
       .grid {
@@ -162,9 +558,10 @@
       .card {
         grid-column: span 12;
         border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: var(--radius-xl);
         background: var(--card);
-        padding: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow-card);
       }
 
       @media (min-width: 880px) {
@@ -178,40 +575,41 @@
 
       .bike-row {
         display: grid;
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 14px;
         margin-top: 14px;
       }
 
       .bike-row figure {
-        grid-column: span 12;
         margin: 0;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-lg);
+        background: var(--white-faint);
         padding: 12px;
+        transition: all var(--transition-med);
       }
 
-      @media (min-width: 860px) {
-        .bike-row figure {
-          grid-column: span 4;
-        }
+      .bike-row figure:hover {
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: var(--shadow-hover);
       }
 
       figure img {
         width: 100%;
         height: auto;
         display: block;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         background: rgba(0, 0, 0, 0.35);
       }
 
       .media {
         position: relative;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         overflow: hidden;
         border: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.35);
+        cursor: zoom-in;
       }
 
       .media img {
@@ -220,146 +618,501 @@
         display: block;
         aspect-ratio: 4 / 3;
         object-fit: cover;
+        transition: transform var(--transition-med);
+      }
+
+      .media:hover img {
+        transform: scale(1.04);
+      }
+
+      .media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent 50%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-med);
+      }
+
+      .media:hover::after {
+        opacity: 1;
+      }
+
+      .fav-btn {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--overlay);
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(6px);
+        z-index: 2;
+      }
+
+      .fav-btn:hover,
+      .fav-btn.active {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green-2);
       }
 
       .price-tag {
         position: absolute;
         left: 10px;
         bottom: 10px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(0, 0, 0, 0.62);
-        color: #f5f7fa;
+        padding: 6px 12px;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        color: var(--text-primary);
         font-weight: 800;
         letter-spacing: 0.2px;
         font-size: 13px;
-        backdrop-filter: blur(6px);
+        backdrop-filter: var(--blur-sm);
+        -webkit-backdrop-filter: var(--blur-sm);
+        z-index: 2;
+        transition: all var(--transition-fast);
+        white-space: nowrap;
       }
 
       .price-tag small {
         font-weight: 700;
         color: rgba(245, 247, 250, 0.82);
-        margin-left: 6px;
+        margin-left: 4px;
+      }
+
+      .price-tag.updated {
+        border-color: rgba(0, 217, 87, 0.4);
+        background: rgba(0, 40, 15, 0.75);
       }
 
       figcaption {
-        margin-top: 8px;
+        margin-top: 10px;
         color: var(--muted);
         font-size: 14px;
+        line-height: 1.5;
       }
 
-      .banner {
-        margin-top: 16px;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--card);
-        overflow: hidden;
+      figcaption strong {
+        color: var(--text-primary);
       }
 
-      .banner img {
-        width: 100%;
-        height: auto;
-        display: block;
+      .card ol,
+      .card ul {
+        padding-left: 22px;
+        margin: 8px 0;
       }
 
-      .banner .cap {
-        padding: 12px 14px;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 14px;
+      .card li {
+        margin: 6px 0;
+        color: var(--text-secondary);
+        line-height: 1.5;
       }
 
-      .credit {
-        font-size: 12px;
-        color: rgba(184, 194, 204, 0.9);
+      .card li::marker {
+        color: var(--kawa-green);
       }
 
       h2 {
         margin: 0 0 10px;
         font-size: 20px;
+        color: var(--text-primary);
+      }
+
+      h3 {
+        margin: 14px 0 8px;
+        font-size: 16px;
+        color: var(--text-primary);
       }
 
       .muted {
         color: var(--muted);
       }
 
+      .quick-links {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      .quick-links a {
+        font-weight: 500;
+      }
+
+      .note-box {
+        margin-top: 14px;
+        padding: 12px 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--white-faint);
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 40;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        backdrop-filter: var(--blur-sm);
+        -webkit-backdrop-filter: var(--blur-sm);
+        color: var(--text-primary);
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-med);
+        text-decoration: none;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green);
+        text-decoration: none;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        padding: 12px 16px;
+        border-radius: 10px;
+        color: var(--text-primary);
+        z-index: 1001;
+        display: none;
+        max-width: 300px;
+        font-size: 14px;
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+      }
+
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+      }
+
+      .lightbox-content img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: var(--kawa-green);
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       footer {
         border-top: 1px solid var(--line);
-        background: rgba(0, 0, 0, 0.55);
-        padding: 18px 0;
+        background: var(--overlay-light);
+        padding: 20px 0;
+        margin-top: 0;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
       }
 
       footer small {
         color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+        font-size: 13px;
+        transition: color var(--transition-fast);
+      }
+
+      .footer-links a:hover {
+        color: var(--kawa-green-2);
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          padding: 20px 16px;
+        }
+        .card {
+          padding: 16px;
+        }
+        .location-select {
+          padding: 12px 14px;
+        }
+        .footer-content {
+          flex-direction: column;
+          text-align: center;
+        }
+        .header-controls {
+          order: 2;
+        }
+        .menu-toggle {
+          order: 1;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .brand strong {
+          font-size: 13px;
+        }
+        .btn {
+          padding: 10px 14px;
+          font-size: 13px;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media print {
+        header,
+        .back-to-top,
+        .location-select,
+        .cta,
+        .search-container {
+          display: none !important;
+        }
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .card,
+        .hero,
+        .banner {
+          border: 1px solid #ccc;
+          background: #fff;
+          box-shadow: none;
+        }
+        a {
+          color: #000;
+        }
       }
     </style>
   </head>
-  <body class="home">
-    <header>
+
+  <body data-theme="dark">
+
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header id="mainHeader">
       <div class="container topbar">
-        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
-          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website — Go to Home page">
+          <img
+            src="https://via.placeholder.com/44x44/00b140/ffffff?text=K"
+            alt="Kawasaki green logo mark"
+            width="44"
+            height="44"
+            id="brandLogo"
+          />
           <strong>Kawasaki Bikes Website</strong>
         </a>
 
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="index.html" aria-current="page">Home</a></li>
-            <li><a href="bikes.html">Bike Models</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
+        <div class="header-controls">
+          <nav id="primaryNav" aria-label="Primary navigation">
+            <ul role="list">
+              <li><a href="index.html" aria-current="page">Home</a></li>
+              <li><a href="bikes.html">Bike Models</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <div class="fav-header-icon">
+            <button class="fav-header-btn" id="favBtn" title="Wishlist">
+              ❤️
+              <span class="fav-badge" id="favBadge">0</span>
+            </button>
+          </div>
+
+          <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+        </div>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >☰</button>
       </div>
     </header>
 
-    <main class="container">
-      <section class="hero" aria-labelledby="welcome">
+    <main id="main-content" class="container">
+
+      <section class="hero" aria-labelledby="welcome" id="heroSection">
         <h1 id="welcome">Ride the Green Legacy</h1>
-        <p>
-          Welcome to a simple, multi-page <strong>HTML-only</strong> website project themed around Kawasaki bikes.
-          Explore model highlights, check a comparison table, click around the image map gallery, and send a message using the contact form.
+
+        <p id="heroText">
+          Welcome to a simple, multi-page <strong>HTML &amp; CSS</strong> website
+          project themed around Kawasaki bikes. Explore model highlights, check a
+          comparison table, click around the image map gallery, and send a message
+          using the contact form.
         </p>
-        <div class="cta">
-          <a class="btn primary" href="bikes.html">Explore Bike Models</a>
-          <a class="btn" href="gallery.html">View the Gallery</a>
-          <a class="btn" href="contact.html">Contact Us</a>
-        </div> 
-        <p class="muted" style="margin-top: 12px">
-          Navigation requirement: this site uses both <strong>text links</strong> and an <strong>image link</strong> (the logo) to move between pages.
-        </p>
+
+        <div class="cta" id="ctaButtons">
+          <a class="btn primary" href="bikes.html" id="btnExplore">
+            🏍️ Explore Bike Models
+          </a>
+          <a class="btn" href="gallery.html" id="btnGallery">
+            🖼️ View the Gallery
+          </a>
+          <a class="btn" href="contact.html" id="btnContact">
+            📩 Contact Us
+          </a>
+        </div>
+
+        <div class="search-container" id="searchContainer">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            class="search-bar"
+            id="searchBar"
+            placeholder="Search bikes..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="location-select" id="locationSelect">
+          <span class="location-icon" aria-hidden="true">📍</span>
+          <label for="city">Select Your City:</label>
+          <select id="city">
+            <option value="">-- Choose City --</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Pune">Pune</option>
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Jaipur">Jaipur</option>
+            <option value="Kochi">Kochi</option>
+          </select>
+          <span id="cityStatus" class="city-status">
+            Select a city to see estimated on-road prices.
+          </span>
+        </div>
+
+        <div class="note-box" id="noteBox">
+          <strong>Navigation note:</strong> This site uses both
+          <strong>text links</strong> (nav bar, inline) and an
+          <strong>image link</strong> (the logo) to move between pages.
+        </div>
       </section>
 
-      <section class="banner" aria-label="Real Kawasaki bike photo banner">
+      <section class="banner" id="bannerSection" aria-label="Featured Kawasaki motorcycle photo">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kawasaki_Ninja_H2.jpg/1280px-Kawasaki_Ninja_H2.jpg"
           alt="Kawasaki Ninja H2 (2015) photographed at Kobe Kawasaki World, Kobe, Japan"
           loading="lazy"
           referrerpolicy="no-referrer"
+          width="1280"
+          height="855"
+          class="lightbox-trigger"
+          id="bannerImg"
         />
         <div class="cap">
-          <strong>Ninja H2 (2015)</strong> — Photo location: <strong>Kobe Kawasaki World, Kobe, Japan</strong>.
-          <span class="credit">Source: Wikimedia Commons (online).</span>
+          <strong>Ninja H2 (2015)</strong> — Photo location:
+          <strong>Kobe Kawasaki World, Kobe, Japan</strong>.
+          <span class="credit">Source: Wikimedia Commons.</span>
         </div>
       </section>
 
-      <section class="grid" aria-label="Home content">
-        <article class="card span-7" aria-labelledby="highlights">
-          <h2 id="highlights">Featured Kawasaki Bike Images</h2>
-          <p class="muted" style="margin-top: -4px">Real photos loaded from online sources (Wikimedia Commons).</p>
+      <div class="grid" aria-label="Home content sections" id="contentGrid">
 
-          <div class="bike-row">
-            <figure>
-              <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
+        <article class="card span-7" aria-labelledby="highlights" id="bikeCard">
+          <h2 id="highlights">Featured Kawasaki Bike Images</h2>
+          <p class="muted">Real photos loaded from online sources (Wikimedia Commons).</p>
+
+          <div class="bike-row" id="bikeRow">
+
+            <figure class="bike-figure">
+              <a href="ninja-zx10r.html" aria-label="View Ninja ZX-10R details">
                 <div class="media">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
-                    alt="Kawasaki Ninja ZX-10R (real photo)"
+                    alt="Kawasaki Ninja ZX-10R — green sport motorcycle, side profile view"
                     loading="lazy"
                     referrerpolicy="no-referrer"
+                    width="1280"
+                    height="960"
+                    class="lightbox-trigger"
                   />
-                  <span class="price-tag">Rs.20,79,000 <small>approx</small></span>
+                  <button class="fav-btn" data-bike-id="ninja-zx10r" title="Add to favorites">🤍</button>
+                  <span class="price-tag" id="zx10r-price" aria-live="polite">Select City</span>
                 </div>
               </a>
               <figcaption>
@@ -367,16 +1120,21 @@
                 <span class="credit">Source: Wikimedia Commons.</span>
               </figcaption>
             </figure>
-            <figure>
-              <a href="z900.html" aria-label="Open Z900 details page">
+
+            <figure class="bike-figure">
+              <a href="z900.html" aria-label="View Z900 details">
                 <div class="media">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
-                    alt="Kawasaki Z900 green (real photo)"
+                    alt="Kawasaki Z900 — green naked streetfighter motorcycle"
                     loading="lazy"
                     referrerpolicy="no-referrer"
+                    width="1280"
+                    height="960"
+                    class="lightbox-trigger"
                   />
-                  <span class="price-tag">Rs.9,99,000 <small>approx</small></span>
+                  <button class="fav-btn" data-bike-id="z900" title="Add to favorites">🤍</button>
+                  <span class="price-tag" id="z900-price" aria-live="polite">Select City</span>
                 </div>
               </a>
               <figcaption>
@@ -384,33 +1142,44 @@
                 <span class="credit">Source: Wikimedia Commons.</span>
               </figcaption>
             </figure>
-            <figure>
-              <a href="versys-650.html" aria-label="Open Versys 650 details page">
+
+            <figure class="bike-figure">
+              <a href="versys-650.html" aria-label="View Versys 650 details">
                 <div class="media">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
-                    alt="Kawasaki Versys 650 (KLE 650) used by Austrian military police (real photo)"
+                    alt="Kawasaki Versys 650 used by Austrian military police — adventure touring motorcycle"
                     loading="lazy"
                     referrerpolicy="no-referrer"
+                    width="960"
+                    height="720"
+                    class="lightbox-trigger"
                   />
-                  <span class="price-tag">Rs.8,63,000 <small>approx</small></span>
+                  <button class="fav-btn" data-bike-id="versys-650" title="Add to favorites">🤍</button>
+                  <span class="price-tag" id="versys-price" aria-live="polite">Select City</span>
                 </div>
               </a>
               <figcaption>
-                <strong>Versys 650</strong> — adventure-ready comfort. Location: <strong>Austria</strong> (Bundesheer / Militärstreife).
+                <strong>Versys 650</strong> — adventure-ready comfort.
+                Location: <strong>Austria</strong>.
                 <span class="credit">Source: Wikimedia Commons.</span>
               </figcaption>
             </figure>
-            <figure>
-              <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
+
+            <figure class="bike-figure">
+              <a href="vulcan-s.html" aria-label="View Vulcan S details">
                 <div class="media">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
-                    alt="Kawasaki Vulcan S 650 (real photo)"
+                    alt="Kawasaki Vulcan S — black cruiser motorcycle, side view"
                     loading="lazy"
                     referrerpolicy="no-referrer"
+                    width="1280"
+                    height="960"
+                    class="lightbox-trigger"
                   />
-                  <span class="price-tag">Rs.8,13,000 <small>approx</small></span>
+                  <button class="fav-btn" data-bike-id="vulcan-s" title="Add to favorites">🤍</button>
+                  <span class="price-tag" id="vulcan-price" aria-live="polite">Select City</span>
                 </div>
               </a>
               <figcaption>
@@ -418,26 +1187,33 @@
                 <span class="credit">Source: Wikimedia Commons.</span>
               </figcaption>
             </figure>
-            <figure>
-              <a href="klr650.html" aria-label="Open KLR650 details page">
+
+            <figure class="bike-figure">
+              <a href="klr650.html" aria-label="View KLR650 details">
                 <div class="media">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
-                    alt="Kawasaki KLR 650 at the Las Vegas Ride for Kids 2019 (real photo)"
+                    alt="Kawasaki KLR 650 dual-sport motorcycle being ridden at Las Vegas Ride for Kids 2019"
                     loading="lazy"
                     referrerpolicy="no-referrer"
+                    width="1280"
+                    height="960"
+                    class="lightbox-trigger"
                   />
-                  <span class="price-tag">Rs.2,00,000 <small>approx</small></span>
+                  <button class="fav-btn" data-bike-id="klr650" title="Add to favorites">🤍</button>
+                  <span class="price-tag" id="klr-price" aria-live="polite">Select City</span>
                 </div>
               </a>
               <figcaption>
-                <strong>KLR650</strong> — rugged dual-sport. Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
+                <strong>KLR650</strong> — rugged dual-sport.
+                Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
                 <span class="credit">Source: Wikimedia Commons.</span>
               </figcaption>
             </figure>
+
           </div>
 
-          <p style="margin-top: 14px">
+          <p class="quick-links" id="quickLinks">
             Quick links:
             <a href="bikes.html">Bike Models</a> ·
             <a href="gallery.html">Image Gallery</a> ·
@@ -445,12 +1221,12 @@
           </p>
         </article>
 
-        <article class="card span-5" aria-labelledby="lists">
+        <article class="card span-5" aria-labelledby="lists" id="listsCard">
           <h2 id="lists">Lists (Ordered + Unordered)</h2>
 
-          <section aria-labelledby="ordered">
-            <h3 id="ordered" style="margin: 12px 0 8px; font-size: 16px">Top Reasons Riders Love Kawasaki</h3>
-            <ol>
+          <section aria-labelledby="ordered" id="orderedSection">
+            <h3 id="ordered">Top Reasons Riders Love Kawasaki</h3>
+            <ol id="reasonsList">
               <li>Strong performance across sport, street, adventure, and cruiser segments.</li>
               <li>Iconic Kawasaki Green and unmistakable design language.</li>
               <li>Great value with approachable models and premium flagships.</li>
@@ -458,30 +1234,535 @@
             </ol>
           </section>
 
-          <section aria-labelledby="unordered">
-            <h3 id="unordered" style="margin: 12px 0 8px; font-size: 16px">Popular Segments</h3>
-            <ul>
+          <section aria-labelledby="unordered" id="unorderedSection">
+            <h3 id="unordered">Popular Segments</h3>
+            <ul id="segmentsList">
               <li>Sport (Ninja series)</li>
               <li>Street / Naked (Z series)</li>
               <li>Adventure / Touring (Versys series)</li>
               <li>Cruiser (Vulcan series)</li>
+              <li>Dual-Sport / Off-Road (KLR / KLX series)</li>
             </ul>
           </section>
 
-          <p class="muted" style="margin-top: 10px">
-            Font styling requirement: this page uses CSS for font family, sizes, weights, and spacing.
-          </p>
+          <div class="note-box" id="stylingNote">
+            <strong>Styling note:</strong> This page uses CSS for font family,
+            sizes, weights, spacing, colors, and responsive layout.
+          </div>
         </article>
-      </section>
+
+      </div>
     </main>
 
-    <footer>
-      <div class="container">
+    <footer id="mainFooter">
+      <div class="container footer-content">
         <small>
-          © <span>2026</span> Kawasaki Bikes Website (HTML project). This is a demo site for learning HTML5 semantic elements, tables, image maps, and forms.
+          © 2026 Kawasaki Bikes Website (HTML project). This is a demo site for
+          learning HTML5 semantic elements, tables, image maps, and forms.
         </small>
+        <nav class="footer-links" id="footerLinks" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="bikes.html">Models</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </nav>
       </div>
     </footer>
+
+    <a
+      href="#"
+      class="back-to-top"
+      id="backToTop"
+      aria-label="Back to top of page"
+      title="Back to top"
+    >↑</a>
+
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <img id="lightboxImage" src="" alt="" />
+      </div>
+    </div>
+
+        <!-- jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Vanilla JS Core -->
+    <script>
+      (function () {
+        'use strict';
+
+        const STORAGE_KEYS = {
+          CITY: 'kawasaki_selectedCity',
+          THEME: 'kawasaki_theme',
+          FAVORITES: 'kawasaki_favorites'
+        };
+
+        const PRICE_DATA = {
+          Delhi:      { zx10r: "₹21,00,000", z900: "₹10,00,000", versys: "₹8,80,000", vulcan: "₹8,30,000", klr: "₹2,10,000" },
+          Mumbai:     { zx10r: "₹21,40,000", z900: "₹10,20,000", versys: "₹9,00,000", vulcan: "₹8,50,000", klr: "₹2,20,000" },
+          Bangalore:  { zx10r: "₹21,50,000", z900: "₹10,30,000", versys: "₹9,10,000", vulcan: "₹8,60,000", klr: "₹2,25,000" },
+          Chennai:    { zx10r: "₹21,30,000", z900: "₹10,15,000", versys: "₹8,95,000", vulcan: "₹8,45,000", klr: "₹2,18,000" },
+          Hyderabad:  { zx10r: "₹21,20,000", z900: "₹10,10,000", versys: "₹8,85,000", vulcan: "₹8,35,000", klr: "₹2,12,000" },
+          Kolkata:    { zx10r: "₹21,60,000", z900: "₹10,35,000", versys: "₹9,05,000", vulcan: "₹8,55,000", klr: "₹2,22,000" },
+          Pune:       { zx10r: "₹21,35,000", z900: "₹10,18,000", versys: "₹8,90,000", vulcan: "₹8,40,000", klr: "₹2,15,000" },
+          Ahmedabad:  { zx10r: "₹21,25,000", z900: "₹10,12,000", versys: "₹8,88,000", vulcan: "₹8,38,000", klr: "₹2,14,000" },
+          Chandigarh: { zx10r: "₹21,10,000", z900: "₹10,05,000", versys: "₹8,82,000", vulcan: "₹8,32,000", klr: "₹2,11,000" },
+          Jaipur:     { zx10r: "₹21,45,000", z900: "₹10,22,000", versys: "₹8,98,000", vulcan: "₹8,48,000", klr: "₹2,19,000" },
+          Kochi:      { zx10r: "₹21,55,000", z900: "₹10,28,000", versys: "₹9,08,000", vulcan: "₹8,58,000", klr: "₹2,24,000" }
+        };
+
+        function debounce(func, wait) {
+          let timeout;
+          return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+          };
+        }
+
+        const Theme = {
+          currentTheme: localStorage.getItem(STORAGE_KEYS.THEME) || 'dark',
+          init: function () {
+            this.applyTheme(this.currentTheme);
+          },
+          applyTheme: function (theme) {
+            document.body.setAttribute('data-theme', theme);
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem(STORAGE_KEYS.THEME, theme);
+            this.currentTheme = theme;
+          },
+          switchTheme: function () {
+            const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+            this.applyTheme(newTheme);
+          }
+        };
+
+        const Favorites = {
+          favorites: JSON.parse(localStorage.getItem(STORAGE_KEYS.FAVORITES) || '[]'),
+          init: function () {
+            this.updateUI();
+          },
+          toggleFavorite: function (bikeId) {
+            const index = this.favorites.indexOf(bikeId);
+            if (index === -1) {
+              this.favorites.push(bikeId);
+            } else {
+              this.favorites.splice(index, 1);
+            }
+            localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(this.favorites));
+            this.updateUI();
+            return index === -1;
+          },
+          updateUI: function () {
+            const badge = document.getElementById('favBadge');
+            if (badge) {
+              badge.textContent = this.favorites.length;
+              badge.style.display = this.favorites.length > 0 ? 'flex' : 'none';
+            }
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+              const bikeId = btn.getAttribute('data-bike-id');
+              const isFav = this.favorites.includes(bikeId);
+              btn.textContent = isFav ? '❤️' : '🤍';
+              btn.classList.toggle('active', isFav);
+            });
+          },
+          showFavorites: function () {
+            return this.favorites;
+          }
+        };
+
+        const CityPricing = {
+          init: function () {
+            const savedCity = localStorage.getItem(STORAGE_KEYS.CITY);
+            const citySelect = document.getElementById('city');
+            if (savedCity && PRICE_DATA[savedCity] && citySelect) {
+              citySelect.value = savedCity;
+            }
+          },
+          updatePrices: function (city) {
+            const priceMap = {
+              'zx10r-price': 'zx10r',
+              'z900-price': 'z900',
+              'versys-price': 'versys',
+              'vulcan-price': 'vulcan',
+              'klr-price': 'klr'
+            };
+            if (!city || !PRICE_DATA[city]) {
+              Object.keys(priceMap).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                  el.textContent = 'Select City';
+                  el.classList.remove('updated');
+                }
+              });
+              const status = document.getElementById('cityStatus');
+              if (status) {
+                status.textContent = 'Select a city to see estimated on-road prices.';
+                status.classList.remove('active');
+              }
+              return null;
+            }
+            const data = PRICE_DATA[city];
+            Object.entries(priceMap).forEach(([id, key]) => {
+              const el = document.getElementById(id);
+              if (el) {
+                el.textContent = data[key];
+                el.classList.add('updated');
+              }
+            });
+            const status = document.getElementById('cityStatus');
+            if (status) {
+              status.textContent = `Showing estimated on-road prices for ${city}.`;
+              status.classList.add('active');
+            }
+            localStorage.setItem(STORAGE_KEYS.CITY, city);
+            return data;
+          }
+        };
+
+        const BikeSearch = {
+          bikeData: [
+            { id: 'ninja-zx10r', name: 'Ninja ZX-10R', category: 'Sport', keywords: ['ninja', 'sport', 'track', 'racing'] },
+            { id: 'z900', name: 'Z900', category: 'Naked', keywords: ['z900', 'naked', 'street', 'streetfighter'] },
+            { id: 'versys-650', name: 'Versys 650', category: 'Adventure', keywords: ['versys', 'adventure', 'touring', 'travel'] },
+            { id: 'vulcan-s', name: 'Vulcan S', category: 'Cruiser', keywords: ['vulcan', 'cruiser', 'comfort', 'highway'] },
+            { id: 'klr650', name: 'KLR650', category: 'Dual-Sport', keywords: ['klr', 'dual-sport', 'off-road', 'adventure'] }
+          ],
+          search: function (query) {
+            return this.bikeData.filter(bike =>
+              bike.name.toLowerCase().includes(query) ||
+              bike.category.toLowerCase().includes(query) ||
+              bike.keywords.some(k => k.includes(query))
+            );
+          }
+        };
+
+        window.KawasakiCore = {
+          Theme,
+          Favorites,
+          CityPricing,
+          BikeSearch,
+          PRICE_DATA,
+          STORAGE_KEYS,
+          debounce
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+          Theme.init();
+          Favorites.init();
+          CityPricing.init();
+        });
+
+      })();
+    </script>
+
+    <!-- ✅ YOUR JQUERY FILES - CORRECT FILE NAMES -->
+    <script src="JQuery/Fade-effect.js"></script>
+    <script src="JQuery/Slide-Effect.js"></script>
+    <script src="JQuery/Toggle-Effect.js"></script>
+    <script src="JQuery/Animation-effect.js"></script>
+
+    <!-- jQuery Master Controller -->
+    <script>
+      $(document).ready(function () {
+
+        const Core = window.KawasakiCore;
+        const speed = { fast: 250, medium: 400, slow: 600 };
+
+        function showToast(message) {
+          $('.toast').stop(true).fadeOut(150, function () { $(this).remove(); });
+          const $toast = $('<div class="toast"></div>').text(message);
+          $('body').append($toast);
+          $toast.fadeIn(speed.fast);
+          setTimeout(function () {
+            $toast.fadeOut(speed.fast, function () { $(this).remove(); });
+          }, 3000);
+        }
+
+        $('#themeToggle').on('click', function () {
+          const $btn = $(this);
+          $btn.animate({ opacity: 0 }, speed.fast, function () {
+            Core.Theme.switchTheme();
+            $btn.animate({ opacity: 1 }, speed.fast);
+          });
+          showToast('🎨 Theme switched!');
+        });
+
+        $('#menuToggle').on('click', function () {
+          const $nav = $('#primaryNav');
+          const $btn = $(this);
+          $nav.slideToggle(speed.medium, function () {
+            const isOpen = $nav.is(':visible');
+            $nav.toggleClass('open', isOpen);
+            $btn.attr('aria-expanded', isOpen ? 'true' : 'false');
+            $btn.text(isOpen ? '✕' : '☰');
+          });
+        });
+
+        $('#primaryNav a').on('click', function () {
+          if ($(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false');
+          }
+        });
+
+        $(document).on('keydown', function (e) {
+          if (e.key === 'Escape' && $('#primaryNav').is(':visible') && $(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false').focus();
+          }
+        });
+
+        $('.fav-btn').on('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const $btn = $(this);
+          const bikeId = $btn.attr('data-bike-id');
+          $btn.stop(true)
+            .animate({ width: '42px', height: '42px' }, 100)
+            .animate({ width: '32px', height: '32px' }, 100)
+            .animate({ width: '38px', height: '38px' }, 80)
+            .animate({ width: '36px', height: '36px' }, 80, function () {
+              const added = Core.Favorites.toggleFavorite(bikeId);
+              showToast(added ? `❤️ Added ${bikeId} to favorites!` : `💔 Removed ${bikeId} from favorites.`);
+              const count = Core.Favorites.favorites.length;
+              const $badge = $('#favBadge');
+              $badge.text(count);
+              if (count > 0) {
+                $badge.fadeIn(speed.fast);
+              } else {
+                $badge.fadeOut(speed.fast);
+              }
+            });
+        });
+
+        $('#favBtn').on('click', function () {
+          const favs = Core.Favorites.showFavorites();
+          if (favs.length === 0) {
+            showToast('❤️ No favorites yet. Add some bikes!');
+          } else {
+            showToast(`❤️ Favorites: ${favs.join(', ')}`);
+          }
+        });
+
+        $('#city').on('change', function () {
+          const city = $(this).val();
+          $('.price-tag').each(function () {
+            const $tag = $(this);
+            $tag.animate({ opacity: 0 }, speed.fast, function () {
+              Core.CityPricing.updatePrices(city);
+              $tag.animate({ opacity: 1 }, speed.fast);
+            });
+          });
+          $('#cityStatus').fadeOut(speed.fast, function () {
+            $(this).fadeIn(speed.fast);
+          });
+          if (city) showToast(`📍 Prices updated for ${city}`);
+        });
+
+        const $searchBar = $('#searchBar');
+        $searchBar.on('focus', function () {
+          $(this).stop(true).animate({ paddingLeft: '46px' }, speed.fast);
+        }).on('blur', function () {
+          $(this).stop(true).animate({ paddingLeft: '40px' }, speed.fast);
+        });
+
+        $searchBar.on('input', Core.debounce(function () {
+          const query = $(this).val().toLowerCase().trim();
+          if (query.length < 2) return;
+          const results = Core.BikeSearch.search(query);
+          if (results.length === 1) {
+            showToast(`🔍 Found: ${results[0].name}. Press Enter to view.`);
+          } else if (results.length > 1) {
+            showToast(`🔍 Found ${results.length} bikes: ${results.map(b => b.name).join(', ')}`);
+          } else {
+            showToast(`🔍 No bikes found for "${query}"`);
+          }
+        }, 300));
+
+        $searchBar.on('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = $(this).val().toLowerCase().trim();
+            const results = Core.BikeSearch.search(query);
+            if (results.length === 1) {
+              window.location.href = `${results[0].id}.html`;
+            } else if (results.length > 1) {
+              window.location.href = `bikes.html?search=${encodeURIComponent(query)}`;
+            } else {
+              showToast(`🔍 No bikes found for "${query}"`);
+            }
+          }
+        });
+
+        $('.lightbox-trigger').on('click', function (e) {
+          if ($(this).is('img')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const src = $(this).attr('src');
+            const alt = $(this).attr('alt');
+            $('#lightboxImage').attr({ src: src, alt: alt }).css({ opacity: 0 });
+            $('#lightbox').css('display', 'flex').hide().fadeIn(speed.medium, function () {
+              $('#lightboxImage').animate({ opacity: 1 }, speed.medium);
+            });
+            $('body').css('overflow', 'hidden');
+          }
+        });
+
+        $('#lightboxClose').on('click', function () {
+          closeLightbox();
+        });
+
+        $('#lightbox').on('click', function (e) {
+          if (e.target === this) closeLightbox();
+        });
+
+        function closeLightbox() {
+          $('#lightboxImage').animate({ opacity: 0 }, speed.fast, function () {
+            $('#lightbox').fadeOut(speed.fast, function () {
+              $('#lightboxImage').attr('src', '').css('opacity', '');
+              $('body').css('overflow', '');
+            });
+          });
+        }
+
+        $(document).on('keydown', function (e) {
+          if (e.key === 'Escape' && $('#lightbox').is(':visible')) {
+            closeLightbox();
+          }
+        });
+
+        function isInViewport($el) {
+          if (!$el.length) return false;
+          const top = $el.offset().top;
+          const bottom = top + $el.outerHeight();
+          const vtop = $(window).scrollTop();
+          const vbottom = vtop + $(window).height();
+          return bottom > vtop && top < vbottom - 60;
+        }
+
+        $('.bike-figure').css({ opacity: 0, marginTop: '20px' });
+
+        function revealBikeFigures() {
+          $('.bike-figure').each(function (i) {
+            const $fig = $(this);
+            if (isInViewport($fig) && parseFloat($fig.css('opacity')) === 0) {
+              $fig.delay(i * 100).animate({ opacity: 1, marginTop: '0px' }, speed.medium);
+            }
+          });
+        }
+
+        $('.grid .card').css({ opacity: 0, marginTop: '20px' });
+
+        function revealCards() {
+          $('.grid .card').each(function (i) {
+            const $card = $(this);
+            if (isInViewport($card) && parseFloat($card.css('opacity')) === 0) {
+              $card.delay(i * 180).animate({ opacity: 1, marginTop: '0px' }, speed.slow);
+            }
+          });
+        }
+
+        $('footer').css({ opacity: 0 });
+
+        function revealFooter() {
+          const $footer = $('footer');
+          if (isInViewport($footer) && parseFloat($footer.css('opacity')) === 0) {
+            $footer.animate({ opacity: 1 }, speed.slow);
+          }
+        }
+
+        $(window).on('scroll', function () {
+          revealBikeFigures();
+          revealCards();
+          revealFooter();
+          const scrollTop = $(this).scrollTop();
+          const docHeight = $(document).height() - $(window).height();
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          $('#readingProgress').stop(true).animate(
+            { width: progress + '%' },
+            { duration: 80, queue: false }
+          );
+          if (scrollTop > 400) {
+            $('#backToTop').stop(true).css('visibility', 'visible')
+              .animate({ opacity: 1, bottom: '24px' }, speed.fast);
+          } else {
+            $('#backToTop').stop(true).animate({ opacity: 0, bottom: '10px' }, speed.fast, function () {
+              $(this).css('visibility', 'hidden');
+            });
+          }
+        });
+
+        revealBikeFigures();
+        revealCards();
+
+        $('#backToTop').on('click', function (e) {
+          e.preventDefault();
+          $('html, body').animate({ scrollTop: 0 }, speed.slow);
+        });
+
+        $('#backToTop').on('mouseenter', function () {
+          $(this).stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+        $('.btn').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '22px', paddingRight: '22px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '18px', paddingRight: '18px' }, speed.fast);
+        });
+
+        $('nav a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '18px', paddingRight: '18px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '14px', paddingRight: '14px' }, speed.fast);
+        });
+
+        $('.bike-figure').on('mouseenter', function () {
+          $(this).stop(true).animate({ marginTop: '-5px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ marginTop: '0px' }, speed.fast);
+        });
+
+        $('.banner').on('mouseenter', function () {
+          $(this).stop(true).animate({ marginTop: '14px' }, speed.medium);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ marginTop: '18px' }, speed.medium);
+        });
+
+        $('.brand').on('mouseenter', function () {
+          $(this).find('img').stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).find('img').stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+        $('.footer-links a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '4px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '0px' }, speed.fast);
+        });
+
+        $(document).on('keydown', function (e) {
+          if (e.target.matches('input, textarea, select')) return;
+          if (e.key === '?') showToast('⌨️ Shortcuts: Alt+T=Theme, Alt+M=Menu, ?=Help');
+          if (e.altKey && (e.key === 't' || e.key === 'T')) $('#themeToggle').trigger('click');
+          if (e.altKey && (e.key === 'm' || e.key === 'M')) $('#menuToggle').trigger('click');
+        });
+
+        setTimeout(function () {
+          showToast('🏍️ Welcome to Kawasaki Bikes! Press ? for shortcuts.');
+        }, 800);
+
+        console.log('✓ Kawasaki jQuery Master Controller Initialized');
+      });
+    </script>
+
   </body>
 </html>
 
