@@ -8,35 +8,85 @@
       :root {
         --kawa-green: #00b140;
         --kawa-green-2: #00d957;
+        --kawa-green-glow: rgba(0, 177, 64, 0.14);
         --ink: #0c1014;
         --muted: #b8c2cc;
         --card: rgba(12, 16, 20, 0.72);
-        --dline: rgba(255, 255, 255, 0.12);
+        --line: rgba(255, 255, 255, 0.12);
+        --line-strong: rgba(255, 255, 255, 0.18);
         --bg: #070a0e;
+        --overlay: rgba(0, 0, 0, 0.62);
+        --white-subtle: rgba(255, 255, 255, 0.06);
+        --white-faint: rgba(255, 255, 255, 0.03);
+        --text-primary: #f5f7fa;
+        --text-secondary: #e8edf3;
+        --blur: blur(10px);
+        --radius-sm: 10px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 18px;
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.15);
+        --transition-fast: 0.2s ease;
+        --transition-med: 0.3s ease;
       }
 
-      * {
+      body[data-theme="light"] {
+        --bg: #f0f2f5;
+        --text-primary: #1a1a2e;
+        --text-secondary: #2d2d44;
+        --muted: #6b7280;
+        --card: rgba(255, 255, 255, 0.92);
+        --line: rgba(0, 0, 0, 0.1);
+        --line-strong: rgba(0, 0, 0, 0.18);
+        --overlay: rgba(255, 255, 255, 0.85);
+        --white-subtle: rgba(0, 0, 0, 0.04);
+        --white-faint: rgba(0, 0, 0, 0.02);
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.12);
+      }
+
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
-        margin: 0;
-        color: #f5f7fa;
+        color: var(--text-primary);
         font-family: "Segoe UI", Tahoma, Arial, sans-serif;
         line-height: 1.55;
         background:
           radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
           radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
           var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        transition: all 0.3s ease;
       }
 
       a {
         color: var(--kawa-green-2);
         text-decoration: none;
+        transition: color var(--transition-fast);
       }
+
       a:hover,
       a:focus-visible {
         text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--kawa-green-2);
+        outline-offset: 3px;
       }
 
       .container {
@@ -47,8 +97,9 @@
       header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        backdrop-filter: blur(10px);
+        z-index: 50;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
         background: rgba(0, 0, 0, 0.55);
         border-bottom: 1px solid var(--line);
       }
@@ -59,46 +110,130 @@
         justify-content: space-between;
         gap: 16px;
         padding: 12px 0;
+        flex-wrap: wrap;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
-        min-width: 220px;
+        min-width: 200px;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: opacity var(--transition-fast);
+      }
+
+      .brand:hover {
+        opacity: 0.85;
+        text-decoration: none;
       }
 
       .brand img {
         width: 44px;
         height: 44px;
+        flex-shrink: 0;
       }
 
       .brand strong {
         letter-spacing: 0.6px;
         font-size: 15px;
+        white-space: nowrap;
+        color: var(--text-primary);
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .theme-toggle {
+        background: var(--white-subtle);
+        border: 1px solid var(--line);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
       }
 
       nav ul {
         list-style: none;
         display: flex;
-        gap: 12px;
-        padding: 0;
-        margin: 0;
+        gap: 8px;
         flex-wrap: wrap;
         justify-content: flex-end;
       }
 
       nav a {
         display: inline-block;
-        padding: 8px 10px;
+        padding: 8px 14px;
         border: 1px solid transparent;
-        border-radius: 10px;
-        color: #f5f7fa;
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 500;
+        transition: all var(--transition-fast);
+      }
+
+      nav a:hover {
+        background: var(--white-subtle);
+        border-color: var(--line);
+        text-decoration: none;
       }
 
       nav a[aria-current="page"] {
         border-color: var(--line);
-        background: rgba(0, 177, 64, 0.14);
+        background: var(--kawa-green-glow);
+        color: var(--kawa-green-2);
+        font-weight: 600;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        transition: background var(--transition-fast);
+      }
+
+      .menu-toggle:hover {
+        background: var(--white-subtle);
+      }
+
+      @media (max-width: 700px) {
+        .menu-toggle {
+          display: block;
+        }
+
+        nav {
+          display: none;
+          width: 100%;
+          order: 3;
+        }
+
+        nav.open {
+          display: block;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 4px;
+          padding: 12px 0 4px;
+          border-top: 1px solid var(--line);
+          margin-top: 8px;
+        }
+
+        nav a {
+          display: block;
+          padding: 12px 14px;
+        }
       }
 
       main {
@@ -107,14 +242,28 @@
 
       .card {
         border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: var(--radius-xl);
         background: var(--card);
-        padding: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow-card);
       }
 
       h1 {
         margin: 0 0 10px;
         font-size: clamp(24px, 3vw, 34px);
+        color: var(--text-primary);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: var(--text-primary);
+      }
+
+      h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+        color: var(--text-primary);
       }
 
       .muted {
@@ -139,9 +288,9 @@
         width: 100%;
         border-collapse: collapse;
         overflow: hidden;
-        border-radius: 14px;
+        border-radius: var(--radius-lg);
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--white-faint);
       }
 
       caption {
@@ -149,12 +298,14 @@
         text-align: left;
         padding: 10px 12px;
         font-weight: 700;
+        color: var(--text-primary);
       }
 
       thead th {
         text-align: left;
         font-weight: 700;
-        background: rgba(0, 177, 64, 0.14);
+        background: var(--kawa-green-glow);
+        color: var(--text-primary);
       }
 
       th,
@@ -162,15 +313,22 @@
         padding: 10px 12px;
         border-bottom: 1px solid var(--line);
         vertical-align: top;
+        color: var(--text-secondary);
+      }
+
+      tbody tr {
+        transition: background var(--transition-fast);
+        cursor: pointer;
       }
 
       tbody tr:hover {
-        background: rgba(255, 255, 255, 0.04);
+        background: var(--white-subtle);
       }
 
       tfoot td {
         font-weight: 700;
-        background: rgba(255, 255, 255, 0.04);
+        background: var(--white-subtle);
+        color: var(--text-primary);
       }
 
       .pill {
@@ -180,7 +338,58 @@
         border: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.25);
         font-size: 13px;
-        color: #e8edf3;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+      }
+
+      .pill:hover {
+        background: var(--kawa-green-glow);
+        border-color: var(--kawa-green);
+        color: var(--kawa-green-2);
+      }
+
+      .location-bar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+        padding: 14px 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(0, 177, 64, 0.07);
+      }
+
+      .location-bar label {
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--kawa-green-2);
+        white-space: nowrap;
+      }
+
+      .location-bar select {
+        background: rgba(12, 16, 20, 0.85);
+        color: var(--text-primary);
+        border: 1px solid var(--kawa-green);
+        border-radius: var(--radius-sm);
+        padding: 8px 14px;
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        outline: none;
+        min-width: 200px;
+        transition: border-color var(--transition-fast);
+      }
+
+      .location-bar select:focus {
+        border-color: var(--kawa-green-2);
+        box-shadow: 0 0 0 3px rgba(0, 217, 87, 0.15);
+      }
+
+      #city-note {
+        color: var(--muted);
+        font-size: 13px;
       }
 
       .model-grid {
@@ -190,16 +399,22 @@
         margin-top: 14px;
       }
 
-      .model-grid article {
+      .model-article {
         grid-column: span 12;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-lg);
+        background: var(--white-faint);
         padding: 12px;
+        transition: box-shadow var(--transition-med);
+      }
+
+      .model-article:hover {
+        box-shadow: var(--shadow-hover);
+        border-color: var(--line-strong);
       }
 
       @media (min-width: 860px) {
-        .model-grid article {
+        .model-article {
           grid-column: span 6;
         }
       }
@@ -212,16 +427,17 @@
         width: 100%;
         height: auto;
         display: block;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         background: rgba(0, 0, 0, 0.35);
       }
 
       .media {
         position: relative;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         overflow: hidden;
         border: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.35);
+        cursor: zoom-in;
       }
 
       .media img {
@@ -230,21 +446,43 @@
         display: block;
         aspect-ratio: 4 / 3;
         object-fit: cover;
+        transition: transform var(--transition-med);
+      }
+
+      .media:hover img {
+        transform: scale(1.04);
+      }
+
+      .media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.3), transparent 55%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-med);
+      }
+
+      .media:hover::after {
+        opacity: 1;
       }
 
       .price-tag {
         position: absolute;
         left: 10px;
         bottom: 10px;
-        padding: 6px 10px;
+        padding: 6px 12px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(0, 0, 0, 0.62);
-        color: #f5f7fa;
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        color: var(--text-primary);
         font-weight: 800;
         letter-spacing: 0.2px;
         font-size: 13px;
         backdrop-filter: blur(6px);
+        z-index: 2;
+        white-space: nowrap;
+        transition: all var(--transition-fast);
       }
 
       .price-tag small {
@@ -253,10 +491,16 @@
         margin-left: 6px;
       }
 
+      .price-tag.updated {
+        border-color: rgba(0, 217, 87, 0.4);
+        background: rgba(0, 40, 15, 0.75);
+      }
+
       figcaption {
         margin-top: 8px;
         color: var(--muted);
         font-size: 14px;
+        line-height: 1.5;
       }
 
       .specs {
@@ -266,6 +510,31 @@
 
       .specs li {
         margin: 4px 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .specs-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 6px 14px;
+        background: var(--white-subtle);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        font-family: inherit;
+      }
+
+      .specs-toggle-btn:hover {
+        background: var(--kawa-green-glow);
+        border-color: var(--kawa-green);
+        color: var(--kawa-green-2);
       }
 
       .credit {
@@ -273,48 +542,285 @@
         color: rgba(184, 194, 204, 0.9);
       }
 
+      .quick-links-list {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .quick-links-list li {
+        margin: 8px 0;
+        color: var(--text-secondary);
+      }
+
+      .quick-links-list a {
+        font-weight: 500;
+        margin-right: 8px;
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 92%;
+        max-height: 92%;
+        text-align: center;
+      }
+
+      .lightbox-content img {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: var(--radius-md);
+        display: block;
+        margin: 0 auto;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -44px;
+        right: 0;
+        background: var(--kawa-green);
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lightbox-caption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        padding: 0 10px;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        background: var(--overlay);
+        border: 1px solid var(--line-strong);
+        color: var(--text-primary);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(6px);
+      }
+
+      .lightbox-prev:hover,
+      .lightbox-next:hover {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green-2);
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 40;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        backdrop-filter: blur(6px);
+        color: var(--text-primary);
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        text-decoration: none;
+      }
+
+      .back-to-top:hover {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green);
+        text-decoration: none;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        z-index: 3000;
+        display: none;
+        max-width: 300px;
+        font-size: 14px;
+        box-shadow: var(--shadow-card);
+      }
+
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--kawa-green), var(--kawa-green-2));
+        z-index: 1000;
+      }
+
       footer {
         border-top: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.55);
-        padding: 18px 0;
+        padding: 20px 0;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
       }
 
       footer small {
         color: var(--muted);
+        font-size: 13px;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+        font-size: 13px;
+        transition: color var(--transition-fast);
+      }
+
+      .footer-links a:hover {
+        color: var(--kawa-green-2);
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 16px;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .location-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media print {
+        header, .back-to-top, .location-bar { display: none !important; }
+        body { background: #fff; color: #000; }
+        .card { border: 1px solid #ccc; background: #fff; box-shadow: none; }
       }
     </style>
   </head>
-  <body>
-    <header>
+
+  <body data-theme="dark">
+
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <header id="mainHeader">
       <div class="container topbar">
-        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
-          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website Home">
+          <img
+            src="https://via.placeholder.com/44x44/00b140/ffffff?text=K"
+            alt="Kawasaki green logo mark"
+            width="44"
+            height="44"
+            id="brandLogo"
+          />
           <strong>Kawasaki Bikes Website</strong>
         </a>
 
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="bikes.html" aria-current="page">Bike Models</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
+        <div class="header-controls">
+          <nav id="primaryNav" aria-label="Primary navigation">
+            <ul role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="bikes.html" aria-current="page">Bike Models</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+        </div>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >☰</button>
+
       </div>
     </header>
 
-    <main class="container">
-      <section class="card" aria-labelledby="models-title">
-        <h1 id="models-title">Bike Models </h1>
-        <p class="muted">
+    <main class="container" id="main-content">
+
+      <section class="card" aria-labelledby="models-title" id="heroCard">
+        <h1 id="models-title">Bike Models</h1>
+        <p class="muted" id="modelsDesc">
           Requirement: this page includes a table built for the Bikes.
         </p>
 
-        <div class="two-col">
-          <section aria-labelledby="table-title">
-            <h2 id="table-title" style="margin: 0 0 10px; font-size: 18px">Model Comparison</h2>
+        <div class="two-col" id="twoCol">
 
-            <table aria-describedby="price-note">
+          <section aria-labelledby="table-title" id="tableSection">
+            <h2 id="table-title">Model Comparison</h2>
+
+            <table aria-describedby="price-note" id="comparisonTable">
               <caption>Kawasaki Model Snapshot</caption>
               <thead>
                 <tr>
@@ -323,31 +829,31 @@
                   <th scope="col">Price (Approx.)</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr id="ninja-zx10r">
+              <tbody id="tableBody">
+                <tr class="table-row" data-bike="ninja-zx10r">
                   <th scope="row"><a href="ninja-zx10r.html">Ninja ZX-10R</a></th>
                   <td>998cc inline-4</td>
-                  <td>Rs.20,79,000</td>
+                  <td class="table-price">Rs.20,79,000</td>
                 </tr>
-                <tr id="z900">
+                <tr class="table-row" data-bike="z900">
                   <th scope="row"><a href="z900.html">Z900</a></th>
                   <td>948cc inline-4</td>
-                  <td>Rs.9,99,000</td>
+                  <td class="table-price">Rs.9,99,000</td>
                 </tr>
-                <tr id="versys-650">
+                <tr class="table-row" data-bike="versys-650">
                   <th scope="row"><a href="versys-650.html">Versys 650</a></th>
                   <td>649cc parallel-twin</td>
-                  <td>Rs.8,63,000</td>
+                  <td class="table-price">Rs.8,63,000</td>
                 </tr>
-                <tr id="vulcan-s">
+                <tr class="table-row" data-bike="vulcan-s">
                   <th scope="row"><a href="vulcan-s.html">Vulcan S</a></th>
                   <td>649cc parallel-twin</td>
-                  <td>Rs.8,13,000</td>
+                  <td class="table-price">Rs.8,13,000</td>
                 </tr>
-                <tr id="klr650">
+                <tr class="table-row" data-bike="klr650">
                   <th scope="row"><a href="klr650.html">KLR650</a></th>
                   <td>652cc single-cylinder</td>
-                  <td>Rs.2,00,000</td>
+                  <td class="table-price">Rs.2,00,000</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -358,339 +864,853 @@
               </tfoot>
             </table>
 
-            <p id="price-note" class="muted" style="margin: 10px 0 0">
+            <p id="price-note" class="muted" style="margin: 10px 0 0; font-size: 13px;">
               Note: prices are sample values for demonstration (HTML project).
             </p>
           </section>
 
-          <aside class="card" style="background: rgba(255,255,255,0.03)" aria-label="Quick links">
-            <h2 style="margin: 0 0 10px; font-size: 18px">Quick Jump</h2>
-            <p class="muted" style="margin-top: -4px">These links are also used by the Gallery image map.</p>
-            <ul style="margin: 0; padding-left: 18px">
-              <li><a href="#ninja-zx10r">Ninja ZX-10R</a> <span class="pill">Sport</span></li>
-              <li><a href="#z900">Z900</a> <span class="pill">Naked</span></li>
-              <li><a href="#versys-650">Versys 650</a> <span class="pill">Adventure</span></li>
-              <li><a href="#vulcan-s">Vulcan S</a> <span class="pill">Cruiser</span></li>
-              <li><a href="#klr650">KLR650</a> <span class="pill">Dual-sport</span></li>
+          <aside class="card" id="quickJumpCard" style="background: var(--white-faint)" aria-label="Quick links">
+            <h2>Quick Jump</h2>
+            <p class="muted" style="margin-top: -4px; font-size: 14px;">
+              These links are also used by the Gallery image map.
+            </p>
+            <ul class="quick-links-list" id="quickLinksList">
+              <li>
+                <a href="#article-ninja" class="smooth-jump">Ninja ZX-10R</a>
+                <span class="pill">Sport</span>
+              </li>
+              <li>
+                <a href="#article-z900" class="smooth-jump">Z900</a>
+                <span class="pill">Naked</span>
+              </li>
+              <li>
+                <a href="#article-versys" class="smooth-jump">Versys 650</a>
+                <span class="pill">Adventure</span>
+              </li>
+              <li>
+                <a href="#article-vulcan" class="smooth-jump">Vulcan S</a>
+                <span class="pill">Cruiser</span>
+              </li>
+              <li>
+                <a href="#article-klr" class="smooth-jump">KLR650</a>
+                <span class="pill">Dual-sport</span>
+              </li>
             </ul>
-            <p class="muted" style="margin-bottom: 0; margin-top: 12px">
+            <p class="muted" style="margin: 12px 0 0; font-size: 14px;">
               Next: try the <a href="gallery.html">Gallery</a> and click the image map areas.
             </p>
           </aside>
+
         </div>
       </section>
 
-      <section class="card" style="margin-top: 16px" aria-labelledby="details-title">
-    <h2 id="details-title" style="margin: 0 0 10px">Model Highlights</h2>
-    <p class="muted" style="margin-top: -4px">
-      
-    </p>
-    <p class="muted" style="margin-top: 0">
-      Specifications below are <strong>example/approx values</strong>.
-    </p>
+      <section class="card" style="margin-top: 16px" aria-labelledby="details-title" id="detailsCard">
+        <h2 id="details-title">Model Highlights</h2>
+        <p class="muted" style="font-size: 14px;">
+          Specifications below are <strong>example/approx values</strong>.
+        </p>
 
-  <!-- ===== LOCATION BAR (ADD THIS BLOCK) ===== -->
-    <div style="
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      padding: 14px 18px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(0, 177, 64, 0.07);
-   ">
-     <span style="font-size: 20px;">📍</span>
-      <label for="citySelect" style="
-        font-weight: 600;
-       font-size: 15px;
-       color: var(--kawa-green-2);
-        white-space: nowrap;
-     ">
-        Select City:
-     </label>
-     <select id="citySelect" onchange="updatePrices()" style="
-        background: rgba(12, 16, 20, 0.85);
-        color: #f5f7fa;
-       border: 1px solid var(--kawa-green);
-       border-radius: 10px;
-        padding: 8px 14px;
-        font-size: 14px;
-        font-family: inherit;
-        cursor: pointer;
-        outline: none;
-       min-width: 200px;
-      ">
-        <option value="">-- Select Your City --</option>
-       <option value="mumbai">Mumbai</option>
-       <option value="delhi">Delhi</option>
-       <option value="bangalore">Bangalore</option>
-        <option value="chennai">Chennai</option>
-       <option value="hyderabad">Hyderabad</option>
-       <option value="kolkata">Kolkata</option>
-        <option value="pune">Pune</option>
-        <option value="jaipur">Jaipur</option>
-     </select>
-      <span id="city-note" style="
-        color: var(--muted);
-        font-size: 13px;
-      ">
-        Prices shown are on-road estimates for the selected city.
-      </span>
-    </div>  
+        <div class="location-bar" id="locationBar">
+          <span style="font-size: 20px;">📍</span>
+          <label for="citySelect">Select City:</label>
+          <select id="citySelect">
+            <option value="">-- Select Your City --</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="delhi">Delhi</option>
+            <option value="bangalore">Bangalore</option>
+            <option value="chennai">Chennai</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="kolkata">Kolkata</option>
+            <option value="pune">Pune</option>
+            <option value="jaipur">Jaipur</option>
+          </select>
+          <span id="city-note">Prices shown are on-road estimates for the selected city.</span>
+        </div>
 
-    <div class="model-grid">
+        <div class="model-grid" id="modelGrid">
 
-      <article aria-labelledby="ninja-h">
-        <h3 id="ninja-h" style="margin: 0 0 8px">Ninja ZX-10R</h3>
-        <figure>
-         <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
-           <div class="media">
-             <img
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
-               alt="Kawasaki Ninja ZX-10R (real photo)"
-               loading="lazy"
-                referrerpolicy="no-referrer"
-             />
-              <span class="price-tag" id="price-ninja">Rs.20,79,000 <small>approx</small></span>
-            </div>
-         </a>
-         <figcaption>
-            Race-bred styling and track-focused performance.
-           <span class="credit">Photo source: Wikimedia Commons (online).</span>
-         </figcaption>
-       </figure>
-        <ul class="specs">
-          <li><strong>Engine</strong>: 998cc inline-4</li>
-          <li><strong>Transmission</strong>: 6-speed</li>
-          <li><strong>Power</strong>: ~200 PS (typical)</li>
-          <li><strong>Weight</strong>: ~205–210 kg (curb)</li>
-          <li><strong>Features</strong>: ride modes, traction control, ABS</li>
-         <li><strong>Availability</strong>: <span id="avail-ninja" style="color: var(--kawa-green-2)">Select a city</span></li>
-         <li><strong>Dealer City</strong>: <span id="dealer-ninja" style="color: var(--muted)">—</span></li>
-        </ul>
-      </article>
+          <article class="model-article" id="article-ninja" aria-labelledby="ninja-h">
+            <h3 id="ninja-h">Ninja ZX-10R</h3>
+            <figure>
+              <div class="media">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
+                  alt="Kawasaki Ninja ZX-10R (real photo)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  class="bike-img"
+                  data-caption="Ninja ZX-10R — Race-bred sport performance"
+                />
+                <span class="price-tag" id="price-ninja">Rs.20,79,000 <small>approx</small></span>
+              </div>
+              <figcaption>
+                Race-bred styling and track-focused performance.
+                <span class="credit">Photo: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <button class="specs-toggle-btn" data-target="specs-ninja">
+              📋 Show Specifications
+            </button>
+            <ul class="specs" id="specs-ninja" style="display:none;">
+              <li><strong>Engine:</strong> 998cc inline-4</li>
+              <li><strong>Transmission:</strong> 6-speed</li>
+              <li><strong>Power:</strong> ~200 PS (typical)</li>
+              <li><strong>Weight:</strong> ~205–210 kg (curb)</li>
+              <li><strong>Features:</strong> ride modes, traction control, ABS</li>
+              <li><strong>Availability:</strong>
+                <span id="avail-ninja" style="color: var(--kawa-green-2)">Select a city</span>
+              </li>
+              <li><strong>Dealer:</strong>
+                <span id="dealer-ninja" style="color: var(--muted)">—</span>
+              </li>
+            </ul>
+          </article>
 
-      <article aria-labelledby="z-h">
-        <h3 id="z-h" style="margin: 0 0 8px">Z900</h3>
-        <figure>
-         <a href="z900.html" aria-label="Open Z900 details page">
-            <div class="media">
-              <img
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
-                alt="Kawasaki Z900 green (real photo)"
-               loading="lazy"
-               referrerpolicy="no-referrer"
-              />
-             <span class="price-tag" id="price-z900">Rs.9,99,000 <small>approx</small></span>
-           </div>
-         </a>
-         <figcaption>
-           Streetfighter design with a punchy inline-4 character.
-            <span class="credit">Photo source: Wikimedia Commons (online).</span>
-         </figcaption>
-        </figure>
-        <ul class="specs">
-         <li><strong>Engine</strong>: 948cc inline-4</li>
-         <li><strong>Transmission</strong>: 6-speed</li>
-         <li><strong>Power</strong>: ~125 PS (typical)</li>
-         <li><strong>Weight</strong>: ~210–215 kg (curb)</li>
-          <li><strong>Style</strong>: naked / streetfighter</li>
-          <li><strong>Availability</strong>: <span id="avail-z900" style="color: var(--kawa-green-2)">Select a city</span></li>
-          <li><strong>Dealer City</strong>: <span id="dealer-z900" style="color: var(--muted)">—</span></li>
-       </ul>
-      </article>
+          <article class="model-article" id="article-z900" aria-labelledby="z-h">
+            <h3 id="z-h">Z900</h3>
+            <figure>
+              <div class="media">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                  alt="Kawasaki Z900 green (real photo)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  class="bike-img"
+                  data-caption="Z900 — Aggressive streetfighter style"
+                />
+                <span class="price-tag" id="price-z900">Rs.9,99,000 <small>approx</small></span>
+              </div>
+              <figcaption>
+                Streetfighter design with a punchy inline-4 character.
+                <span class="credit">Photo: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <button class="specs-toggle-btn" data-target="specs-z900">
+              📋 Show Specifications
+            </button>
+            <ul class="specs" id="specs-z900" style="display:none;">
+              <li><strong>Engine:</strong> 948cc inline-4</li>
+              <li><strong>Transmission:</strong> 6-speed</li>
+              <li><strong>Power:</strong> ~125 PS (typical)</li>
+              <li><strong>Weight:</strong> ~210–215 kg (curb)</li>
+              <li><strong>Style:</strong> naked / streetfighter</li>
+              <li><strong>Availability:</strong>
+                <span id="avail-z900" style="color: var(--kawa-green-2)">Select a city</span>
+              </li>
+              <li><strong>Dealer:</strong>
+                <span id="dealer-z900" style="color: var(--muted)">—</span>
+              </li>
+            </ul>
+          </article>
 
-     <article aria-labelledby="versys-h">
-       <h3 id="versys-h" style="margin: 0 0 8px">Versys 650</h3>
-       <figure>
-          <a href="versys-650.html" aria-label="Open Versys 650 details page">
-           <div class="media">
-             <img
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
-               alt="Kawasaki Versys 650 (real photo)"
-               loading="lazy"
-               referrerpolicy="no-referrer"
-             />
-             <span class="price-tag" id="price-versys">Rs.8,63,000 <small>approx</small></span>
-           </div>
-         </a>
-          <figcaption>
-            Comfortable ergonomics for commuting and touring.
-            <span class="credit">Photo source: Wikimedia Commons (online).</span>
-          </figcaption>
-       </figure>
-        <ul class="specs">
-         <li><strong>Engine</strong>: 649cc parallel-twin</li>
-          <li><strong>Transmission</strong>: 6-speed</li>
-          <li><strong>Power</strong>: ~67 PS (typical)</li>
-          <li><strong>Fuel</strong>: ~21 L (typical)</li>
-          <li><strong>Use</strong>: commuting, touring, light adventure</li>
-         <li><strong>Availability</strong>: <span id="avail-versys" style="color: var(--kawa-green-2)">Select a city</span></li>
-         <li><strong>Dealer City</strong>: <span id="dealer-versys" style="color: var(--muted)">—</span></li>
-        </ul>
-      </article>
+          <article class="model-article" id="article-versys" aria-labelledby="versys-h">
+            <h3 id="versys-h">Versys 650</h3>
+            <figure>
+              <div class="media">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
+                  alt="Kawasaki Versys 650 (real photo)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  class="bike-img"
+                  data-caption="Versys 650 — Adventure touring comfort"
+                />
+                <span class="price-tag" id="price-versys">Rs.8,63,000 <small>approx</small></span>
+              </div>
+              <figcaption>
+                Comfortable ergonomics for commuting and touring.
+                <span class="credit">Photo: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <button class="specs-toggle-btn" data-target="specs-versys">
+              📋 Show Specifications
+            </button>
+            <ul class="specs" id="specs-versys" style="display:none;">
+              <li><strong>Engine:</strong> 649cc parallel-twin</li>
+              <li><strong>Transmission:</strong> 6-speed</li>
+              <li><strong>Power:</strong> ~67 PS (typical)</li>
+              <li><strong>Fuel:</strong> ~21 L (typical)</li>
+              <li><strong>Use:</strong> commuting, touring, light adventure</li>
+              <li><strong>Availability:</strong>
+                <span id="avail-versys" style="color: var(--kawa-green-2)">Select a city</span>
+              </li>
+              <li><strong>Dealer:</strong>
+                <span id="dealer-versys" style="color: var(--muted)">—</span>
+              </li>
+            </ul>
+          </article>
 
-      <article aria-labelledby="vulcan-h">
-        <h3 id="vulcan-h" style="margin: 0 0 8px">Vulcan S</h3>
-        <figure>
-         <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
-            <div class="media">
-             <img
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
-                alt="Kawasaki Vulcan S 650 (real photo)"
-               loading="lazy"
-               referrerpolicy="no-referrer"
-             />
-              <span class="price-tag" id="price-vulcan">Rs.8,13,000 <small>approx</small></span>
-            </div>
-          </a>
-         <figcaption>
-           Low-slung cruiser stance with modern reliability.
-            <span class="credit">Photo source: Wikimedia Commons (online).</span>
-          </figcaption>
-        </figure>
-        <ul class="specs">
-          <li><strong>Engine</strong>: 649cc parallel-twin</li>
-          <li><strong>Transmission</strong>: 6-speed</li>
-          <li><strong>Power</strong>: ~60 PS (typical)</li>
-          <li><strong>Seat height</strong>: ~705 mm (typical)</li>
-          <li><strong>Style</strong>: cruiser</li>
-          <li><strong>Availability</strong>: <span id="avail-vulcan" style="color: var(--kawa-green-2)">Select a city</span></li>
-          <li><strong>Dealer City</strong>: <span id="dealer-vulcan" style="color: var(--muted)">—</span></li>
-        </ul>
-      </article>
+          <article class="model-article" id="article-vulcan" aria-labelledby="vulcan-h">
+            <h3 id="vulcan-h">Vulcan S</h3>
+            <figure>
+              <div class="media">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                  alt="Kawasaki Vulcan S 650 (real photo)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  class="bike-img"
+                  data-caption="Vulcan S — Relaxed cruiser proportions"
+                />
+                <span class="price-tag" id="price-vulcan">Rs.8,13,000 <small>approx</small></span>
+              </div>
+              <figcaption>
+                Low-slung cruiser stance with modern reliability.
+                <span class="credit">Photo: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <button class="specs-toggle-btn" data-target="specs-vulcan">
+              📋 Show Specifications
+            </button>
+            <ul class="specs" id="specs-vulcan" style="display:none;">
+              <li><strong>Engine:</strong> 649cc parallel-twin</li>
+              <li><strong>Transmission:</strong> 6-speed</li>
+              <li><strong>Power:</strong> ~60 PS (typical)</li>
+              <li><strong>Seat height:</strong> ~705 mm (typical)</li>
+              <li><strong>Style:</strong> cruiser</li>
+              <li><strong>Availability:</strong>
+                <span id="avail-vulcan" style="color: var(--kawa-green-2)">Select a city</span>
+              </li>
+              <li><strong>Dealer:</strong>
+                <span id="dealer-vulcan" style="color: var(--muted)">—</span>
+              </li>
+            </ul>
+          </article>
 
-      <article aria-labelledby="klr-h">
-        <h3 id="klr-h" style="margin: 0 0 8px">KLR650</h3>
-        <figure>
-          <a href="klr650.html" aria-label="Open KLR650 details page">
-            <div class="media">
-              <img
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
-                alt="Kawasaki KLR 650 (real photo)"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-             />
-              <span class="price-tag" id="price-klr">Rs.2,00,000 <small>approx</small></span>
-            </div>
-          </a>
-          <figcaption>
-            Built for long-distance, mixed-surface exploring.
-            <span class="credit">Photo source: Wikimedia Commons (online).</span>
-          </figcaption>
-        </figure>
-        <ul class="specs">
-          <li><strong>Engine</strong>: 652cc single-cylinder</li>
-          <li><strong>Transmission</strong>: 5-speed (typical)</li>
-          <li><strong>Power</strong>: ~40 hp (typical)</li>
-          <li><strong>Fuel</strong>: ~23 L (typical)</li>
-          <li><strong>Use</strong>: adventure / dual-sport</li>
-          <li><strong>Availability</strong>: <span id="avail-klr" style="color: var(--kawa-green-2)">Select a city</span></li>
-          <li><strong>Dealer City</strong>: <span id="dealer-klr" style="color: var(--muted)">—</span></li>
-        </ul>
-        </article>
+          <article class="model-article" id="article-klr" aria-labelledby="klr-h">
+            <h3 id="klr-h">KLR650</h3>
+            <figure>
+              <div class="media">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
+                  alt="Kawasaki KLR 650 (real photo)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  class="bike-img"
+                  data-caption="KLR650 — Rugged dual-sport adventure"
+                />
+                <span class="price-tag" id="price-klr">Rs.2,00,000 <small>approx</small></span>
+              </div>
+              <figcaption>
+                Built for long-distance, mixed-surface exploring.
+                <span class="credit">Photo: Wikimedia Commons.</span>
+              </figcaption>
+            </figure>
+            <button class="specs-toggle-btn" data-target="specs-klr">
+              📋 Show Specifications
+            </button>
+            <ul class="specs" id="specs-klr" style="display:none;">
+              <li><strong>Engine:</strong> 652cc single-cylinder</li>
+              <li><strong>Transmission:</strong> 5-speed (typical)</li>
+              <li><strong>Power:</strong> ~40 hp (typical)</li>
+              <li><strong>Fuel:</strong> ~23 L (typical)</li>
+              <li><strong>Use:</strong> adventure / dual-sport</li>
+              <li><strong>Availability:</strong>
+                <span id="avail-klr" style="color: var(--kawa-green-2)">Select a city</span>
+              </li>
+              <li><strong>Dealer:</strong>
+                <span id="dealer-klr" style="color: var(--muted)">—</span>
+              </li>
+            </ul>
+          </article>
 
-      </div>
-    </section>
+        </div>
+      </section>
+
     </main>
 
-    <footer>
-          <footer>
-      <div class="container">
+    <footer id="mainFooter">
+      <div class="container footer-content">
         <small>
-          © <span>2026</span> Kawasaki Bikes Website (HTML project). Use the navigation links above to move between pages.
+          © 2026 Kawasaki Bikes Website (HTML project).
+          Use the navigation links above to move between pages.
         </small>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="bikes.html">Models</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </nav>
       </div>
     </footer>
+
+    <a
+      href="#"
+      class="back-to-top"
+      id="backToTop"
+      aria-label="Back to top"
+      title="Back to top"
+    >↑</a>
+
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content" id="lightboxContent">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <div class="lightbox-nav">
+          <button class="lightbox-prev" id="lightboxPrev">❮</button>
+          <button class="lightbox-next" id="lightboxNext">❯</button>
+        </div>
+        <img id="lightboxImage" src="" alt="" />
+        <p class="lightbox-caption" id="lightboxCaption"></p>
+      </div>
+    </div>
+
+    <!-- jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Your jQuery Effect Files -->
+    <script src="JQuery/Fade-effect.js"></script>
+    <script src="JQuery/Slide-Effect.js"></script>
+    <script src="JQuery/Toggle-Effect.js"></script>
+    <script src="JQuery/Animation-effect.js"></script>
+
+    <!-- Vanilla JS - Bike Data -->
     <script>
-  const bikeData = {
-    mumbai:    { ninja: "Rs.22,45,000", z900: "Rs.10,82,000", versys: "Rs.9,35,000", vulcan: "Rs.8,82,000", klr: "Rs.2,18,000", dealer: "Kawasaki Mumbai, Andheri (E)" },
-    delhi:     { ninja: "Rs.22,10,000", z900: "Rs.10,65,000", versys: "Rs.9,20,000", vulcan: "Rs.8,68,000", klr: "Rs.2,15,000", dealer: "Kawasaki Delhi, Rohini" },
-    bangalore: { ninja: "Rs.21,90,000", z900: "Rs.10,55,000", versys: "Rs.9,10,000", vulcan: "Rs.8,58,000", klr: "Rs.2,12,000", dealer: "Kawasaki Bangalore, Koramangala" },
-    chennai:   { ninja: "Rs.22,00,000", z900: "Rs.10,60,000", versys: "Rs.9,15,000", vulcan: "Rs.8,62,000", klr: "Rs.2,14,000", dealer: "Kawasaki Chennai, Anna Nagar" },
-    hyderabad: { ninja: "Rs.21,80,000", z900: "Rs.10,48,000", versys: "Rs.9,05,000", vulcan: "Rs.8,52,000", klr: "Rs.2,10,000", dealer: "Kawasaki Hyderabad, Banjara Hills" },
-    kolkata:   { ninja: "Rs.22,30,000", z900: "Rs.10,75,000", versys: "Rs.9,28,000", vulcan: "Rs.8,75,000", klr: "Rs.2,16,000", dealer: "Kawasaki Kolkata, Salt Lake" },
-    pune:      { ninja: "Rs.21,95,000", z900: "Rs.10,52,000", versys: "Rs.9,08,000", vulcan: "Rs.8,55,000", klr: "Rs.2,11,000", dealer: "Kawasaki Pune, Viman Nagar" },
-    jaipur:    { ninja: "Rs.22,20,000", z900: "Rs.10,70,000", versys: "Rs.9,25,000", vulcan: "Rs.8,70,000", klr: "Rs.2,17,000", dealer: "Kawasaki Jaipur, Vaishali Nagar" }
-  };
+      const bikeData = {
+        mumbai:    { ninja: "Rs.22,45,000", z900: "Rs.10,82,000", versys: "Rs.9,35,000", vulcan: "Rs.8,82,000", klr: "Rs.2,18,000", dealer: "Kawasaki Mumbai, Andheri (E)" },
+        delhi:     { ninja: "Rs.22,10,000", z900: "Rs.10,65,000", versys: "Rs.9,20,000", vulcan: "Rs.8,68,000", klr: "Rs.2,15,000", dealer: "Kawasaki Delhi, Rohini" },
+        bangalore: { ninja: "Rs.21,90,000", z900: "Rs.10,55,000", versys: "Rs.9,10,000", vulcan: "Rs.8,58,000", klr: "Rs.2,12,000", dealer: "Kawasaki Bangalore, Koramangala" },
+        chennai:   { ninja: "Rs.22,00,000", z900: "Rs.10,60,000", versys: "Rs.9,15,000", vulcan: "Rs.8,62,000", klr: "Rs.2,14,000", dealer: "Kawasaki Chennai, Anna Nagar" },
+        hyderabad: { ninja: "Rs.21,80,000", z900: "Rs.10,48,000", versys: "Rs.9,05,000", vulcan: "Rs.8,52,000", klr: "Rs.2,10,000", dealer: "Kawasaki Hyderabad, Banjara Hills" },
+        kolkata:   { ninja: "Rs.22,30,000", z900: "Rs.10,75,000", versys: "Rs.9,28,000", vulcan: "Rs.8,75,000", klr: "Rs.2,16,000", dealer: "Kawasaki Kolkata, Salt Lake" },
+        pune:      { ninja: "Rs.21,95,000", z900: "Rs.10,52,000", versys: "Rs.9,08,000", vulcan: "Rs.8,55,000", klr: "Rs.2,11,000", dealer: "Kawasaki Pune, Viman Nagar" },
+        jaipur:    { ninja: "Rs.22,20,000", z900: "Rs.10,70,000", versys: "Rs.9,25,000", vulcan: "Rs.8,70,000", klr: "Rs.2,17,000", dealer: "Kawasaki Jaipur, Vaishali Nagar" }
+      };
 
-  const dealerLinks = {
-    mumbai:    "https://www.google.com/maps/search/Kawasaki+dealer+Mumbai+Andheri",
-    delhi:     "https://www.google.com/maps/search/Kawasaki+dealer+Delhi+Rohini",
-    bangalore: "https://www.google.com/maps/search/Kawasaki+dealer+Bangalore+Koramangala",
-    chennai:   "https://www.google.com/maps/search/Kawasaki+dealer+Chennai+Anna+Nagar",
-    hyderabad: "https://www.google.com/maps/search/Kawasaki+dealer+Hyderabad+Banjara+Hills",
-    kolkata:   "https://www.google.com/maps/search/Kawasaki+dealer+Kolkata+Salt+Lake",
-    pune:      "https://www.google.com/maps/search/Kawasaki+dealer+Pune+Viman+Nagar",
-    jaipur:    "https://www.google.com/maps/search/Kawasaki+dealer+Jaipur+Vaishali+Nagar"
-  };
+      const dealerLinks = {
+        mumbai:    "https://www.google.com/maps/search/Kawasaki+dealer+Mumbai+Andheri",
+        delhi:     "https://www.google.com/maps/search/Kawasaki+dealer+Delhi+Rohini",
+        bangalore: "https://www.google.com/maps/search/Kawasaki+dealer+Bangalore+Koramangala",
+        chennai:   "https://www.google.com/maps/search/Kawasaki+dealer+Chennai+Anna+Nagar",
+        hyderabad: "https://www.google.com/maps/search/Kawasaki+dealer+Hyderabad+Banjara+Hills",
+        kolkata:   "https://www.google.com/maps/search/Kawasaki+dealer+Kolkata+Salt+Lake",
+        pune:      "https://www.google.com/maps/search/Kawasaki+dealer+Pune+Viman+Nagar",
+        jaipur:    "https://www.google.com/maps/search/Kawasaki+dealer+Jaipur+Vaishali+Nagar"
+      };
 
-  const availability = {
-    mumbai:    { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "On Order" },
-    delhi:     { ninja: "In Stock", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
-    bangalore: { ninja: "Limited Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
-    chennai:   { ninja: "On Order", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "In Stock" },
-    hyderabad: { ninja: "In Stock", z900: "Limited Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
-    kolkata:   { ninja: "On Order", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
-    pune:      { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "Limited Stock" },
-    jaipur:    { ninja: "Limited Stock", z900: "On Order", versys: "In Stock", vulcan: "In Stock", klr: "In Stock" }
-  };
+      const availability = {
+        mumbai:    { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "On Order" },
+        delhi:     { ninja: "In Stock", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
+        bangalore: { ninja: "Limited Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
+        chennai:   { ninja: "On Order", z900: "In Stock", versys: "In Stock", vulcan: "Limited Stock", klr: "In Stock" },
+        hyderabad: { ninja: "In Stock", z900: "Limited Stock", versys: "In Stock", vulcan: "In Stock", klr: "On Order" },
+        kolkata:   { ninja: "On Order", z900: "In Stock", versys: "Limited Stock", vulcan: "In Stock", klr: "In Stock" },
+        pune:      { ninja: "In Stock", z900: "In Stock", versys: "In Stock", vulcan: "In Stock", klr: "Limited Stock" },
+        jaipur:    { ninja: "Limited Stock", z900: "On Order", versys: "In Stock", vulcan: "In Stock", klr: "In Stock" }
+      };
 
-  function availColor(status) {
-    if (status === "In Stock") return "#00d957";
-    if (status === "Limited Stock") return "#f5a623";
-    return "#e05c5c";
-  }
+      function availColor(status) {
+        if (status === "In Stock") return "#00d957";
+        if (status === "Limited Stock") return "#f5a623";
+        return "#e05c5c";
+      }
 
-  function updatePrices() {
-    const city = document.getElementById("citySelect").value;
+      window.BikeData = { bikeData, dealerLinks, availability, availColor };
+    </script>
 
-    if (!city) {
-      ["ninja","z900","versys","vulcan","klr"].forEach(bike => {
-        document.getElementById("avail-" + bike).textContent = "Select a city";
-        document.getElementById("avail-" + bike).style.color = "var(--kawa-green-2)";
-        document.getElementById("dealer-" + bike).innerHTML = "—";
+    <!-- jQuery Master Controller -->
+    <script>
+      $(document).ready(function () {
+
+        const speed = { fast: 250, medium: 400, slow: 600 };
+        const { bikeData, dealerLinks, availability, availColor } = window.BikeData;
+        let currentImgIndex = 0;
+        const bikeImages = [];
+
+        $('.bike-img').each(function () {
+          bikeImages.push({
+            src: $(this).attr('src'),
+            alt: $(this).attr('alt'),
+            caption: $(this).attr('data-caption')
+          });
+        });
+
+
+        // ── THEME ──
+        const savedTheme = localStorage.getItem('kawasaki_theme') || 'dark';
+        $('body').attr('data-theme', savedTheme);
+        $('#themeToggle').text(savedTheme === 'dark' ? '☀️' : '🌙');
+
+        $('#themeToggle').on('click', function () {
+          const $btn = $(this);
+          $btn.animate({ opacity: 0 }, speed.fast, function () {
+            const current = $('body').attr('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            $('body').attr('data-theme', next);
+            localStorage.setItem('kawasaki_theme', next);
+            $btn.text(next === 'dark' ? '☀️' : '🌙');
+            $btn.animate({ opacity: 1 }, speed.fast);
+          });
+          showToast('🎨 Theme switched!');
+        });
+
+
+        // ── MOBILE MENU ──
+        $('#menuToggle').on('click', function () {
+          const $nav = $('#primaryNav');
+          $nav.slideToggle(speed.medium, function () {
+            const isOpen = $nav.is(':visible');
+            $nav.toggleClass('open', isOpen);
+            $('#menuToggle')
+              .attr('aria-expanded', isOpen ? 'true' : 'false')
+              .text(isOpen ? '✕' : '☰');
+          });
+        });
+
+        $('#primaryNav a').on('click', function () {
+          if ($(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false');
+          }
+        });
+
+        $(document).on('keydown', function (e) {
+          if (e.key === 'Escape' && $('#primaryNav').is(':visible') && $(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false').focus();
+          }
+        });
+
+
+        // ── TOAST ──
+        function showToast(message) {
+          $('.toast').stop(true).fadeOut(150, function () { $(this).remove(); });
+          const $toast = $('<div class="toast"></div>').text(message);
+          $('body').append($toast);
+          $toast.fadeIn(speed.fast);
+          setTimeout(function () {
+            $toast.fadeOut(speed.fast, function () { $(this).remove(); });
+          }, 3000);
+        }
+
+
+        // ── PAGE LOAD ANIMATIONS ──
+        $('#heroCard').css({ opacity: 0, marginTop: '30px' });
+        $('#detailsCard').css({ opacity: 0, marginTop: '30px' });
+
+        $('#heroCard').animate({ opacity: 1, marginTop: '0px' }, speed.slow);
+
+        $('#models-title').css({ opacity: 0 });
+        $('#models-title').delay(200).animate({ opacity: 1 }, speed.medium);
+
+        $('#modelsDesc').css({ opacity: 0 });
+        $('#modelsDesc').delay(400).animate({ opacity: 1 }, speed.medium);
+
+        $('#twoCol').css({ opacity: 0 });
+        $('#twoCol').delay(600).animate({ opacity: 1 }, speed.medium);
+
+        setTimeout(function () {
+          $('#detailsCard').animate({ opacity: 1, marginTop: '0px' }, speed.slow);
+        }, 400);
+
+
+        // ── TABLE ROWS STAGGERED FADE IN ──
+        $('.table-row').css({ opacity: 0 });
+        $('.table-row').each(function (i) {
+          $(this).delay(800 + i * 120).animate({ opacity: 1 }, speed.medium);
+        });
+
+
+        // ── TABLE ROW HOVER ──
+        $('.table-row').on('mouseenter', function () {
+          $(this).stop(true).animate({ opacity: 0.85 }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ opacity: 1 }, speed.fast);
+        });
+
+
+        // ── TABLE ROW CLICK → SMOOTH SCROLL TO ARTICLE ──
+        $('.table-row').on('click', function () {
+          const bike = $(this).attr('data-bike');
+          const targetMap = {
+            'ninja-zx10r': '#article-ninja',
+            'z900': '#article-z900',
+            'versys-650': '#article-versys',
+            'vulcan-s': '#article-vulcan',
+            'klr650': '#article-klr'
+          };
+          const target = targetMap[bike];
+          if (target && $(target).length) {
+            $('html, body').animate({
+              scrollTop: $(target).offset().top - 80
+            }, speed.slow);
+            $(target).animate({ opacity: 0.6 }, 200).animate({ opacity: 1 }, 400);
+          }
+        });
+
+
+        // ── QUICK JUMP SMOOTH SCROLL ──
+        $('.smooth-jump').on('click', function (e) {
+          e.preventDefault();
+          const target = $(this).attr('href');
+          if ($(target).length) {
+            $('html, body').animate({
+              scrollTop: $(target).offset().top - 80
+            }, speed.slow);
+            $(target)
+              .animate({ opacity: 0.6 }, 200)
+              .animate({ opacity: 1 }, 400);
+          }
+        });
+
+
+        // ── PILL HOVER ANIMATE ──
+        $('.pill').on('mouseenter', function () {
+          $(this).stop(true).animate(
+            { paddingLeft: '14px', paddingRight: '14px' },
+            speed.fast
+          );
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate(
+            { paddingLeft: '10px', paddingRight: '10px' },
+            speed.fast
+          );
+        });
+
+
+        // ── CITY SELECTOR → PRICE UPDATE WITH ANIMATION ──
+        $('#citySelect').on('change', function () {
+          const city = $(this).val();
+          const cityName = $(this).find('option:selected').text();
+
+          $(this).stop(true)
+            .animate({ opacity: 0.6 }, 100)
+            .animate({ opacity: 1 }, 100)
+            .animate({ opacity: 0.8 }, 100)
+            .animate({ opacity: 1 }, 100);
+
+          if (!city) {
+            $('.price-tag').each(function () {
+              const $tag = $(this);
+              $tag.animate({ opacity: 0 }, speed.fast, function () {
+                const defaults = {
+                  'price-ninja': 'Rs.20,79,000 <small>approx</small>',
+                  'price-z900': 'Rs.9,99,000 <small>approx</small>',
+                  'price-versys': 'Rs.8,63,000 <small>approx</small>',
+                  'price-vulcan': 'Rs.8,13,000 <small>approx</small>',
+                  'price-klr': 'Rs.2,00,000 <small>approx</small>'
+                };
+                $tag.html(defaults[$tag.attr('id')] || $tag.html());
+                $tag.removeClass('updated');
+                $tag.animate({ opacity: 1 }, speed.fast);
+              });
+            });
+
+            ['ninja', 'z900', 'versys', 'vulcan', 'klr'].forEach(function (bike) {
+              $('#avail-' + bike).text('Select a city').css('color', 'var(--kawa-green-2)');
+              $('#dealer-' + bike).html('—');
+            });
+
+            $('#city-note').fadeOut(speed.fast, function () {
+              $(this).text('Prices shown are on-road estimates for the selected city.')
+                .fadeIn(speed.fast);
+            });
+
+            $('.table-price').each(function () {
+              $(this).animate({ opacity: 0 }, speed.fast, function () {
+                $(this).animate({ opacity: 1 }, speed.fast);
+              });
+            });
+
+            return;
+          }
+
+          const d = bikeData[city];
+          const a = availability[city];
+
+          $('.price-tag').each(function () {
+            const $tag = $(this);
+            $tag.animate({ opacity: 0 }, speed.fast, function () {
+              const priceMap = {
+                'price-ninja': d.ninja,
+                'price-z900': d.z900,
+                'price-versys': d.versys,
+                'price-vulcan': d.vulcan,
+                'price-klr': d.klr
+              };
+              const id = $tag.attr('id');
+              if (priceMap[id]) {
+                $tag.html(priceMap[id] + ' <small>on-road</small>');
+                $tag.addClass('updated');
+              }
+              $tag.animate({ opacity: 1 }, speed.fast);
+            });
+          });
+
+          ['ninja', 'z900', 'versys', 'vulcan', 'klr'].forEach(function (bike) {
+            const $avail = $('#avail-' + bike);
+            const $dealer = $('#dealer-' + bike);
+
+            $avail.animate({ opacity: 0 }, speed.fast, function () {
+              $avail.text(a[bike]).css('color', availColor(a[bike]));
+              $avail.animate({ opacity: 1 }, speed.fast);
+            });
+
+            $dealer.slideUp(speed.fast, function () {
+              $dealer.html(
+                `<a href="${dealerLinks[city]}" target="_blank" rel="noopener noreferrer"
+                  style="color:var(--kawa-green-2);text-decoration:underline;text-underline-offset:3px;"
+                >${d.dealer} 🗺️</a>`
+              );
+              $dealer.slideDown(speed.fast);
+            });
+          });
+
+          const tablePrices = {
+            'ninja-zx10r': d.ninja,
+            'z900': d.z900,
+            'versys-650': d.versys,
+            'vulcan-s': d.vulcan,
+            'klr650': d.klr
+          };
+
+          $('.table-row').each(function () {
+            const bike = $(this).attr('data-bike');
+            const $priceCell = $(this).find('.table-price');
+            if (tablePrices[bike]) {
+              $priceCell.animate({ opacity: 0 }, speed.fast, function () {
+                $(this).text(tablePrices[bike]);
+                $(this).animate({ opacity: 1 }, speed.fast);
+              });
+            }
+          });
+
+          $('#city-note').fadeOut(speed.fast, function () {
+            $(this).text('Showing on-road prices & availability for: ' + cityName)
+              .fadeIn(speed.fast);
+          });
+
+          showToast('📍 Prices updated for ' + cityName);
+        });
+
+
+        // ── SPECS TOGGLE BUTTON ──
+        $('.specs-toggle-btn').on('click', function () {
+          const targetId = $(this).attr('data-target');
+          const $specs = $('#' + targetId);
+          const $btn = $(this);
+
+          $specs.slideToggle(speed.medium, function () {
+            const isVisible = $specs.is(':visible');
+            $btn.text(isVisible ? '📋 Hide Specifications' : '📋 Show Specifications');
+          });
+        });
+
+
+        // ── MODEL ARTICLE SCROLL REVEAL ──
+        $('.model-article').css({ opacity: 0, marginTop: '25px' });
+
+        function isInViewport($el) {
+          if (!$el.length) return false;
+          const top = $el.offset().top;
+          const bottom = top + $el.outerHeight();
+          const vtop = $(window).scrollTop();
+          const vbottom = vtop + $(window).height();
+          return bottom > vtop && top < vbottom - 50;
+        }
+
+        function revealArticles() {
+          $('.model-article').each(function (i) {
+            const $art = $(this);
+            if (isInViewport($art) && parseFloat($art.css('opacity')) === 0) {
+              $art.delay(i * 120).animate(
+                { opacity: 1, marginTop: '0px' },
+                speed.medium
+              );
+            }
+          });
+        }
+
+        $(window).on('scroll', revealArticles);
+        revealArticles();
+
+
+        // ── MODEL ARTICLE HOVER ──
+        $('.model-article').on('mouseenter', function () {
+          $(this).stop(true).animate({ marginTop: '-5px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ marginTop: '0px' }, speed.fast);
+        });
+
+
+        // ── LIGHTBOX ──
+        function openLightbox(index) {
+          currentImgIndex = index;
+          const img = bikeImages[index];
+          $('#lightboxImage')
+            .attr({ src: img.src, alt: img.alt })
+            .css({ opacity: 0, marginTop: '20px' });
+          $('#lightboxCaption').text(img.caption);
+          $('#lightbox')
+            .css('display', 'flex')
+            .hide()
+            .fadeIn(speed.medium, function () {
+              $('#lightboxImage').animate({ opacity: 1, marginTop: '0px' }, speed.medium);
+            });
+          $('body').css('overflow', 'hidden');
+        }
+
+        function closeLightbox() {
+          $('#lightboxImage').animate({ opacity: 0, marginTop: '20px' }, speed.fast, function () {
+            $('#lightbox').fadeOut(speed.fast, function () {
+              $('#lightboxImage').attr('src', '').css({ opacity: '', marginTop: '' });
+              $('body').css('overflow', '');
+            });
+          });
+        }
+
+        function goToNext() {
+          currentImgIndex = (currentImgIndex + 1) % bikeImages.length;
+          $('#lightboxImage').animate({ opacity: 0 }, speed.fast, function () {
+            const img = bikeImages[currentImgIndex];
+            $('#lightboxImage').attr({ src: img.src, alt: img.alt });
+            $('#lightboxCaption').text(img.caption);
+            $('#lightboxImage').animate({ opacity: 1 }, speed.fast);
+          });
+        }
+
+        function goToPrev() {
+          currentImgIndex = (currentImgIndex - 1 + bikeImages.length) % bikeImages.length;
+          $('#lightboxImage').animate({ opacity: 0 }, speed.fast, function () {
+            const img = bikeImages[currentImgIndex];
+            $('#lightboxImage').attr({ src: img.src, alt: img.alt });
+            $('#lightboxCaption').text(img.caption);
+            $('#lightboxImage').animate({ opacity: 1 }, speed.fast);
+          });
+        }
+
+        $('.bike-img').on('click', function () {
+          const index = $('.bike-img').index(this);
+          openLightbox(index);
+        });
+
+        $('#lightboxClose').on('click', closeLightbox);
+
+        $('#lightbox').on('click', function (e) {
+          if (e.target === this) closeLightbox();
+        });
+
+        $('#lightboxNext').on('click', function (e) {
+          e.stopPropagation();
+          goToNext();
+        });
+
+        $('#lightboxPrev').on('click', function (e) {
+          e.stopPropagation();
+          goToPrev();
+        });
+
+        $(document).on('keydown', function (e) {
+          if ($('#lightbox').is(':visible')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') goToNext();
+            if (e.key === 'ArrowLeft') goToPrev();
+          }
+        });
+
+        $('#lightboxClose').on('mouseenter', function () {
+          $(this).stop(true).animate({ width: '40px', height: '40px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ width: '36px', height: '36px' }, speed.fast);
+        });
+
+
+        // ── NAV LINK HOVER ──
+        $('nav a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '18px', paddingRight: '18px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '14px', paddingRight: '14px' }, speed.fast);
+        });
+
+
+        // ── BRAND LOGO HOVER ──
+        $('.brand').on('mouseenter', function () {
+          $(this).find('img').stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).find('img').stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+
+        // ── FOOTER LINKS HOVER ──
+        $('.footer-links a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '4px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '0px' }, speed.fast);
+        });
+
+
+        // ── FOOTER REVEAL ──
+        $('footer').css({ opacity: 0 });
+
+        function revealFooter() {
+          if (isInViewport($('footer')) && parseFloat($('footer').css('opacity')) === 0) {
+            $('footer').animate({ opacity: 1 }, speed.slow);
+          }
+        }
+
+        $(window).on('scroll', revealFooter);
+        revealFooter();
+
+
+        // ── READING PROGRESS ──
+        $(window).on('scroll', function () {
+          const scrollTop = $(this).scrollTop();
+          const docHeight = $(document).height() - $(window).height();
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          $('#readingProgress').stop(true).animate(
+            { width: progress + '%' },
+            { duration: 80, queue: false }
+          );
+        });
+
+
+        // ── BACK TO TOP ──
+        $('#backToTop').css({ opacity: 0, visibility: 'hidden' });
+
+        $(window).on('scroll', function () {
+          if ($(this).scrollTop() > 400) {
+            $('#backToTop')
+              .css('visibility', 'visible')
+              .stop(true)
+              .animate({ opacity: 1, bottom: '24px' }, speed.fast);
+          } else {
+            $('#backToTop').stop(true).animate({ opacity: 0, bottom: '10px' }, speed.fast, function () {
+              $(this).css('visibility', 'hidden');
+            });
+          }
+        });
+
+        $('#backToTop').on('click', function (e) {
+          e.preventDefault();
+          $('html, body').animate({ scrollTop: 0 }, speed.slow);
+        });
+
+        $('#backToTop').on('mouseenter', function () {
+          $(this).stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+
+        // ── KEYBOARD SHORTCUTS ──
+        $(document).on('keydown', function (e) {
+          if (e.target.matches('input, textarea, select')) return;
+          if (e.key === '?') showToast('⌨️ Shortcuts: Alt+T=Theme, Alt+M=Menu, Arrows=Lightbox Nav');
+          if (e.altKey && (e.key === 't' || e.key === 'T')) $('#themeToggle').trigger('click');
+          if (e.altKey && (e.key === 'm' || e.key === 'M')) $('#menuToggle').trigger('click');
+        });
+
+
+        setTimeout(function () {
+          showToast('🏍️ Select a city to see on-road prices!');
+        }, 900);
+
+        console.log('✓ Bikes jQuery Controller Initialized');
       });
-      document.getElementById("price-ninja").innerHTML  = "Rs.20,79,000 <small>approx</small>";
-      document.getElementById("price-z900").innerHTML   = "Rs.9,99,000 <small>approx</small>";
-      document.getElementById("price-versys").innerHTML = "Rs.8,63,000 <small>approx</small>";
-      document.getElementById("price-vulcan").innerHTML = "Rs.8,13,000 <small>approx</small>";
-      document.getElementById("price-klr").innerHTML    = "Rs.2,00,000 <small>approx</small>";
-      document.getElementById("city-note").textContent  = "Prices shown are on-road estimates for the selected city.";
-      return;
-    }
+    </script>
 
-    const d = bikeData[city];
-    const a = availability[city];
-    const citySelect = document.getElementById("citySelect");
-    const cityName = citySelect.options[citySelect.selectedIndex].text;
-
-    document.getElementById("price-ninja").innerHTML  = d.ninja  + " <small>on-road</small>";
-    document.getElementById("price-z900").innerHTML   = d.z900   + " <small>on-road</small>";
-    document.getElementById("price-versys").innerHTML = d.versys + " <small>on-road</small>";
-    document.getElementById("price-vulcan").innerHTML = d.vulcan + " <small>on-road</small>";
-    document.getElementById("price-klr").innerHTML    = d.klr    + " <small>on-road</small>";
-
-    ["ninja","z900","versys","vulcan","klr"].forEach(bike => {
-      const availEl  = document.getElementById("avail-"  + bike);
-      const dealerEl = document.getElementById("dealer-" + bike);
-
-      availEl.textContent = a[bike];
-      availEl.style.color = availColor(a[bike]);
-
-      dealerEl.innerHTML = `<a href="${dealerLinks[city]}"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="color: var(--kawa-green-2); text-decoration: underline; text-underline-offset: 3px;"
-        aria-label="Find ${d.dealer} on Google Maps"
-      >${d.dealer} 🗺️</a>`;
-    });
-
-    document.getElementById("city-note").textContent = "Showing on-road prices & availability for: " + cityName;
-  }
-</script>
-
-
-
+  </body>
+</html>
