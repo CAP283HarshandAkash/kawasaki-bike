@@ -8,34 +8,78 @@
       :root {
         --kawa-green: #00b140;
         --kawa-green-2: #00d957;
+        --kawa-green-glow: rgba(0, 177, 64, 0.14);
         --muted: #b8c2cc;
         --card: rgba(12, 16, 20, 0.72);
         --line: rgba(255, 255, 255, 0.12);
+        --line-strong: rgba(255, 255, 255, 0.18);
         --bg: #070a0e;
+        --overlay: rgba(0, 0, 0, 0.62);
+        --white-subtle: rgba(255, 255, 255, 0.06);
+        --text-primary: #f5f7fa;
+        --text-secondary: #e8edf3;
+        --blur: blur(10px);
+        --radius-sm: 10px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 18px;
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.15);
+        --transition-fast: 0.2s ease;
+        --transition-med: 0.3s ease;
+      }
+
+      body[data-theme="light"] {
+        --bg: #f0f2f5;
+        --text-primary: #1a1a2e;
+        --text-secondary: #2d2d44;
+        --muted: #6b7280;
+        --card: rgba(255, 255, 255, 0.92);
+        --line: rgba(0, 0, 0, 0.1);
+        --line-strong: rgba(0, 0, 0, 0.18);
+        --overlay: rgba(255, 255, 255, 0.85);
+        --white-subtle: rgba(0, 0, 0, 0.04);
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 8px 32px rgba(0, 177, 64, 0.12);
       }
 
       * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
-        margin: 0;
-        color: #f5f7fa;
+        color: var(--text-primary);
         font-family: "Segoe UI", Tahoma, Arial, sans-serif;
         line-height: 1.55;
         background:
           radial-gradient(900px 420px at 20% 10%, rgba(0, 177, 64, 0.12), transparent 60%),
           radial-gradient(700px 420px at 90% 20%, rgba(0, 217, 87, 0.08), transparent 55%),
           var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        transition: all 0.3s ease;
       }
 
       a {
         color: var(--kawa-green-2);
         text-decoration: none;
+        transition: color var(--transition-fast);
       }
+
       a:hover,
       a:focus-visible {
         text-decoration: underline;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--kawa-green-2);
+        outline-offset: 3px;
       }
 
       .container {
@@ -46,8 +90,9 @@
       header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        backdrop-filter: blur(10px);
+        z-index: 50;
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
         background: rgba(0, 0, 0, 0.55);
         border-bottom: 1px solid var(--line);
       }
@@ -58,46 +103,130 @@
         justify-content: space-between;
         gap: 16px;
         padding: 12px 0;
+        flex-wrap: wrap;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
-        min-width: 220px;
+        min-width: 200px;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: opacity var(--transition-fast);
+      }
+
+      .brand:hover {
+        opacity: 0.85;
+        text-decoration: none;
       }
 
       .brand img {
         width: 44px;
         height: 44px;
+        flex-shrink: 0;
       }
 
       .brand strong {
         letter-spacing: 0.6px;
         font-size: 15px;
+        white-space: nowrap;
+        color: var(--text-primary);
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .theme-toggle {
+        background: var(--white-subtle);
+        border: 1px solid var(--line);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
       }
 
       nav ul {
         list-style: none;
         display: flex;
-        gap: 12px;
-        padding: 0;
-        margin: 0;
+        gap: 8px;
         flex-wrap: wrap;
         justify-content: flex-end;
       }
 
       nav a {
         display: inline-block;
-        padding: 8px 10px;
+        padding: 8px 14px;
         border: 1px solid transparent;
-        border-radius: 10px;
-        color: #f5f7fa;
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 500;
+        transition: all var(--transition-fast);
+      }
+
+      nav a:hover {
+        background: var(--white-subtle);
+        border-color: var(--line);
+        text-decoration: none;
       }
 
       nav a[aria-current="page"] {
         border-color: var(--line);
-        background: rgba(0, 177, 64, 0.14);
+        background: var(--kawa-green-glow);
+        color: var(--kawa-green-2);
+        font-weight: 600;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        transition: background var(--transition-fast);
+      }
+
+      .menu-toggle:hover {
+        background: var(--white-subtle);
+      }
+
+      @media (max-width: 700px) {
+        .menu-toggle {
+          display: block;
+        }
+
+        nav {
+          display: none;
+          width: 100%;
+          order: 3;
+        }
+
+        nav.open {
+          display: block;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 4px;
+          padding: 12px 0 4px;
+          border-top: 1px solid var(--line);
+          margin-top: 8px;
+        }
+
+        nav a {
+          display: block;
+          padding: 12px 14px;
+        }
       }
 
       main {
@@ -106,14 +235,22 @@
 
       .card {
         border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: var(--radius-xl);
         background: var(--card);
-        padding: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow-card);
       }
 
       h1 {
         margin: 0 0 10px;
         font-size: clamp(24px, 3vw, 34px);
+        color: var(--text-primary);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: var(--text-primary);
       }
 
       .muted {
@@ -123,15 +260,43 @@
       .map-wrap {
         margin-top: 12px;
         border: 1px solid var(--line);
-        border-radius: 16px;
+        border-radius: var(--radius-lg);
         overflow: hidden;
         background: rgba(255, 255, 255, 0.03);
+        position: relative;
+        cursor: pointer;
       }
 
       .map-wrap img {
         display: block;
         width: 100%;
         height: auto;
+        transition: transform var(--transition-med);
+      }
+
+      .map-wrap:hover img {
+        transform: scale(1.01);
+      }
+
+      .map-tooltip {
+        position: absolute;
+        background: var(--overlay);
+        color: var(--text-primary);
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line-strong);
+        font-size: 13px;
+        font-weight: 600;
+        pointer-events: none;
+        display: none;
+        z-index: 10;
+        backdrop-filter: blur(6px);
+        white-space: nowrap;
+      }
+
+      .map-tooltip span {
+        color: var(--kawa-green-2);
+        margin-left: 4px;
       }
 
       .grid {
@@ -145,9 +310,16 @@
         margin: 0;
         grid-column: span 12;
         border: 1px solid var(--line);
-        border-radius: 16px;
+        border-radius: var(--radius-lg);
         background: rgba(255, 255, 255, 0.03);
         padding: 12px;
+        transition: box-shadow var(--transition-med);
+        cursor: pointer;
+      }
+
+      figure:hover {
+        box-shadow: var(--shadow-hover);
+        border-color: var(--line-strong);
       }
 
       @media (min-width: 900px) {
@@ -160,7 +332,7 @@
         width: 100%;
         height: auto;
         display: block;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         background: rgba(0, 0, 0, 0.35);
       }
 
@@ -168,6 +340,11 @@
         margin-top: 8px;
         color: var(--muted);
         font-size: 14px;
+        line-height: 1.5;
+      }
+
+      figcaption strong {
+        color: var(--text-primary);
       }
 
       .credit {
@@ -177,10 +354,11 @@
 
       .media {
         position: relative;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         overflow: hidden;
         border: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.35);
+        cursor: zoom-in;
       }
 
       .media img {
@@ -189,21 +367,43 @@
         display: block;
         aspect-ratio: 4 / 3;
         object-fit: cover;
+        transition: transform var(--transition-med);
+      }
+
+      .media:hover img {
+        transform: scale(1.04);
+      }
+
+      .media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 55%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-med);
+      }
+
+      .media:hover::after {
+        opacity: 1;
       }
 
       .price-tag {
         position: absolute;
         left: 10px;
         bottom: 10px;
-        padding: 6px 10px;
+        padding: 6px 12px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(0, 0, 0, 0.62);
-        color: #f5f7fa;
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        color: var(--text-primary);
         font-weight: 800;
         letter-spacing: 0.2px;
         font-size: 13px;
         backdrop-filter: blur(6px);
+        z-index: 2;
+        display: none;
+        white-space: nowrap;
       }
 
       .price-tag small {
@@ -212,181 +412,843 @@
         margin-left: 6px;
       }
 
+      .zoom-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--overlay);
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--text-primary);
+        backdrop-filter: blur(6px);
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 92%;
+        max-height: 92%;
+        text-align: center;
+      }
+
+      .lightbox-content img {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: var(--radius-md);
+        display: block;
+        margin: 0 auto;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -44px;
+        right: 0;
+        background: var(--kawa-green);
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .lightbox-close:hover {
+        background: var(--kawa-green-2);
+        transform: scale(1.1);
+      }
+
+      .lightbox-caption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        padding: 0 10px;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        background: var(--overlay);
+        border: 1px solid var(--line-strong);
+        color: var(--text-primary);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(6px);
+      }
+
+      .lightbox-prev:hover,
+      .lightbox-next:hover {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green-2);
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 40;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--line-strong);
+        background: var(--overlay);
+        backdrop-filter: blur(6px);
+        color: var(--text-primary);
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        text-decoration: none;
+        transition: background var(--transition-fast);
+      }
+
+      .back-to-top:hover {
+        background: var(--kawa-green);
+        border-color: var(--kawa-green);
+        text-decoration: none;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        z-index: 3000;
+        display: none;
+        max-width: 300px;
+        font-size: 14px;
+        box-shadow: var(--shadow-card);
+      }
+
       footer {
         border-top: 1px solid var(--line);
         background: rgba(0, 0, 0, 0.55);
-        padding: 18px 0;
+        padding: 20px 0;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
       }
 
       footer small {
         color: var(--muted);
+        font-size: 13px;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+        font-size: 13px;
+        transition: color var(--transition-fast);
+      }
+
+      .footer-links a:hover {
+        color: var(--kawa-green-2);
+      }
+
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--kawa-green), var(--kawa-green-2));
+        z-index: 1000;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 16px;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          text-align: center;
+        }
       }
     </style>
   </head>
-  <body>
-    <header>
+
+  <body data-theme="dark">
+
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <header id="mainHeader">
       <div class="container topbar">
-        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website (Home)">
-          <img src="assets/kawasaki-logo.svg" alt="Kawasaki green logo mark" />
+
+        <a class="brand" href="index.html" aria-label="Kawasaki Bikes Website Home">
+          <img
+            src="https://via.placeholder.com/44x44/00b140/ffffff?text=K"
+            alt="Kawasaki green logo mark"
+            width="44"
+            height="44"
+            id="brandLogo"
+          />
           <strong>Kawasaki Bikes Website</strong>
         </a>
 
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="bikes.html">Bike Models</a></li>
-            <li><a href="gallery.html" aria-current="page">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
+        <div class="header-controls">
+          <nav id="primaryNav" aria-label="Primary navigation">
+            <ul role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="bikes.html">Bike Models</a></li>
+              <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+
+          <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+        </div>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+        >☰</button>
+
       </div>
     </header>
 
-    <main class="container">
-      <section class="card" aria-labelledby="gallery-title">
+    <main class="container" id="main-content">
+
+      <section class="card" aria-labelledby="gallery-title" id="heroCard">
         <h1 id="gallery-title">Image Gallery + Image Map</h1>
-        <p class="muted">
+        <p class="muted" id="galleryDesc">
           Requirement: this page includes multiple images and an <strong>image map</strong> with clickable areas.
           Click a highlighted area on the banner to jump to the matching model section on the Bike Models page.
         </p>
 
-        <section aria-labelledby="map-title" style="margin-top: 12px">
-          <h2 id="map-title" style="margin: 0 0 10px; font-size: 18px">Clickable Banner (Image Map)</h2>
+        <section aria-labelledby="map-title" style="margin-top: 12px" id="mapSection">
+          <h2 id="map-title">Clickable Banner (Image Map)</h2>
 
-          <div class="map-wrap">
+          <div class="map-wrap" id="mapWrap">
             <img
               src="assets/gallery-map.svg"
               alt="Gallery banner with five bike zones: Ninja, Z900, Versys, Vulcan, KLR"
               usemap="#bikemap"
               width="1000"
               height="320"
+              id="mapImage"
             />
+            <div class="map-tooltip" id="mapTooltip">🏍️ <span></span></div>
 
             <map name="bikemap">
-              <!-- coords assume 1000x320 -->
-              <area shape="rect" coords="0,0,200,320" href="ninja-zx10r.html" alt="Ninja ZX-10R" />
-              <area shape="rect" coords="200,0,400,320" href="z900.html" alt="Z900" />
-              <area shape="rect" coords="400,0,600,320" href="versys-650.html" alt="Versys 650" />
-              <area shape="rect" coords="600,0,800,320" href="vulcan-s.html" alt="Vulcan S" />
-              <area shape="rect" coords="800,0,1000,320" href="klr650.html" alt="KLR650" />
+              <area shape="rect" coords="0,0,200,320"   href="ninja-zx10r.html" alt="Ninja ZX-10R"  data-label="Ninja ZX-10R"  data-price="₹21,00,000" />
+              <area shape="rect" coords="200,0,400,320"  href="z900.html"        alt="Z900"          data-label="Z900"           data-price="₹10,00,000" />
+              <area shape="rect" coords="400,0,600,320"  href="versys-650.html"  alt="Versys 650"    data-label="Versys 650"     data-price="₹8,80,000"  />
+              <area shape="rect" coords="600,0,800,320"  href="vulcan-s.html"    alt="Vulcan S"      data-label="Vulcan S"       data-price="₹8,30,000"  />
+              <area shape="rect" coords="800,0,1000,320" href="klr650.html"      alt="KLR650"        data-label="KLR650"         data-price="₹2,10,000"  />
             </map>
           </div>
 
-          <p class="muted" style="margin: 10px 0 0">
-            Tip: after jumping to a model, use the page navigation to come back here.
+          <p class="muted" id="mapTip" style="margin: 10px 0 0; display:none;">
+            💡 Tip: after jumping to a model, use the page navigation to come back here.
           </p>
         </section>
       </section>
 
-      <section class="card" style="margin-top: 16px" aria-label="Bike image gallery">
-        <h2 style="margin: 0 0 10px; font-size: 18px">More Kawasaki Bike Images</h2>
-        <p class="muted" style="margin-top: -4px">Real online photos (Wikimedia Commons) with some location details.</p>
+      <section class="card" style="margin-top: 16px" aria-label="Bike image gallery" id="galleryCard">
+        <h2 id="galleryGridTitle">More Kawasaki Bike Images</h2>
+        <p class="muted" id="galleryGridDesc">Real online photos (Wikimedia Commons) with some location details.</p>
 
-        <section class="grid">
-          <figure>
-            <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
-                  alt="Kawasaki Ninja ZX-10R (real photo)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Rs.20,79,000 <small>approx</small></span>
-              </div>
-            </a>
-            <figcaption><strong>Ninja ZX-10R</strong> — sport performance. <span class="credit">Source: Wikimedia Commons.</span></figcaption>
-          </figure>
-          <figure>
-            <a href="z900.html" aria-label="Open Z900 details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
-                  alt="Kawasaki Z900 green (real photo)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Rs.9,99,000 <small>approx</small></span>
-              </div>
-            </a>
-            <figcaption><strong>Z900</strong> — streetfighter style. <span class="credit">Source: Wikimedia Commons.</span></figcaption>
-          </figure>
-          <figure>
-            <a href="versys-650.html" aria-label="Open Versys 650 details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
-                  alt="Kawasaki Versys 650 (KLE 650) used by Austrian military police (real photo)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Rs.8,63,000 <small>approx</small></span>
-              </div>
-            </a>
+        <section class="grid" id="galleryGrid">
+
+          <figure class="gallery-figure" id="fig-1">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Kawasaki_ZX10R.JPG/1280px-Kawasaki_ZX10R.JPG"
+                alt="Kawasaki Ninja ZX-10R (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="Ninja ZX-10R — sport performance"
+              />
+              <span class="price-tag">Rs.20,79,000 <small>approx</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
             <figcaption>
-              <strong>Versys 650</strong> — touring comfort. Location: <strong>Austria</strong> (Bundesheer / Militärstreife).
+              <strong>Ninja ZX-10R</strong> — sport performance.
               <span class="credit">Source: Wikimedia Commons.</span>
             </figcaption>
           </figure>
-          <figure>
-            <a href="vulcan-s.html" aria-label="Open Vulcan S details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
-                  alt="Kawasaki Vulcan S 650 (real photo)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Rs.8,13,000 <small>approx</small></span>
-              </div>
-            </a>
-            <figcaption><strong>Vulcan S</strong> — cruiser proportions. <span class="credit">Source: Wikimedia Commons.</span></figcaption>
-          </figure>
-          <figure>
-            <a href="klr650.html" aria-label="Open KLR650 details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
-                  alt="Kawasaki KLR 650 at the Las Vegas Ride for Kids 2019 (real photo)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Rs.2,00,000 <small>approx</small></span>
-              </div>
-            </a>
+
+          <figure class="gallery-figure" id="fig-2">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Kawasaki_Z900%2C_green.jpg/1280px-Kawasaki_Z900%2C_green.jpg"
+                alt="Kawasaki Z900 green (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="Z900 — aggressive streetfighter style"
+              />
+              <span class="price-tag">Rs.9,99,000 <small>approx</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
             <figcaption>
-              <strong>KLR650</strong> — adventure / dual-sport. Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
+              <strong>Z900</strong> — streetfighter style.
               <span class="credit">Source: Wikimedia Commons.</span>
             </figcaption>
           </figure>
-          <figure>
-            <a href="ninja-zx10r.html" aria-label="Open Ninja ZX-10R details page">
-              <div class="media">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kawasaki_Ninja_H2.jpg/1280px-Kawasaki_Ninja_H2.jpg"
-                  alt="Kawasaki Ninja H2 (2015) photographed at Kobe Kawasaki World, Kobe, Japan"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                />
-                <span class="price-tag">Flagship <small>photo</small></span>
-              </div>
-            </a>
+
+          <figure class="gallery-figure" id="fig-3">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg/960px-Kawasaki_KLE_650_Versys_Austrian_army_military_police_motorcycle_Kawasaki_%22Milit%C3%A4rstreife%22.jpg"
+                alt="Kawasaki Versys 650 Austrian military police (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="Versys 650 — adventure touring comfort"
+              />
+              <span class="price-tag">Rs.8,63,000 <small>approx</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
             <figcaption>
-              <strong>Ninja H2</strong> — supercharged flagship. Location: <strong>Kobe Kawasaki World, Kobe, Japan</strong>.
+              <strong>Versys 650</strong> — touring comfort.
+              Location: <strong>Austria</strong>.
               <span class="credit">Source: Wikimedia Commons.</span>
             </figcaption>
           </figure>
+
+          <figure class="gallery-figure" id="fig-4">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Vulcan_S.jpg/1280px-Vulcan_S.jpg"
+                alt="Kawasaki Vulcan S 650 (real photo)"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="Vulcan S — relaxed cruiser proportions"
+              />
+              <span class="price-tag">Rs.8,13,000 <small>approx</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
+            <figcaption>
+              <strong>Vulcan S</strong> — cruiser proportions.
+              <span class="credit">Source: Wikimedia Commons.</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-figure" id="fig-5">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg/1280px-Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg"
+                alt="Kawasaki KLR 650 Las Vegas Ride for Kids 2019"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="KLR650 — rugged dual-sport adventure"
+              />
+              <span class="price-tag">Rs.2,00,000 <small>approx</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
+            <figcaption>
+              <strong>KLR650</strong> — adventure / dual-sport.
+              Location: <strong>Las Vegas (Ride for Kids 2019)</strong>.
+              <span class="credit">Source: Wikimedia Commons.</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-figure" id="fig-6">
+            <div class="media">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kawasaki_Ninja_H2.jpg/1280px-Kawasaki_Ninja_H2.jpg"
+                alt="Kawasaki Ninja H2 (2015) Kobe Kawasaki World Japan"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="gallery-img"
+                data-caption="Ninja H2 — supercharged flagship, Kobe Japan"
+              />
+              <span class="price-tag">Flagship <small>photo</small></span>
+              <span class="zoom-icon">🔍</span>
+            </div>
+            <figcaption>
+              <strong>Ninja H2</strong> — supercharged flagship.
+              Location: <strong>Kobe Kawasaki World, Japan</strong>.
+              <span class="credit">Source: Wikimedia Commons.</span>
+            </figcaption>
+          </figure>
+
         </section>
       </section>
     </main>
 
-    <footer>
-      <div class="container">
+    <footer id="mainFooter">
+      <div class="container footer-content">
         <small>
-          © <span>2026</span> Kawasaki Bikes Website (HTML project). Gallery includes an image map linking to models.
+          © 2026 Kawasaki Bikes Website (HTML project).
+          Gallery includes an image map linking to models.
         </small>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="bikes.html">Models</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </nav>
       </div>
     </footer>
+
+    <a
+      href="#"
+      class="back-to-top"
+      id="backToTop"
+      aria-label="Back to top"
+      title="Back to top"
+    >↑</a>
+
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content" id="lightboxContent">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <div class="lightbox-nav">
+          <button class="lightbox-prev" id="lightboxPrev">❮</button>
+          <button class="lightbox-next" id="lightboxNext">❯</button>
+        </div>
+        <img id="lightboxImage" src="" alt="" />
+        <p class="lightbox-caption" id="lightboxCaption"></p>
+      </div>
+    </div>
+
+    <!-- jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Your jQuery Effect Files -->
+    <script src="JQuery/Fade-effect.js"></script>
+    <script src="JQuery/Slide-Effect.js"></script>
+    <script src="JQuery/Toggle-Effect.js"></script>
+    <script src="JQuery/Animation-effect.js"></script>
+
+    <!-- Gallery jQuery Master Controller -->
+    <script>
+      $(document).ready(function () {
+
+        const speed = { fast: 250, medium: 400, slow: 600 };
+        let currentImageIndex = 0;
+        const galleryImages = [];
+
+        $('.gallery-img').each(function () {
+          galleryImages.push({
+            src: $(this).attr('src'),
+            alt: $(this).attr('alt'),
+            caption: $(this).attr('data-caption')
+          });
+        });
+
+
+        // ── THEME TOGGLE ──
+        const savedTheme = localStorage.getItem('kawasaki_theme') || 'dark';
+        $('body').attr('data-theme', savedTheme);
+        $('#themeToggle').text(savedTheme === 'dark' ? '☀️' : '🌙');
+
+        $('#themeToggle').on('click', function () {
+          const $btn = $(this);
+          $btn.animate({ opacity: 0 }, speed.fast, function () {
+            const current = $('body').attr('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            $('body').attr('data-theme', next);
+            localStorage.setItem('kawasaki_theme', next);
+            $btn.text(next === 'dark' ? '☀️' : '🌙');
+            $btn.animate({ opacity: 1 }, speed.fast);
+          });
+          showToast('🎨 Theme switched!');
+        });
+
+
+        // ── MOBILE MENU ──
+        $('#menuToggle').on('click', function () {
+          const $nav = $('#primaryNav');
+          $nav.slideToggle(speed.medium, function () {
+            const isOpen = $nav.is(':visible');
+            $nav.toggleClass('open', isOpen);
+            $('#menuToggle')
+              .attr('aria-expanded', isOpen ? 'true' : 'false')
+              .text(isOpen ? '✕' : '☰');
+          });
+        });
+
+        $('#primaryNav a').on('click', function () {
+          if ($(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false');
+          }
+        });
+
+        $(document).on('keydown', function (e) {
+          if (e.key === 'Escape' && $('#primaryNav').is(':visible') && $(window).width() <= 700) {
+            $('#primaryNav').slideUp(speed.fast, function () {
+              $(this).removeClass('open');
+            });
+            $('#menuToggle').text('☰').attr('aria-expanded', 'false').focus();
+          }
+        });
+
+
+        // ── TOAST NOTIFICATION ──
+        function showToast(message) {
+          $('.toast').stop(true).fadeOut(150, function () { $(this).remove(); });
+          const $toast = $('<div class="toast"></div>').text(message);
+          $('body').append($toast);
+          $toast.fadeIn(speed.fast);
+          setTimeout(function () {
+            $toast.fadeOut(speed.fast, function () { $(this).remove(); });
+          }, 3000);
+        }
+
+
+        // ── PAGE LOAD ANIMATIONS ──
+        $('#heroCard').css({ opacity: 0, marginTop: '30px' });
+        $('#galleryCard').css({ opacity: 0, marginTop: '30px' });
+
+        $('#heroCard').animate({ opacity: 1, marginTop: '0px' }, speed.slow);
+
+        $('#gallery-title').css({ opacity: 0 });
+        $('#gallery-title').delay(200).animate({ opacity: 1 }, speed.medium);
+
+        $('#galleryDesc').css({ opacity: 0 });
+        $('#galleryDesc').delay(400).animate({ opacity: 1 }, speed.medium);
+
+        $('#mapSection').css({ opacity: 0 });
+        $('#mapSection').delay(600).animate({ opacity: 1 }, speed.medium);
+
+        $('#mapWrap').css({ opacity: 0 });
+        $('#mapWrap').delay(800).animate({ opacity: 1 }, speed.slow);
+
+        setTimeout(function () {
+          $('#mapTip').slideDown(speed.medium);
+        }, 1200);
+
+
+        // ── IMAGE MAP TOOLTIP ──
+        $('area').on('mouseenter', function (e) {
+          const label = $(this).attr('data-label');
+          const price = $(this).attr('data-price');
+          const $tooltip = $('#mapTooltip');
+          $tooltip.find('span').text(label + ' — ' + price);
+          const offset = $('#mapWrap').offset();
+          const x = e.pageX - offset.left + 10;
+          const y = e.pageY - offset.top - 40;
+          $tooltip.css({ left: x + 'px', top: y + 'px' });
+          $tooltip.fadeIn(speed.fast);
+        });
+
+        $('area').on('mousemove', function (e) {
+          const offset = $('#mapWrap').offset();
+          const x = e.pageX - offset.left + 10;
+          const y = e.pageY - offset.top - 40;
+          $('#mapTooltip').css({ left: x + 'px', top: y + 'px' });
+        });
+
+        $('area').on('mouseleave', function () {
+          $('#mapTooltip').fadeOut(speed.fast);
+        });
+
+        $('#mapWrap').on('mouseenter', function () {
+          $(this).find('img').stop(true).animate({ opacity: 0.92 }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).find('img').stop(true).animate({ opacity: 1 }, speed.fast);
+          $('#mapTooltip').fadeOut(speed.fast);
+        });
+
+
+        // ── GALLERY FIGURES SCROLL REVEAL ──
+        $('.gallery-figure').css({ opacity: 0, marginTop: '25px' });
+
+        function isInViewport($el) {
+          if (!$el.length) return false;
+          const top = $el.offset().top;
+          const bottom = top + $el.outerHeight();
+          const vtop = $(window).scrollTop();
+          const vbottom = vtop + $(window).height();
+          return bottom > vtop && top < vbottom - 50;
+        }
+
+        function revealGalleryFigures() {
+          $('.gallery-figure').each(function (i) {
+            const $fig = $(this);
+            if (isInViewport($fig) && parseFloat($fig.css('opacity')) === 0) {
+              $fig.delay(i * 120).animate(
+                { opacity: 1, marginTop: '0px' },
+                speed.medium
+              );
+            }
+          });
+        }
+
+        $(window).on('scroll', revealGalleryFigures);
+        revealGalleryFigures();
+
+        setTimeout(function () {
+          $('#galleryCard').animate({ opacity: 1, marginTop: '0px' }, speed.slow);
+          revealGalleryFigures();
+        }, 400);
+
+
+        // ── FIGURE HOVER EFFECTS ──
+        $('.gallery-figure').on('mouseenter', function () {
+          $(this).stop(true).animate({ marginTop: '-6px' }, speed.fast);
+          $(this).find('.price-tag').fadeIn(speed.fast);
+          $(this).find('.zoom-icon').css('display', 'flex').hide().fadeIn(speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ marginTop: '0px' }, speed.fast);
+          $(this).find('.price-tag').fadeOut(speed.fast);
+          $(this).find('.zoom-icon').fadeOut(speed.fast);
+        });
+
+
+        // ── FIGCAPTION SLIDE ON HOVER ──
+        $('.gallery-figure figcaption').hide();
+
+        $('.gallery-figure').on('mouseenter', function () {
+          $(this).find('figcaption').slideDown(speed.fast);
+        }).on('mouseleave', function () {
+          $(this).find('figcaption').slideUp(speed.fast);
+        });
+
+
+        // ── LIGHTBOX ──
+        function openLightbox(index) {
+          currentImageIndex = index;
+          const img = galleryImages[index];
+          $('#lightboxImage')
+            .attr({ src: img.src, alt: img.alt })
+            .css({ opacity: 0, marginTop: '20px' });
+          $('#lightboxCaption').text(img.caption);
+          $('#lightbox').css('display', 'flex').hide().fadeIn(speed.medium, function () {
+            $('#lightboxImage').animate({ opacity: 1, marginTop: '0px' }, speed.medium);
+          });
+          $('body').css('overflow', 'hidden');
+        }
+
+        function closeLightbox() {
+          $('#lightboxImage').animate({ opacity: 0, marginTop: '20px' }, speed.fast, function () {
+            $('#lightbox').fadeOut(speed.fast, function () {
+              $('#lightboxImage').attr('src', '').css({ opacity: '', marginTop: '' });
+              $('body').css('overflow', '');
+            });
+          });
+        }
+
+        function goToNext() {
+          currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+          $('#lightboxImage').animate({ opacity: 0 }, speed.fast, function () {
+            const img = galleryImages[currentImageIndex];
+            $('#lightboxImage').attr({ src: img.src, alt: img.alt });
+            $('#lightboxCaption').text(img.caption);
+            $('#lightboxImage').animate({ opacity: 1 }, speed.fast);
+          });
+        }
+
+        function goToPrev() {
+          currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+          $('#lightboxImage').animate({ opacity: 0 }, speed.fast, function () {
+            const img = galleryImages[currentImageIndex];
+            $('#lightboxImage').attr({ src: img.src, alt: img.alt });
+            $('#lightboxCaption').text(img.caption);
+            $('#lightboxImage').animate({ opacity: 1 }, speed.fast);
+          });
+        }
+
+        $('.gallery-img').on('click', function (e) {
+          e.preventDefault();
+          const index = $('.gallery-img').index(this);
+          openLightbox(index);
+        });
+
+        $('#lightboxClose').on('click', closeLightbox);
+
+        $('#lightbox').on('click', function (e) {
+          if (e.target === this) closeLightbox();
+        });
+
+        $('#lightboxNext').on('click', function (e) {
+          e.stopPropagation();
+          goToNext();
+        });
+
+        $('#lightboxPrev').on('click', function (e) {
+          e.stopPropagation();
+          goToPrev();
+        });
+
+        $(document).on('keydown', function (e) {
+          if ($('#lightbox').is(':visible')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') goToNext();
+            if (e.key === 'ArrowLeft') goToPrev();
+          }
+        });
+
+        $('#lightboxClose').on('mouseenter', function () {
+          $(this).stop(true).animate({ width: '40px', height: '40px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ width: '36px', height: '36px' }, speed.fast);
+        });
+
+
+        // ── NAV LINK HOVER ──
+        $('nav a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '18px', paddingRight: '18px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '14px', paddingRight: '14px' }, speed.fast);
+        });
+
+
+        // ── BRAND LOGO HOVER ──
+        $('.brand').on('mouseenter', function () {
+          $(this).find('img').stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).find('img').stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+
+        // ── FOOTER LINKS HOVER ──
+        $('.footer-links a').on('mouseenter', function () {
+          $(this).stop(true).animate({ paddingLeft: '4px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ paddingLeft: '0px' }, speed.fast);
+        });
+
+
+        // ── FOOTER REVEAL ──
+        $('footer').css({ opacity: 0 });
+
+        function revealFooter() {
+          if (isInViewport($('footer')) && parseFloat($('footer').css('opacity')) === 0) {
+            $('footer').animate({ opacity: 1 }, speed.slow);
+          }
+        }
+
+        $(window).on('scroll', revealFooter);
+        revealFooter();
+
+
+        // ── READING PROGRESS ──
+        $(window).on('scroll', function () {
+          const scrollTop = $(this).scrollTop();
+          const docHeight = $(document).height() - $(window).height();
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          $('#readingProgress').stop(true).animate(
+            { width: progress + '%' },
+            { duration: 80, queue: false }
+          );
+        });
+
+
+        // ── BACK TO TOP ──
+        $('#backToTop').css({ opacity: 0, visibility: 'hidden' });
+
+        $(window).on('scroll', function () {
+          if ($(this).scrollTop() > 400) {
+            $('#backToTop')
+              .css('visibility', 'visible')
+              .stop(true)
+              .animate({ opacity: 1, bottom: '24px' }, speed.fast);
+          } else {
+            $('#backToTop').stop(true).animate({ opacity: 0, bottom: '10px' }, speed.fast, function () {
+              $(this).css('visibility', 'hidden');
+            });
+          }
+        });
+
+        $('#backToTop').on('click', function (e) {
+          e.preventDefault();
+          $('html, body').animate({ scrollTop: 0 }, speed.slow);
+        });
+
+        $('#backToTop').on('mouseenter', function () {
+          $(this).stop(true).animate({ width: '50px', height: '50px' }, speed.fast);
+        }).on('mouseleave', function () {
+          $(this).stop(true).animate({ width: '44px', height: '44px' }, speed.fast);
+        });
+
+
+        // ── KEYBOARD SHORTCUT ──
+        $(document).on('keydown', function (e) {
+          if (e.target.matches('input, textarea, select')) return;
+          if (e.key === '?') showToast('⌨️ Shortcuts: Arrow Keys = Navigate Lightbox, Esc = Close');
+          if (e.altKey && (e.key === 't' || e.key === 'T')) $('#themeToggle').trigger('click');
+          if (e.altKey && (e.key === 'm' || e.key === 'M')) $('#menuToggle').trigger('click');
+        });
+
+
+        setTimeout(function () {
+          showToast('🖼️ Click any image to view full size!');
+        }, 1000);
+
+        console.log('✓ Gallery jQuery Controller Initialized');
+      });
+    </script>
+
   </body>
 </html>
-
